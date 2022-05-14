@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 //Icons imports
-import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 //Components imports
 import { Sidebar } from 'primereact/sidebar';
 import { PanelMenu } from 'primereact/panelmenu';
 
+//Resources imports
 import logo from '../logo.png';
-import { Routes } from '../helpers/Routes';
+import { convertRoutes } from '../helpers/Routes';
 import "./cssFiles/PanelMenu.css";
 
 export default function SideBar() {
+    const navigate = useNavigate();
     const [active, setActive] = useState(false) // Prueba de ocultamiento de opciones
 
     return (
@@ -23,15 +24,13 @@ export default function SideBar() {
             <h1 className='lg:text-4xl sm:text-3xl text-white'>Holistic Hospital</h1>
             <img src={logo} alt='logo' className='mr-2' style={{ height: '10vmin' }} />
             <Sidebar visible={active} onHide={() => setActive(false)} style={{ color: 'white', backgroundColor: 'black' }}>
-                <div className="w-full flex flex-row">
-                    <Icon icon={faCircleUser} className="text-4xl m-2 text-white" />
-                    <div className="flex flex-row justify-between w-full items-center m-2">
-                        <h1 className="text-bold">Usuario X</h1>
-                        <h1 className="text-red-500">Cerrar sesión</h1>
-                    </div>
+                <div className="w-full flex flex-row items-center">
+                    <img src={logo} alt='logo' className='mr-2' style={{ height: '10vmin' }} />
+                    <h1 className="text-bold text-center w-full">¡ Bienvenid@ Usuario X !</h1>
                 </div>
+                <h1 className="text-red-500 text-center mt-2">Cerrar sesión</h1>
                 <ul className="w-full text-white lg:mt-4">
-                    <PanelMenu model={Routes} />
+                    <PanelMenu model={convertRoutes(navigate)} />
                 </ul>
             </Sidebar>
         </div>
