@@ -137,7 +137,7 @@ export default function CreateNewUser() {
                                 <div className="field">
                                     <span className="p-float-label">
                                         <Controller name="lastname" control={control} rules={{ required: 'El apellido es requerido' }} render={({ field, fieldState }) => (
-                                            <InputText id={field.name} {...field} autoFocus className={classNames({ 'p-invalid': fieldState.invalid })} />
+                                            <InputText id={field.name} {...field}  className={classNames({ 'p-invalid': fieldState.invalid })} />
                                         )} />
                                         <label htmlFor="lastname" className={classNames({ 'p-error': errors.name })}>Apellido*</label>
                                     </span>

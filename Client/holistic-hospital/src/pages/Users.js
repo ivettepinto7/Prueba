@@ -157,6 +157,7 @@ export default function Users() {
       <Toast ref={toast} />
 
       <UsersTable />
+      
 
       <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
         <div className="confirmation-content">
