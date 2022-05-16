@@ -1,6 +1,13 @@
+export const UserRoles = {
+    ADMINISTRADOR: "Administrador",
+    USUARIO: "Usuario",
+    SECRETARIA: "Secretaria/o",
+    MEDICO: "Médico",
+}
+
 export const Roles = [
-    { name: 'administrador', code: 1 },
-    { name: 'usuario', code: 2 },
-    { name: 'secretario', code: 3 },
-    { name: 'médico', code: 4 },
+    { name: UserRoles.ADMINISTRADOR, code: 1 },
+    { name: UserRoles.USUARIO, code: 2 },
+    { name: UserRoles.SECRETARIA, code: 3 },
+    { name: UserRoles.MEDICO, code: 4 },
 ]

@@ -11,7 +11,6 @@ import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { Password } from 'primereact/password';
 import { SelectButton } from 'primereact/selectbutton';
-import { ToggleButton } from 'primereact/togglebutton';
 
 import "../cssFiles/FormDemo.css";
 
@@ -43,6 +42,7 @@ export default function EditUser() {
     const onSubmit = (data) => {
         setFormData(data);
         setShowMessage(true);
+        console.log(formData);
 
         reset();
     };

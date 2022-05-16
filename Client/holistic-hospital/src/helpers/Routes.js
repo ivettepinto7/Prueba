@@ -1,12 +1,15 @@
+import { UserRoles } from "./Roles";
+
 export function convertRoutes(navigator) {
     return [
-        { 
+        {
             label: 'Usuarios',
             command: (event) => {
                 navigator('/landing/usuarios');
-            }, 
+            },
+            roles: [UserRoles.ADMINISTRADOR, UserRoles.SECRETARIA]
         },
-        { 
+        {
             label: 'Expediente',
             items: [
                 {
@@ -17,7 +20,7 @@ export function convertRoutes(navigator) {
                 },
                 {
                     label: 'Exámenes realizados',
-                    command: (event) =>  {
+                    command: (event) => {
                         navigator('/landing/expediente/examenes-realizados');
                     },
                 },
@@ -35,7 +38,7 @@ export function convertRoutes(navigator) {
                 },
             ]
         },
-        { 
+        {
             label: 'Citas',
             items: [
                 {
@@ -51,13 +54,48 @@ export function convertRoutes(navigator) {
                     },
                 },
                 {
-                    label: 'Asignar turnos',
+                    label: 'Agendar inmunización',
                     command: (event) => {
-                        navigator('/landing/citas/asignar-turnos');
+                        navigator('/landing/citas/cita-inmunizacion');
                     },
                 },
             ]
-        }
-    
+        },
+        {
+            label: 'Recordatorios',
+            command: (event) => {
+                navigator('/landing/recordatorios');
+            },
+        },
+        {
+            label: 'Agregar examen',
+            command: (event) => {
+                navigator('/landing/agregar-examen');
+            },
+        },
+        {
+            label: 'Agregar vacuna',
+            command: (event) => {
+                navigator('/landing/agregar-vacuna');
+            },
+        },
+        {
+            label: 'Agregar área de hospital',
+            command: (event) => {
+                navigator('/landing/agregar-area');
+            },
+        },
+        {
+            label: 'Agregar medicamento',
+            command: (event) => {
+                navigator('/landing/agregar-medicamento');
+            },
+        },
+        {
+            label: 'Asignar turnos',
+            command: (event) => {
+                navigator('/landing/asignar-turnos');
+            },
+        },
     ]
 }
