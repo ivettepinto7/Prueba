@@ -7,10 +7,11 @@ export function convertRoutes(navigator) {
             command: (event) => {
                 navigator('/landing/usuarios');
             },
-            roles: [UserRoles.ADMINISTRADOR, UserRoles.SECRETARIA]
+            roles: [UserRoles.ADMINISTRADOR, UserRoles.SECRETARIA],
         },
         {
             label: 'Expediente',
+            roles: [UserRoles.USUARIO],
             items: [
                 {
                     label: 'Inmunizaciones',
@@ -40,6 +41,7 @@ export function convertRoutes(navigator) {
         },
         {
             label: 'Citas',
+            roles: [UserRoles.USUARIO],
             items: [
                 {
                     label: 'Agendar cita médica',
@@ -63,36 +65,42 @@ export function convertRoutes(navigator) {
         },
         {
             label: 'Recordatorios',
+            roles: [UserRoles.USUARIO],
             command: (event) => {
                 navigator('/landing/recordatorios');
             },
         },
         {
             label: 'Agregar examen',
+            roles: [UserRoles.ADMINISTRADOR],
             command: (event) => {
                 navigator('/landing/agregar-examen');
             },
         },
         {
             label: 'Agregar vacuna',
+            roles: [UserRoles.ADMINISTRADOR],
             command: (event) => {
                 navigator('/landing/agregar-vacuna');
             },
         },
         {
             label: 'Agregar área de hospital',
+            roles: [UserRoles.ADMINISTRADOR],
             command: (event) => {
                 navigator('/landing/agregar-area');
             },
         },
         {
             label: 'Agregar medicamento',
+            roles: [UserRoles.ADMINISTRADOR],
             command: (event) => {
                 navigator('/landing/agregar-medicamento');
             },
         },
         {
             label: 'Asignar turnos',
+            roles: [UserRoles.ADMINISTRADOR],
             command: (event) => {
                 navigator('/landing/asignar-turnos');
             },

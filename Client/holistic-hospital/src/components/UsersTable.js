@@ -77,7 +77,7 @@ export default function UsersTable() {
   }
 
   const nameBodyTemplate = (rowData) => {
-    return rowData.name + ' ' + rowData.lastname;
+    return rowData.name + ' ' + rowData.last_name;
   }
 
   return (

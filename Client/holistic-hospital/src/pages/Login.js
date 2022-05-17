@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext, SetUserContext } from '../contexts/UserContext/UserContext';
 
 //Components imports
 import { InputText } from 'primereact/inputtext';
@@ -7,30 +8,49 @@ import { Password } from 'primereact/password';
 import { Toast } from 'primereact/toast';
 
 //Helpers imports
-import logo from'../logo.png';
+import logo from '../logo.png';
 import { People } from '../helpers/UsersList'
 
 export default function Login() {
+    const { token } = useContext(UserContext);
+    const setUser = useContext(SetUserContext);
     const navigate = useNavigate();
     const toast = useRef(null);
+    
     const people = People;
     const [userCode, setUserCode] = useState("");//For input in login form
     const [password, setPassword] = useState("");//For input in login form
+    const isLogged = token !== '';
 
+    useEffect(() => {
+        if(isLogged) navigate("/landing");
+    },[isLogged, navigate]);
+    
     const login = () => {
         try {
             const foundPerson = people.find((person) => {
                 return person.code === userCode && person.password === password;
             })
-            if(foundPerson !== undefined)
-                navigate('/landing')
+            if (foundPerson !== undefined && foundPerson.status === true) {
+                setUser({
+                    token: foundPerson.token,
+                    code: foundPerson.code,
+                    name: foundPerson.name,
+                    last_name: foundPerson.last_name,
+                    email: foundPerson.email,
+                    rol: foundPerson.rol,
+                    status: foundPerson.status,
+                    isLogged: true,
+                })
+                navigate('/landing');
+            }
             else
                 toast.current.show({
-                    severity:'error', 
-                    summary: 'Error al iniciar sesión', 
-                    detail:'Datos incorrectos', 
-                    life: 3000,
-                    style: {marginLeft: '20%'}
+                    severity: 'error',
+                    summary: 'Error al iniciar sesión, es probable que su cuenta esté inactiva o verifique los campos',
+                    detail: 'Datos incorrectos',
+                    life: 6000,
+                    style: { marginLeft: '20%' }
                 });
 
         } catch (error) {
@@ -60,7 +80,7 @@ export default function Login() {
                             </div>
                             <div className="flex flex-row justify-center items-center space-x-2"></div>
 
-                            <form onSubmit={(e) => {e.preventDefault()}} className="flex flex-col block justify-center items-center p-5 w-full h-3/4 rounded-md shadow-md">
+                            <form onSubmit={(e) => { e.preventDefault() }} className="flex flex-col block justify-center items-center p-5 w-full h-3/4 rounded-md shadow-md">
                                 <span className="p-float-label">
                                     <InputText
                                         id="usercode"
@@ -79,7 +99,10 @@ export default function Login() {
                                 />
                                 <div className="flex flex-row justify-center w-full">
                                     <button
-                                        onClick={() => login()}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            login()
+                                        }}
                                         className="lg:w-1/2 w-full flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300"
                                     >
                                         Iniciar sesión
