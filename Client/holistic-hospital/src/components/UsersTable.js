@@ -9,16 +9,16 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import './cssFiles/DataTable.css';
 
+import CreateNewUser from "./EmergentWindows/CreateNewUser";
+import EditUser from "./EmergentWindows/EditUser";
+import DeleteOneUser from "./EmergentWindows/DeleteOneUser";
+
 //Helpers imports
 import { People } from "../helpers/UsersList";
-import CreateNewUser from "./EemergentWindows/CreateNewUser";
-import EditUser from "./EemergentWindows/EditUser";
 
 export default function UsersTable() {
   const menuContext = useContext(MenuContext);
   const people = People;
-
-  const [selectedProducts, setSelectedProducts] = useState(null);
   
   const [globalFilter, setGlobalFilter] = useState(null);
   const dt = useRef(null);
@@ -32,11 +32,6 @@ export default function UsersTable() {
           className="p-button-success mr-2"
           onClick={() => menuContext.settingEmergentNewUserState()} 
           />
-        <Button
-          label="Eliminar"
-          icon="pi pi-trash"
-          className="p-button-danger"
-        />
       </>
     )
   }
@@ -54,7 +49,11 @@ export default function UsersTable() {
          />
         <Button
            icon="pi pi-trash" 
-           className="p-button-rounded p-button-warning" 
+           className="p-button-rounded p-button-warning"
+           onClick={() => {
+            menuContext.settingUserCode(rowData.code);
+             menuContext.settingEmergentDeleteOneUserState()
+           }} 
           />
       </>
     );
@@ -78,7 +77,7 @@ export default function UsersTable() {
   }
 
   const nameBodyTemplate = (rowData) => {
-    return rowData.name + ' ' + rowData.lastname;
+    return rowData.name + ' ' + rowData.last_name;
   }
 
   return (
@@ -93,16 +92,20 @@ export default function UsersTable() {
         */}
         <EditUser />
 
+         {/*
+          *User deletion emergent window 
+        */}
+        <DeleteOneUser />
+
       <div className="card">
 
         <Toolbar className="mb-4" left={leftToolbarTemplate} ></Toolbar>
 
-        <DataTable showGridlines lazy={true} ref={dt} value={people} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
+        <DataTable showGridlines lazy={true} ref={dt} value={people}
           dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
           globalFilter={globalFilter} header={header} responsiveLayout="scroll">
-          <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>
           <Column field="code" header="Código" sortable style={{ minWidth: '12rem' }}></Column>
           <Column field="name" header="Nombre" body={nameBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column>
           <Column field="email" header="Correo" sortable style={{ minWidth: '12rem' }}></Column>
