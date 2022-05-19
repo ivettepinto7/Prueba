@@ -49,20 +49,16 @@ export default function Landing() {
                 if (items !== undefined) {
                     items.forEach(({ pathi, rolesi }) => {
                         let match = pathi === pathname ? true : false;
-                        console.log("Match",match);
                         if (match === true) {
                             const authorized = rolesi.some((rol) => rol === castRol.name);
-                            console.log("AUTH", authorized);
                             if (authorized === false)
                                 navigate("/landing");
                         }
                         })
                 } else {
                     let match = path === pathname ? true : false;
-                    console.log("Match", match);
                     if (match === true) {
                         const authorized = roles.some((rol) => rol === castRol.name);
-                        console.log("AUTH", authorized);
                         if (authorized === false)
                             navigate("/landing");
                     }

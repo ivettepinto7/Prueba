@@ -12,9 +12,6 @@ const MenuState = (props) => {
     //State for delete MANY users window
     const [emergentDeleteOneUserState, setEmergentDeleteOneUserState] = useState(false);
 
-    //User code storage
-    const [userCode, setUserCode] = useState("");
-
     //Function for emergent new user state
     function settingEmergentNewUserState() {
         if (emergentNewUserState) setEmergentNewUserState(false);
@@ -33,23 +30,16 @@ const MenuState = (props) => {
         else setEmergentDeleteOneUserState(true);
     }
 
-    //Function to save user code used in emergent edit user
-    function settingUserCode(code){
-        setUserCode(code);
-    }
-
     return (
         <MenuContext.Provider
             value={{
                 emergentNewUserState,
                 emergentEditUserState,
                 emergentDeleteOneUserState,
-                userCode,
 
                 settingEmergentNewUserState,
                 settingEmergentEditUserState,
                 settingEmergentDeleteOneUserState,
-                settingUserCode,
             }}
         >
             { props.children }

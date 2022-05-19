@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import MenuContext from '../../contexts/MenuContext/MenuContext';
+import { UserContext } from '../../contexts/UserContext/UserContext';
 import { useForm, Controller } from 'react-hook-form';
 
 //Components imports
@@ -17,6 +18,7 @@ import "../cssFiles/FormDemo.css";
 export default function EditUser() {
     const { emergentEditUserState } = useContext(MenuContext);
     const menuContext = useContext(MenuContext);
+    const userContext = useContext(UserContext);
 
     const toast = useRef(null);
 
@@ -112,7 +114,7 @@ export default function EditUser() {
                         <div className="flex justify-content-center flex-column pt-6 px-3">
                             <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
                             <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
-                                <b>{menuContext.userCode}</b> actualizado con éxito.
+                                <b>{userContext.userCode}</b> actualizado con éxito.
                             </p>
                         </div>
                     </Dialog>

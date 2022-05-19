@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import MenuContext from '../../contexts/MenuContext/MenuContext';
+import { UserContext } from '../../contexts/UserContext/UserContext';
 
 //Components imports
 import { Dialog } from 'primereact/dialog';
@@ -11,6 +12,7 @@ import "../cssFiles/FormDemo.css";
 export default function DeleteOneUser() {
     const { emergentDeleteOneUserState } = useContext(MenuContext);
     const menuContext = useContext(MenuContext);
+    const userContext = useContext(UserContext);
 
     const toast = useRef(null);
 
@@ -50,7 +52,7 @@ export default function DeleteOneUser() {
             >
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {menuContext.userCode && <span>¿Seguro que desea eliminar el usuario <b>{menuContext.userCode}</b>?</span>}
+                    {userContext.userCode && <span>¿Seguro que desea eliminar el usuario <b>{userContext.userCode}</b>?</span>}
                 </div>
             </Dialog>
         </div>
