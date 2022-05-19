@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from "react";
 import MenuContext from "../contexts/MenuContext/MenuContext";
+import { UserContext } from "../contexts/UserContext/UserContext";
 
 //Components imports
 import { DataTable } from "primereact/datatable";
@@ -18,6 +19,7 @@ import { People } from "../helpers/UsersList";
 
 export default function UsersTable() {
   const menuContext = useContext(MenuContext);
+  const userContext = useContext(UserContext);
   const people = People;
   
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -43,7 +45,7 @@ export default function UsersTable() {
           icon="pi pi-pencil" 
           className="p-button-rounded p-button-success mr-2"
           onClick={() => {
-            menuContext.settingUserCode(rowData.code);
+            userContext.settingUserCode(rowData.code);
             menuContext.settingEmergentEditUserState();
           }} 
          />
@@ -51,7 +53,7 @@ export default function UsersTable() {
            icon="pi pi-trash" 
            className="p-button-rounded p-button-warning"
            onClick={() => {
-            menuContext.settingUserCode(rowData.code);
+            userContext.settingUserCode(rowData.code);
              menuContext.settingEmergentDeleteOneUserState()
            }} 
           />

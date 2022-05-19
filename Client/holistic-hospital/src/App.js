@@ -13,6 +13,9 @@ const Landing = lazy(() => import("./pages/Landing"));
 const Users = lazy(() => import("./pages/Users"));
 const Inmunizations = lazy(() => import("./pages/Inmunizations"));
 const ExamsExistence = lazy(() => import("./pages/ExamsExistence"));
+const Tests = lazy(() => import("./pages/Tests"));
+const PrevAppointments = lazy(() => import("./pages/PrevAppoin"));
+
 
 function App() {
   return (
@@ -28,6 +31,8 @@ function App() {
 
                 <Route exact path="expediente">
                   <Route index exact path="inmunizaciones" element={<Inmunizations />} />
+                  <Route index exact path="Examenes-realizados" element={<Tests />} />
+                  <Route index exact path="citas-previas" element={<PrevAppointments/>} />
                 </Route>
                 {/*TODO app routes*/}
               </Route>

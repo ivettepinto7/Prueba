@@ -15,14 +15,16 @@ import { classNames } from 'primereact/utils';
 
 import "../cssFiles/FormDemo.css";
 import { Roles } from '../../helpers/Roles';
+import { AreasList } from '../../helpers/AreasList';
 
 export default function CreateNewUser() {
     const { emergentNewUserState } = useContext(MenuContext);
     const menuContext = useContext(MenuContext);
 
     const roles = Roles;
+    const areasList = AreasList;
     const toast = useRef(null);
-
+    
     var today = new Date();
     const [display, setDisplay] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
@@ -39,7 +41,8 @@ export default function CreateNewUser() {
         area: null,
     }
 
-    const { control, formState: { errors }, handleSubmit, reset } = useForm({ defaultValues });
+    const { control, formState: { errors }, handleSubmit, reset, watch } = useForm({ defaultValues });
+    const selectedRole = watch('role',false);
 
     const onSubmit = (data) => {
         setFormData(data);
@@ -66,6 +69,7 @@ export default function CreateNewUser() {
             </ul>
         </>
     );
+
     useEffect(() => {
         setDisplay(emergentNewUserState);
     }, [emergentNewUserState]);
@@ -99,11 +103,12 @@ export default function CreateNewUser() {
             </div>
         );
     };
+
     return (
         <div className="flex flex-col">
             <Toast ref={toast} />
             <Dialog
-                breakpoints={{'960px': '75vw', '640px': '100vw'}}
+                breakpoints={{ '960px': '75vw', '640px': '100vw' }}
                 header="Crear usuario"
                 visible={display}
                 style={{ width: '50vw' }}
@@ -177,10 +182,25 @@ export default function CreateNewUser() {
                                     {getFormErrorMessage('role')}
                                 </div>
 
+                                {
+                                        selectedRole && selectedRole['code'] === 4 ?
+                                        <div className="field">
+                                            <span className="p-float-label">
+                                                <Controller name="area" control={control} rules={{ required: 'El área es requerida.' }} render={({ field }) => (
+                                                    <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={areasList} optionLabel='name' />
+                                                )} />
+                                                <label htmlFor="area" className={classNames({ 'p-error': errors.role })}>Área</label>
+                                            </span>
+                                            {getFormErrorMessage('area')}
+                                        </div>
+                                        :
+                                        ""
+                                    }
+
                                 <div className="field">
                                     <span className="p-float-label">
                                         <Controller name="birthdate" control={control} rules={{ required: 'La fecha de nacimiento es requerida.' }} render={({ field }) => (
-                                            <Calendar id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon maxDate={today}/>
+                                            <Calendar id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon maxDate={today} />
                                         )} />
                                         <label htmlFor="birthdate" className={classNames({ 'p-error': errors.birthdate })}>Fecha de nacimiento</label>
                                     </span>
