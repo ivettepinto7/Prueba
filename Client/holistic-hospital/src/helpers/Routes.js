@@ -8,7 +8,7 @@ export function convertRoutes(navigator) {
                 navigator('/landing/usuarios');
             },
             path: '/landing/usuarios',
-            roles: [UserRoles.ADMINISTRADOR, UserRoles.SECRETARIA],
+            roles: [UserRoles.ADMINISTRADOR],
         },
         {
             label: 'Expediente',
@@ -66,9 +66,9 @@ export function convertRoutes(navigator) {
                     label: 'Agendar examen',
                     rolesi: [UserRoles.USUARIO],
                     command: (event) => {
-                        navigator('/landing/citas/cita-examenes');
+                        navigator('/landing/citas/cita-examen');
                     },
-                    pathi: '/landing/citas/cita-examenes',
+                    pathi: '/landing/citas/cita-examen',
                 },
                 {
                     label: 'Agendar inmunización',
@@ -81,6 +81,14 @@ export function convertRoutes(navigator) {
             ]
         },
         {
+            label: 'Citas del dia',
+            roles: [UserRoles.SECRETARIA, UserRoles.MEDICO],
+            command: (event) => {
+                navigator('/landing/citas-dia')
+            },
+            path: '/landing/citas-dia',
+        },
+        {
             label: 'Recordatorios',
             roles: [UserRoles.USUARIO],
             command: (event) => {
@@ -89,44 +97,36 @@ export function convertRoutes(navigator) {
             path: '/landing/recordatorios',
         },
         {
-            label: 'Agregar examen',
+            label: 'Exámenes',
             roles: [UserRoles.ADMINISTRADOR],
             command: (event) => {
-                navigator('/landing/agregar-examen');
+                navigator('/landing/examenes');
             },
-            path: '/landing/agregar-examen',
+            path: '/landing/examenes',
         },
         {
-            label: 'Agregar vacuna',
+            label: 'Vacunas',
             roles: [UserRoles.ADMINISTRADOR],
             command: (event) => {
-                navigator('/landing/agregar-vacuna');
+                navigator('/landing/vacunas');
             },
-            path: '/landing/agregar-vacuna',
+            path: '/landing/vacunas',
         },
         {
-            label: 'Agregar área de hospital',
+            label: 'Áreas',
             roles: [UserRoles.ADMINISTRADOR],
             command: (event) => {
-                navigator('/landing/agregar-area');
+                navigator('/landing/areas');
             },
-            path: '/landing/agregar-area',
+            path: '/landing/areas',
         },
         {
-            label: 'Agregar medicamento',
+            label: 'Medicamentos',
             roles: [UserRoles.ADMINISTRADOR],
             command: (event) => {
-                navigator('/landing/agregar-medicamento');
+                navigator('/landing/medicamentos');
             },
-            path: '/landing/agregar-medicamento',
-        },
-        {
-            label: 'Asignar turnos',
-            roles: [UserRoles.ADMINISTRADOR],
-            command: (event) => {
-                navigator('/landing/asignar-turnos');
-            },
-            path: '/landing/asignar-turnos',
+            path: '/landing/medicamentos',
         },
     ]
 }

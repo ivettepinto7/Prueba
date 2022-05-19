@@ -54,8 +54,9 @@ export default function SideBar() {
                             status: null,
                             isLogged: false,
                         })
-                        localStorage.clear();
                         navigate("/")
+                        localStorage.clear();
+                        window.location.replace('');
                     }}>
                     Cerrar sesión
                 </h1>
