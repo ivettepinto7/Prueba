@@ -12,6 +12,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Landing = lazy(() => import("./pages/Landing"));
 const Users = lazy(() => import("./pages/Users"));
 const Inmunizations = lazy(() => import("./pages/Inmunizations"));
+const ExamsExistence = lazy(() => import("./pages/ExamsExistence"));
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
               <Route index element={<Login />} />
               <Route path="landing" element={<Landing />}>
                 <Route index exact path="usuarios" element={<Users />} />
+                <Route exact path="examenes" element={<ExamsExistence />} />
+
                 <Route exact path="expediente">
                   <Route index exact path="inmunizaciones" element={<Inmunizations />} />
                 </Route>

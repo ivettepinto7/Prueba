@@ -12,6 +12,9 @@ const MenuState = (props) => {
     //State for delete MANY users window
     const [emergentDeleteOneUserState, setEmergentDeleteOneUserState] = useState(false);
 
+    //State for create new exam
+    const [emergentNewExamState, setEmergentNewExamState] = useState(false);
+
     //User code storage
     const [userCode, setUserCode] = useState("");
 
@@ -33,6 +36,13 @@ const MenuState = (props) => {
         else setEmergentDeleteOneUserState(true);
     }
 
+    //Function for emergent delete one user state
+    function settingEmergentNewExamState() {
+        if (emergentNewExamState) setEmergentNewExamState(false);
+        else setEmergentNewExamState(true);
+    }
+    
+
     //Function to save user code used in emergent edit user
     function settingUserCode(code){
         setUserCode(code);
@@ -44,11 +54,13 @@ const MenuState = (props) => {
                 emergentNewUserState,
                 emergentEditUserState,
                 emergentDeleteOneUserState,
+                emergentNewExamState,
                 userCode,
 
                 settingEmergentNewUserState,
                 settingEmergentEditUserState,
                 settingEmergentDeleteOneUserState,
+                settingEmergentNewExamState,
                 settingUserCode,
             }}
         >

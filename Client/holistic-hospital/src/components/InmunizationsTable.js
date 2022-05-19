@@ -30,7 +30,7 @@ export default function InmunizationsTable() {
         <DataTable showGridlines lazy={true} ref={dt} value={inmunizations}
           dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} inmunizations"
           globalFilter={globalFilter} header={header} responsiveLayout="scroll">
           <Column field="vaccine_name" header="Nombre de vacuna"  sortable style={{ minWidth: '12rem' }}></Column>
           <Column field="age" header="Edad de aplicación" sortable style={{ minWidth: '12rem' }}></Column>

@@ -13,12 +13,14 @@ import CreateNewUser from "./EmergentWindows/CreateNewUser";
 import EditUser from "./EmergentWindows/EditUser";
 import DeleteOneUser from "./EmergentWindows/DeleteOneUser";
 
-//Helpers imports
-import { People } from "../helpers/UsersList";
+import CreateNewExam from "./EmergentWindows/CreateNewExam";
 
-export default function UsersTable() {
+//Helpers imports
+import { Exams } from "../helpers/ExamExistenceList";
+
+export default function ExamExistenceTable() {
   const menuContext = useContext(MenuContext);
-  const people = People;
+  const exams = Exams;
   
   const [globalFilter, setGlobalFilter] = useState(null);
   const dt = useRef(null);
@@ -30,7 +32,7 @@ export default function UsersTable() {
           label="Nuevo"
           icon="pi pi-plus"
           className="p-button-success mr-2"
-          onClick={() => menuContext.settingEmergentNewUserState()} 
+          onClick={() => menuContext.settingEmergentNewExamState()} 
           />
       </>
     )
@@ -61,7 +63,7 @@ export default function UsersTable() {
 
   const header = (
     <div className="table-header">
-      <h5 className="mx-0 my-1">Manejo de usuarios</h5>
+      <h5 className="mx-0 my-1">Manejo de examenes</h5>
       <span className="p-input-icon-left">
         <i className="pi pi-search" />
         <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
@@ -69,11 +71,13 @@ export default function UsersTable() {
     </div>
   );
 
-  const statusBodyTemplate = (rowData) => {
-    if (rowData.status === true)
-      return 'Activo';
+  const genderBodyTemplate = (rowData) => {
+    if (rowData.gender === 'f')
+      return 'Femenino';
+    else if(rowData.gender ==='m')
+      return 'Masculino';
     else
-      return 'Inactivo';
+      return 'Indiferente';
   }
 
   const nameBodyTemplate = (rowData) => {
@@ -85,7 +89,7 @@ export default function UsersTable() {
       {/*
         *User creation emergent window 
       */}
-        <CreateNewUser />
+        <CreateNewExam />
 
         {/*
           *User edit emergent window 
@@ -101,16 +105,15 @@ export default function UsersTable() {
 
         <Toolbar className="mb-4" left={leftToolbarTemplate} ></Toolbar>
 
-        <DataTable showGridlines lazy={true} ref={dt} value={people}
+        <DataTable showGridlines lazy={true} ref={dt} value={exams}
           dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} exams"
           globalFilter={globalFilter} header={header} responsiveLayout="scroll">
-          <Column field="code" header="Código" sortable style={{ minWidth: '12rem' }}></Column>
-          <Column field="name" header="Nombre" body={nameBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column>
-          <Column field="email" header="Correo" sortable style={{ minWidth: '12rem' }}></Column>
-          <Column field="rol" header="Rol" sortable style={{ minWidth: '8rem' }}></Column>
-          <Column field="status" header="Estado" body={statusBodyTemplate} sortable style={{ minWidth: '10rem' }}></Column>
+          <Column field="name" header="Nombre" sortable style={{ minWidth: '12rem' }}></Column>
+          <Column field="gender" header="Género" body={genderBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column>
+          <Column field="start_age" header="Edad inicial" sortable style={{ minWidth: '12rem' }}></Column>
+          <Column field="frequency" header="Frecuencia (días)" sortable style={{ minWidth: '8rem' }}></Column>
           <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
         </DataTable>
       </div>
