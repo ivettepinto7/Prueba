@@ -9,20 +9,27 @@ const MenuState = (props) => {
     //State for edit user window
     const [emergentEditUserState, setEmergentEditUserState] = useState(false);
 
+    //State for edit logged user
+    const [emergentEditOwnUserState, setEmergentEditOwnUserState] =  useState(false);
+    
     //State for delete One users window
     const [emergentDeleteOneUserState, setEmergentDeleteOneUserState] = useState(false);
 
     //State for create new exam
     const [emergentNewExamState, setEmergentNewExamState] = useState(false);
+    
     //State for edit  exam
     const [emergentEditExamState, setEmergentEditExamState] = useState(false);
+    
     //State for delete one exam window
     const [emergentDeleteOneExamState, setEmergentDeleteOneExamState] = useState(false);
 
     //State for create new vaccine
     const [emergentNewVaccineState, setEmergentNewVaccineState] = useState(false);
+    
     //State for edit  vaccine
     const [emergentEditVaccineState, setEmergentEditVaccineState] = useState(false);
+    
     //State for delete one vaccine window
     const [emergentDeleteOneVaccineState, setEmergentDeleteOneVaccineState] = useState(false);
 
@@ -37,6 +44,12 @@ const MenuState = (props) => {
     function settingEmergentEditUserState() {
         if (emergentEditUserState) setEmergentEditUserState(false);
         else setEmergentEditUserState(true);
+    }
+
+    //Function for emergent edit logged user state
+    function settingEmergentEditOwnUserState() {
+        if (emergentEditOwnUserState) setEmergentEditOwnUserState(false);
+        else setEmergentEditOwnUserState(true);
     }
 
     //Function for emergent delete one user state
@@ -88,6 +101,7 @@ const MenuState = (props) => {
             value={{
                 emergentNewUserState,
                 emergentEditUserState,
+                emergentEditOwnUserState,
                 emergentDeleteOneUserState,
                 emergentNewExamState,
                 emergentEditExamState,
@@ -98,6 +112,7 @@ const MenuState = (props) => {
 
                 settingEmergentNewUserState,
                 settingEmergentEditUserState,
+                settingEmergentEditOwnUserState,
                 settingEmergentDeleteOneUserState,
                 settingEmergentNewExamState,
                 settingEmergentEditExamState,
