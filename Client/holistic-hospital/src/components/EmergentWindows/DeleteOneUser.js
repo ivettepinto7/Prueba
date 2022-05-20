@@ -34,10 +34,10 @@ export default function DeleteOneUser() {
         dialogFuncMap[`${name}`](false);
     };
 
-    const deleteProductDialogFooter = (
+    const deleteOneUserDialogFooter = (
         <>
-          <Button label="No" icon="pi pi-times" className="p-button-text" onClick={onHide} />
-          <Button label="Si" icon="pi pi-check" className="p-button-text" onClick={onHide} />
+          <Button label="No" icon="pi pi-times" className="p-button-text" onClick={() => onHide("display")} />
+          <Button label="Si" icon="pi pi-check" className="p-button-text" onClick={() => onHide("display")} />
         </>
       );
     return (
@@ -47,7 +47,7 @@ export default function DeleteOneUser() {
                 visible={display} style={{ width: '450px' }} 
                 header="Confirm" 
                 modal 
-                footer={deleteProductDialogFooter} 
+                footer={deleteOneUserDialogFooter} 
                 onHide={() => onHide('display')}
             >
                 <div className="confirmation-content">

@@ -128,7 +128,7 @@ export default function CreateNewUser() {
 
                     <div className="m-1 w-full flex justify-content-center">
                         <div className="card w-full">
-                            <form autoComplete='off' onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 p-fluid w-full">
+                            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 p-fluid w-full">
                                 <div className="field">
                                     <span className="p-float-label">
                                         <Controller name="name" control={control} rules={{ required: 'El nombre es requerido' }} render={({ field, fieldState }) => (

@@ -10,6 +10,7 @@ import { Toast } from 'primereact/toast';
 //Helpers imports
 import logo from '../logo.png';
 import { People } from '../helpers/UsersList'
+import LeftLoginSection from '../components/LeftLoginSection';
 
 export default function Login() {
     const { token } = useContext(UserContext);
@@ -62,10 +63,7 @@ export default function Login() {
             <div className="relative min-h-screen  grid bg-black ">
                 <Toast ref={toast} />
                 <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 ">
-                    <div
-                        className="relative sm:w-1/2 xl:w-3/5 bg-blue-800 h-full hidden md:flex flex-auto items-center justify-center p-10 overflow-hidden  text-white bg-no-repeat bg-cover relative" style={{ backgroundPosition: 'center', backgroundSize: '40vmin', backgroundImage: `url(${logo})` }}>
-                        <div className="absolute bg-black  opacity-25 inset-0 z-0"></div>
-                    </div>
+                    <LeftLoginSection />
                     <div
                         className="md:flex md:items-center md:justify-left w-full sm:w-auto md:h-full xl:w-1/2 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none "
                     >
@@ -108,7 +106,7 @@ export default function Login() {
                                         Iniciar sesión
                                     </button>
                                 </div>
-                                <p className="bottom-0 text-white text-xs p-2 cursor-pointer">
+                                <p className="bottom-0 text-white text-xs p-2 cursor-pointer" onClick={() => navigate("/recuperar")}>
                                     ¿Olvidaste tu contraseña?, clic aquí.
                                 </p>
                             </form>

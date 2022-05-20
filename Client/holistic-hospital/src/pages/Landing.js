@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext/UserContext";
 
 //Components imports
+import { Navigate } from "react-router-dom";
+
 import SideBar from "../components/SideBar";
 
 //Helpers imports
@@ -24,12 +26,12 @@ export default function Landing() {
     const pathname = usePathname();
     const routes = convertRoutes(navigate);
 
-    const castRol = Roles.find((r) => {
-        return r.code === rol;
-    });
 
     useEffect(() => {
-        if (!isLogged) navigate("/");
+        const castRol = Roles.find((r) => {
+            return r.code === rol;
+        });
+        if (isLogged === false) navigate("/")
         else {
             const fixedRoutes = routes.map(({ path, ...rest }) => {
                 if (rest.items !== undefined) {
@@ -54,7 +56,7 @@ export default function Landing() {
                             if (authorized === false)
                                 navigate("/landing");
                         }
-                        })
+                    })
                 } else {
                     let match = path === pathname ? true : false;
                     if (match === true) {
@@ -65,7 +67,7 @@ export default function Landing() {
                 }
             })
         }
-    }, [isLogged, navigate, pathname, rol, routes, castRol.name]);
+    }, [isLogged, navigate, pathname, rol, routes]);
 
     return (
         <div className="w-full h-screen">
