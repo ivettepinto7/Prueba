@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext, SetUserContext } from '../contexts/UserContext/UserContext';
 
 //Components imports
-import { InputText } from 'primereact/inputtext';
+import { InputNumber } from 'primereact/inputnumber';
 import { Password } from 'primereact/password';
 import { Toast } from 'primereact/toast';
 
@@ -17,16 +17,16 @@ export default function Login() {
     const setUser = useContext(SetUserContext);
     const navigate = useNavigate();
     const toast = useRef(null);
-    
+
     const people = People;
-    const [userCode, setUserCode] = useState("");//For input in login form
+    const [userCode, setUserCode] = useState(null);//For input in login form
     const [password, setPassword] = useState("");//For input in login form
     const isLogged = token !== '';
 
     useEffect(() => {
-        if(isLogged) navigate("/landing");
-    },[isLogged, navigate]);
-    
+        if (isLogged) navigate("/landing");
+    }, [isLogged, navigate]);
+
     const login = () => {
         try {
             const foundPerson = people.find((person) => {
@@ -80,14 +80,18 @@ export default function Login() {
 
                             <form onSubmit={(e) => { e.preventDefault() }} className="flex flex-col block justify-center items-center p-5 w-full h-3/4 rounded-md shadow-md">
                                 <span className="p-float-label">
-                                    <InputText
+                                    <InputNumber
                                         id="usercode"
+                                        mode="decimal"
                                         value={userCode}
-                                        onChange={(e) => setUserCode(e.target.value)}
+                                        onChange={(e) => setUserCode(e.value)}
                                     />
                                     <label htmlFor="usercode">Código de usuario</label>
                                 </span>
+                                <br />
+                                <span className="p-float-label">
                                 <Password
+                                    id="password"
                                     autoComplete='current'
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -95,25 +99,27 @@ export default function Login() {
                                     toggleMask
                                     className="my-2"
                                 />
-                                <div className="flex flex-row justify-center w-full">
-                                    <button
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            login()
-                                        }}
-                                        className="lg:w-1/2 w-full flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300"
-                                    >
-                                        Iniciar sesión
-                                    </button>
-                                </div>
-                                <p className="bottom-0 text-white text-xs p-2 cursor-pointer" onClick={() => navigate("/recuperar")}>
-                                    ¿Olvidaste tu contraseña?, clic aquí.
-                                </p>
-                            </form>
-                        </div>
+                                <label htmlFor="password">Contraseña</label>
+                            </span>
+                            <div className="flex flex-row justify-center w-full">
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        login()
+                                    }}
+                                    className="lg:w-1/2 w-full flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300"
+                                >
+                                    Iniciar sesión
+                                </button>
+                            </div>
+                            <p className="bottom-0 text-white text-xs p-2 cursor-pointer" onClick={() => navigate("/recuperar")}>
+                                ¿Olvidaste tu contraseña?, clic aquí.
+                            </p>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        </div >
     );
 }
