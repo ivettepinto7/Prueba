@@ -9,14 +9,23 @@ const MenuState = (props) => {
     //State for edit user window
     const [emergentEditUserState, setEmergentEditUserState] = useState(false);
 
-    //State for delete MANY users window
+    //State for delete One users window
     const [emergentDeleteOneUserState, setEmergentDeleteOneUserState] = useState(false);
 
     //State for create new exam
     const [emergentNewExamState, setEmergentNewExamState] = useState(false);
+    //State for edit  exam
+    const [emergentEditExamState, setEmergentEditExamState] = useState(false);
+    //State for delete one exam window
+    const [emergentDeleteOneExamState, setEmergentDeleteOneExamState] = useState(false);
 
-    //User code storage
-    const [userCode, setUserCode] = useState("");
+    //State for create new vaccine
+    const [emergentNewVaccineState, setEmergentNewVaccineState] = useState(false);
+    //State for edit  vaccine
+    const [emergentEditVaccineState, setEmergentEditVaccineState] = useState(false);
+    //State for delete one vaccine window
+    const [emergentDeleteOneVaccineState, setEmergentDeleteOneVaccineState] = useState(false);
+
 
     //Function for emergent new user state
     function settingEmergentNewUserState() {
@@ -36,17 +45,43 @@ const MenuState = (props) => {
         else setEmergentDeleteOneUserState(true);
     }
 
-    //Function for emergent delete one user state
+    //Function for emergent new exam xistence state
     function settingEmergentNewExamState() {
         if (emergentNewExamState) setEmergentNewExamState(false);
         else setEmergentNewExamState(true);
     }
+
+    //Function for emergent edit exam xistence state
+    function settingEmergentEditExamState() {
+        if (emergentEditExamState) setEmergentEditExamState(false);
+        else setEmergentEditExamState(true);
+    }
+
+    //Function for emergent delete one exam state
+    function settingEmergentDeleteOneExamState() {
+        if (emergentDeleteOneExamState) setEmergentDeleteOneExamState(false);
+        else setEmergentDeleteOneExamState(true);
+    }
+
+    //Function for emergent new vaccine xistence state
+    function settingEmergentNewVaccineState() {
+        if (emergentNewVaccineState) setEmergentNewVaccineState(false);
+        else setEmergentNewVaccineState(true);
+    }
+
+    //Function for emergent edit vaccine xistence state
+    function settingEmergentEditVaccineState() {
+        if (emergentEditVaccineState) setEmergentEditVaccineState(false);
+        else setEmergentEditVaccineState(true);
+    }
+
+    //Function for emergent delete vaccine exam state
+    function settingEmergentDeleteOneVaccineState() {
+        if (emergentDeleteOneVaccineState) setEmergentDeleteOneVaccineState(false);
+        else setEmergentDeleteOneVaccineState(true);
+    }
     
 
-    //Function to save user code used in emergent edit user
-    function settingUserCode(code){
-        setUserCode(code);
-    }
 
     return (
         <MenuContext.Provider
@@ -55,13 +90,21 @@ const MenuState = (props) => {
                 emergentEditUserState,
                 emergentDeleteOneUserState,
                 emergentNewExamState,
-                userCode,
+                emergentEditExamState,
+                emergentDeleteOneExamState,
+                emergentNewVaccineState,
+                emergentEditVaccineState,
+                emergentDeleteOneVaccineState,
 
                 settingEmergentNewUserState,
                 settingEmergentEditUserState,
                 settingEmergentDeleteOneUserState,
                 settingEmergentNewExamState,
-                settingUserCode,
+                settingEmergentEditExamState,
+                settingEmergentDeleteOneExamState,
+                settingEmergentNewVaccineState,
+                settingEmergentEditVaccineState,
+                settingEmergentDeleteOneVaccineState,
             }}
         >
             { props.children }

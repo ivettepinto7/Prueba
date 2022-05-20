@@ -12,14 +12,12 @@ import { classNames } from 'primereact/utils';
 import { InputNumber } from 'primereact/inputnumber';
 
 import "../cssFiles/FormDemo.css";
-import { Genders } from '../../helpers/Genders';
 
+export default function CreateNewVaccine() {
 
-export default function CreateNewExam() {
-    const { emergentNewExamState } = useContext(MenuContext);
+    const { emergentNewVaccineState } = useContext(MenuContext);
     const menuContext = useContext(MenuContext);
 
-    const genders = Genders;
     const toast = useRef(null);
 
     var today = new Date();
@@ -28,10 +26,10 @@ export default function CreateNewExam() {
     const [formData, setFormData] = useState({});
 
     const defaultValues = {
-    name: '',
-    gender: '',
-    start_age: null,
-    frequency: null,
+        id_vaccine: '',
+        name: '',
+        required_doses: null,
+        frequency: null,
     }
 
     const { control, formState: { errors }, handleSubmit, reset } = useForm({ defaultValues });
@@ -51,15 +49,15 @@ export default function CreateNewExam() {
 
 
     useEffect(() => {
-        setDisplay(emergentNewExamState); 
-    }, [emergentNewExamState]);
+        setDisplay(emergentNewVaccineState);
+    }, [emergentNewVaccineState]);
 
     const dialogFuncMap = {
         display: setDisplay,
     };
 
     const onHide = (name) => {
-        menuContext.settingEmergentNewExamState();
+        menuContext.settingEmergentNewVaccineState();
         dialogFuncMap[`${name}`](false);
     };
 
@@ -84,16 +82,15 @@ export default function CreateNewExam() {
         <div className="flex flex-col">
             <Toast ref={toast} />
             <Dialog
-                breakpoints={{'960px': '75vw', '640px': '100vw'}}
-                header="Crear examen"
+                breakpoints={{ '960px': '75vw', '640px': '100vw' }}
+                header="Crear Vacuna"
                 visible={display}
                 style={{ width: '50vw' }}
                 footer={renderFooter('display')}
                 onHide={() => onHide('display')}
             >
-
                 <div className="form-demo w-full">
-                    <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top"  footer={dialogFooter}  showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                    <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
                         <div className="flex justify-content-center flex-column pt-6 px-3">
                             <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
                             <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
@@ -105,7 +102,7 @@ export default function CreateNewExam() {
                     <div className="m-1 w-full flex justify-content-center">
 
                         <div className="card w-full">
-                            
+
                             <form autoComplete='off' onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 p-fluid w-full">
 
 
@@ -120,31 +117,22 @@ export default function CreateNewExam() {
                                 </div>
 
 
-                                <div className="field">
-                                    <span className="p-float-label">
-                                        <Controller name="gender" control={control} rules={{ required: 'El género es requerido.' }} render={({ field }) => (
-                                            <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={genders} optionLabel='name' />
-                                        )} />
-                                        <label htmlFor="gender" className={classNames({ 'p-error': errors.gender })}>Género</label>
-                                    </span>
-                                    {getFormErrorMessage('gender')}
-                                </div>
 
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Controller name="start_age" control={control}  render={({ field, fieldState }) => (
-                                            <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)}  />
-                                        )} />
-                                        <label htmlFor="start_age" >Edad inicial</label>
-                                    </span>
-                                </div>
-
-                                <div className="field">
-                                    <span className="p-float-label">
-                                        <Controller name="frequency" control={control}  render={({ field, fieldState }) => (
+                                        <Controller name="required_doses" control={control} render={({ field, fieldState }) => (
                                             <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)} />
                                         )} />
-                                        <label htmlFor="frequency" >Frecuencia del test (en dias)</label>
+                                        <label htmlFor="required_doses" >Dosis requeridas</label>
+                                    </span>
+                                </div>
+
+                                <div className="field">
+                                    <span className="p-float-label">
+                                        <Controller name="frequency" control={control} render={({ field, fieldState }) => (
+                                            <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)} />
+                                        )} />
+                                        <label htmlFor="frequency" >Frecuencia de la vacuna (en dias)</label>
                                     </span>
                                 </div>
                             </form>
