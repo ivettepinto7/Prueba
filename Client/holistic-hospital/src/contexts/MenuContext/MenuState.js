@@ -19,6 +19,13 @@ const MenuState = (props) => {
     //State for delete one exam window
     const [emergentDeleteOneExamState, setEmergentDeleteOneExamState] = useState(false);
 
+    //State for create new vaccine
+    const [emergentNewVaccineState, setEmergentNewVaccineState] = useState(false);
+    //State for edit  vaccine
+    const [emergentEditVaccineState, setEmergentEditVaccineState] = useState(false);
+    //State for delete one vaccine window
+    const [emergentDeleteOneVaccineState, setEmergentDeleteOneVaccineState] = useState(false);
+
 
     //Function for emergent new user state
     function settingEmergentNewUserState() {
@@ -55,6 +62,24 @@ const MenuState = (props) => {
         if (emergentDeleteOneExamState) setEmergentDeleteOneExamState(false);
         else setEmergentDeleteOneExamState(true);
     }
+
+    //Function for emergent new vaccine xistence state
+    function settingEmergentNewVaccineState() {
+        if (emergentNewVaccineState) setEmergentNewVaccineState(false);
+        else setEmergentNewVaccineState(true);
+    }
+
+    //Function for emergent edit vaccine xistence state
+    function settingEmergentEditVaccineState() {
+        if (emergentEditVaccineState) setEmergentEditVaccineState(false);
+        else setEmergentEditVaccineState(true);
+    }
+
+    //Function for emergent delete vaccine exam state
+    function settingEmergentDeleteOneVaccineState() {
+        if (emergentDeleteOneVaccineState) setEmergentDeleteOneVaccineState(false);
+        else setEmergentDeleteOneVaccineState(true);
+    }
     
 
 
@@ -67,6 +92,9 @@ const MenuState = (props) => {
                 emergentNewExamState,
                 emergentEditExamState,
                 emergentDeleteOneExamState,
+                emergentNewVaccineState,
+                emergentEditVaccineState,
+                emergentDeleteOneVaccineState,
 
                 settingEmergentNewUserState,
                 settingEmergentEditUserState,
@@ -74,6 +102,9 @@ const MenuState = (props) => {
                 settingEmergentNewExamState,
                 settingEmergentEditExamState,
                 settingEmergentDeleteOneExamState,
+                settingEmergentNewVaccineState,
+                settingEmergentEditVaccineState,
+                settingEmergentDeleteOneVaccineState,
             }}
         >
             { props.children }
