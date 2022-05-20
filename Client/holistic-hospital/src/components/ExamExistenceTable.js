@@ -11,7 +11,8 @@ import './cssFiles/DataTable.css';
 
 import CreateNewUser from "./EmergentWindows/CreateNewUser";
 import EditUser from "./EmergentWindows/EditUser";
-import DeleteOneUser from "./EmergentWindows/DeleteOneUser";
+import EditExamExistence from "./EmergentWindows/EditExamExistence";
+import DeleteOneExam from "./EmergentWindows/DeleteExamExistence";
 
 import CreateNewExam from "./EmergentWindows/CreateNewExam";
 
@@ -21,6 +22,8 @@ import { Exams } from "../helpers/ExamExistenceList";
 export default function ExamExistenceTable() {
   const menuContext = useContext(MenuContext);
   const exams = Exams;
+  const [codevar,setcodevar] = useState("");
+  const [namevar,setnamevar] = useState("");
   
   const [globalFilter, setGlobalFilter] = useState(null);
   const dt = useRef(null);
@@ -38,6 +41,7 @@ export default function ExamExistenceTable() {
     )
   }
 
+
   const actionBodyTemplate = (rowData) => {
     return (
       <>
@@ -45,16 +49,17 @@ export default function ExamExistenceTable() {
           icon="pi pi-pencil" 
           className="p-button-rounded p-button-success mr-2"
           onClick={() => {
-            menuContext.settingUserCode(rowData.code);
-            menuContext.settingEmergentEditUserState();
+            setcodevar(rowData.code);
+            menuContext.settingEmergentEditExamState();
           }} 
          />
         <Button
            icon="pi pi-trash" 
            className="p-button-rounded p-button-warning"
            onClick={() => {
-            menuContext.settingUserCode(rowData.code);
-             menuContext.settingEmergentDeleteOneUserState()
+             setnamevar(rowData.name);
+             setcodevar(rowData.code);
+             menuContext.settingEmergentDeleteOneExamState();
            }} 
           />
       </>
@@ -94,12 +99,12 @@ export default function ExamExistenceTable() {
         {/*
           *User edit emergent window 
         */}
-        <EditUser />
+        <EditExamExistence code={codevar}/>
 
          {/*
           *User deletion emergent window 
         */}
-        <DeleteOneUser />
+        <DeleteOneExam code={codevar} name={namevar}/>
 
       <div className="card">
 

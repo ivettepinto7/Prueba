@@ -9,14 +9,16 @@ const MenuState = (props) => {
     //State for edit user window
     const [emergentEditUserState, setEmergentEditUserState] = useState(false);
 
-    //State for delete MANY users window
+    //State for delete One users window
     const [emergentDeleteOneUserState, setEmergentDeleteOneUserState] = useState(false);
 
     //State for create new exam
     const [emergentNewExamState, setEmergentNewExamState] = useState(false);
+    //State for edit  exam
+    const [emergentEditExamState, setEmergentEditExamState] = useState(false);
+    //State for delete one exam window
+    const [emergentDeleteOneExamState, setEmergentDeleteOneExamState] = useState(false);
 
-    //User code storage
-    const [userCode, setUserCode] = useState("");
 
     //Function for emergent new user state
     function settingEmergentNewUserState() {
@@ -36,17 +38,25 @@ const MenuState = (props) => {
         else setEmergentDeleteOneUserState(true);
     }
 
-    //Function for emergent delete one user state
+    //Function for emergent new exam xistence state
     function settingEmergentNewExamState() {
         if (emergentNewExamState) setEmergentNewExamState(false);
         else setEmergentNewExamState(true);
     }
+
+    //Function for emergent edit exam xistence state
+    function settingEmergentEditExamState() {
+        if (emergentEditExamState) setEmergentEditExamState(false);
+        else setEmergentEditExamState(true);
+    }
+
+    //Function for emergent delete one exam state
+    function settingEmergentDeleteOneExamState() {
+        if (emergentDeleteOneExamState) setEmergentDeleteOneExamState(false);
+        else setEmergentDeleteOneExamState(true);
+    }
     
 
-    //Function to save user code used in emergent edit user
-    function settingUserCode(code){
-        setUserCode(code);
-    }
 
     return (
         <MenuContext.Provider
@@ -55,13 +65,15 @@ const MenuState = (props) => {
                 emergentEditUserState,
                 emergentDeleteOneUserState,
                 emergentNewExamState,
-                userCode,
+                emergentEditExamState,
+                emergentDeleteOneExamState,
 
                 settingEmergentNewUserState,
                 settingEmergentEditUserState,
                 settingEmergentDeleteOneUserState,
                 settingEmergentNewExamState,
-                settingUserCode,
+                settingEmergentEditExamState,
+                settingEmergentDeleteOneExamState,
             }}
         >
             { props.children }
