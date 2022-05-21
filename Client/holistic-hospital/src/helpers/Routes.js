@@ -52,8 +52,12 @@ export function convertRoutes(navigator) {
         {
             label: 'Citas',
             roles: [UserRoles.USUARIO],
+            command: (event) => {
+                navigator('/landing/citas');
+            },
             path: '/landing/citas',
-            items: [
+            
+            /*items: [
                 {
                     label: 'Agendar cita médica',
                     rolesi: [UserRoles.USUARIO],
@@ -78,7 +82,7 @@ export function convertRoutes(navigator) {
                     },
                     pathi: '/landing/citas/cita-inmunizacion',
                 },
-            ]
+            ]*/
         },
         {
             label: 'Citas del dia',

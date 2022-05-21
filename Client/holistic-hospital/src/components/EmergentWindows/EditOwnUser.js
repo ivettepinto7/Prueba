@@ -113,8 +113,8 @@ export default function EditOwnUser() {
             >
                 <div className="form-demo w-full">
                     <Toast ref={toast} />
-                    <div className="m-1 w-full flex justify-content-center animate">
-                        <div className="flex items-center">
+                    <div className="m-1 w-full flex justify-center animate">
+                        <div className="flex justify-center items-center">
                             <div>
                                 <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: '5rem', color: 'var(--green-500)' }} />
                             </div>
