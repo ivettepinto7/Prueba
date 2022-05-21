@@ -33,6 +33,31 @@ const MenuState = (props) => {
     //State for delete one vaccine window
     const [emergentDeleteOneVaccineState, setEmergentDeleteOneVaccineState] = useState(false);
 
+    //State for create new area
+    const [emergentNewAreaState, setemergentNewAreaState] = useState(false);
+
+    //State for edit  area
+    const [emergentEditAreaState, setemergentEditAreaState] = useState(false);
+
+    //State for delete  area
+    const [emergentDeleteOneAreaState, setemergentDeleteOneAreaState] = useState(false);
+
+
+    function settingEmergentNewAreaState() {
+        if (emergentNewAreaState) setemergentNewAreaState(false);
+        else setemergentNewAreaState(true);
+    }
+
+    //Function for emergent edit user state
+    function settingEmergentEditAreaState() {
+        if (emergentEditAreaState) setemergentEditAreaState(false);
+        else setemergentEditAreaState(true);
+    }
+
+    function settingEmergentDeleteOneAreaState() {
+        if (emergentDeleteOneAreaState) setemergentDeleteOneAreaState(false);
+        else setemergentDeleteOneAreaState(true);
+    }
     //State for user record windows
     const [emergentShowRecordState, setEmergentShowRecordState] = useState(false);
 
@@ -127,9 +152,13 @@ const MenuState = (props) => {
                 emergentNewVaccineState,
                 emergentEditVaccineState,
                 emergentDeleteOneVaccineState,
+                emergentNewAreaState,
+                emergentEditAreaState,
+                emergentDeleteOneAreaState,
                 emergentShowRecordState,
                 emergentPrescriptionState,
 
+                
                 settingEmergentNewUserState,
                 settingEmergentEditUserState,
                 settingEmergentEditOwnUserState,
@@ -140,6 +169,9 @@ const MenuState = (props) => {
                 settingEmergentNewVaccineState,
                 settingEmergentEditVaccineState,
                 settingEmergentDeleteOneVaccineState,
+                settingEmergentNewAreaState,
+                settingEmergentEditAreaState,
+                settingEmergentDeleteOneAreaState,
                 settingEmergentShowRecordState,
                 settingEmergentPrescriptionState,
             }}
