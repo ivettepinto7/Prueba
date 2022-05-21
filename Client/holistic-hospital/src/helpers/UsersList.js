@@ -35,7 +35,7 @@ export const People = [
       name: 'Juana',
       last_name: 'Juarez',
       email: 'jjuarez@gmail.com',
-      password: 'pass5',
+      password: 'pass4',
       rol: 4,
       status: true,
     },
@@ -45,7 +45,7 @@ export const People = [
       name: 'Jose',
       last_name: 'Jose',
       email: 'josejose@gmail.com',
-      password: 'pass6',
+      password: 'pass5',
       rol: 2,
       status: false,
     }

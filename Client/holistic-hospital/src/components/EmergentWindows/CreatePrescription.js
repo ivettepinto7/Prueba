@@ -7,16 +7,15 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
 import { classNames } from 'primereact/utils';
+import { InputTextarea } from 'primereact/inputtextarea';
 import { InputNumber } from 'primereact/inputnumber';
 
 import "../cssFiles/FormDemo.css";
 
+export default function CreatePrescription() {
 
-export default function EditVaccineExistence({code}) {
-    
-    const { emergentEditVaccineState } = useContext(MenuContext);
+    const { emergentPrescriptionState } = useContext(MenuContext);
     const menuContext = useContext(MenuContext);
 
     const toast = useRef(null);
@@ -27,14 +26,13 @@ export default function EditVaccineExistence({code}) {
     const [formData, setFormData] = useState({});
 
     const defaultValues = {
-    name: '',
-    gender: '',
-    start_age: null,
-    frequency: null,
+        name: '',
+        daily_amount: null,
+        total_amount: null,
+        indication: '',
     }
 
     const { control, formState: { errors }, handleSubmit, reset } = useForm({ defaultValues });
-
     const onSubmit = (data) => {
         setFormData(data);
         setShowMessage(true);
@@ -50,15 +48,15 @@ export default function EditVaccineExistence({code}) {
 
 
     useEffect(() => {
-        setDisplay(emergentEditVaccineState); 
-    }, [emergentEditVaccineState]);
+        setDisplay(emergentPrescriptionState);
+    }, [emergentPrescriptionState]);
 
     const dialogFuncMap = {
         display: setDisplay,
     };
 
     const onHide = (name) => {
-        menuContext.settingEmergentEditVaccineState();
+        menuContext.settingEmergentPrescriptionState();
         dialogFuncMap[`${name}`](false);
     };
 
@@ -84,7 +82,7 @@ export default function EditVaccineExistence({code}) {
             <Toast ref={toast} />
             <Dialog
                 breakpoints={{ '960px': '75vw', '640px': '100vw' }}
-                header="Editar Vacuna"
+                header="Crear receta"
                 visible={display}
                 style={{ width: '50vw' }}
                 footer={renderFooter('display')}
@@ -95,7 +93,7 @@ export default function EditVaccineExistence({code}) {
                         <div className="flex justify-content-center flex-column pt-6 px-3">
                             <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
                             <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
-                                <b>{code}</b> modificado con éxito.
+                                <b>{formData.name}</b> registrado con éxito.
                             </p>
                         </div>
                     </Dialog>
@@ -109,31 +107,42 @@ export default function EditVaccineExistence({code}) {
 
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Controller name="name" control={control}  render={({ field, fieldState }) => (
+                                        <Controller name="name" control={control} rules={{ required: 'El nombre es requerido' }} render={({ field, fieldState }) => (
                                             <InputText id={field.name} {...field} autoFocus className={classNames({ 'p-invalid': fieldState.invalid })} />
                                         )} />
                                         <label htmlFor="name" className={classNames({ 'p-error': errors.name })}>Nombre*</label>
                                     </span>
+                                    {getFormErrorMessage('name')}
                                 </div>
-
 
 
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Controller name="required_doses" control={control} render={({ field, fieldState }) => (
-                                            <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)} />
+                                        <Controller name="daily_amount" control={control} rules={{ required: 'La cantidad diaria es requerido' }} render={({ field, fieldState }) => (
+                                            <InputNumber id={field.name} {...field} mode="decimal" className={classNames({ 'p-invalid': fieldState.invalid })} onChange={(e) => field.onChange(e.value)} />
                                         )} />
-                                        <label htmlFor="required_doses" >Dosis requeridas</label>
+                                        <label htmlFor="daily_amount" className={classNames({ 'p-error': errors.name })}>Cantidad diaria*</label>
                                     </span>
+                                    {getFormErrorMessage('daily_amount')}
                                 </div>
 
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Controller name="frequency" control={control} render={({ field, fieldState }) => (
-                                            <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)} />
+                                        <Controller name="total_amount" control={control}  rules={{ required: 'La cantidad total es requerido' }} render={({ field, fieldState }) => (
+                                            <InputNumber id={field.name} {...field} mode="decimal" className={classNames({ 'p-invalid': fieldState.invalid })} onChange={(e) => field.onChange(e.value)} />
                                         )} />
-                                        <label htmlFor="frequency" >Frecuencia de la vacuna (en dias)</label>
+                                        <label htmlFor="total_amount" className={classNames({ 'p-error': errors.name })}>Cantidad*</label>
                                     </span>
+                                    {getFormErrorMessage('total_amount')}
+                                </div>
+                                <div className="field">
+                                    <span className="p-float-label">
+                                        <Controller name="indication" control={control} rules={{ required: 'La indicación es requerida' }} render={({ field, fieldState }) => (
+                                            <InputTextarea id={field.name} {...field} autoResize className={classNames({ 'p-invalid': fieldState.invalid })} onChange={(e) => field.onChange(e.target.value)} rows={1} cols={1} />
+                                        )} />
+                                        <label htmlFor="indication" className={classNames({ 'p-error': errors.name })}>Indicación*</label>
+                                    </span>
+                                    {getFormErrorMessage('indication')}
                                 </div>
                             </form>
                         </div>

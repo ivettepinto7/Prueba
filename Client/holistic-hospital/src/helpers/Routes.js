@@ -91,6 +91,16 @@ export function convertRoutes(navigator) {
                 navigator('/landing/citas-dia')
             },
             path: '/landing/citas-dia',
+            
+        },
+        {
+            label: 'Consulta',
+            roles: [UserRoles.MEDICO, UserRoles.SECRETARIA],
+            command: (event) => {
+                navigator('/landing/citas-dia/consulta')
+            },
+            path: '/landing/citas-dia/consulta',
+            
         },
         {
             label: 'Recordatorios',

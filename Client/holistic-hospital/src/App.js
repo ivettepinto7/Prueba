@@ -19,6 +19,8 @@ const Inmunizations = lazy(() => import("./pages/Inmunizations"));
 const PrevAppointments = lazy(() => import("./pages/PrevAppoin"));
 const ExamsExistence = lazy(() => import("./pages/ExamsExistence"));
 const VaccinesExistence = lazy(() => import("./pages/VaccinesExistence"));
+const CitasDia = lazy(() => import("./pages/CitasDia"));
+const Consulta = lazy(() => import("./pages/Consulta"));
 const ScheduleAppointment = lazy(() => import("./pages/ScheduleAppointment"))
 const AreasExistence = lazy(() => import("./pages/AreaExistence"))
 
@@ -40,6 +42,9 @@ function App() {
                 <Route exact path="vacunas" element={<VaccinesExistence />} />
                 <Route exact path="recordatorios" element={<Recordatorios />} />
                 <Route exact path="areas" element={<AreasExistence />} />
+                <Route exact path="citas-dia" element={<CitasDia/>}/>
+                <Route exact path="/landing/citas-dia/consulta" element={<Consulta />} />
+                
 
                 <Route exact path="expediente">
                   <Route index exact path="inmunizaciones" element={<Inmunizations />} />
