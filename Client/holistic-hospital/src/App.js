@@ -13,14 +13,15 @@ const RecoverPassword = lazy(() => import("./pages/RecoverPassword"));
 const RestorePassword = lazy(() => import("./pages/RestorePassword"));
 const Landing = lazy(() => import("./pages/Landing"));
 const Users = lazy(() => import("./pages/Users"));
-const Inmunizations = lazy(() => import("./pages/Inmunizations"));
-const ExamsExistence = lazy(() => import("./pages/ExamsExistence"));
 const Tests = lazy(() => import("./pages/Tests"));
-const PrevAppointments = lazy(() => import("./pages/PrevAppoin"));
-const VaccinesExistence = lazy(() => import("./pages/VaccinesExistence"));
 const Recordatorios = lazy(() => import("./pages/Reminders"));
+const Inmunizations = lazy(() => import("./pages/Inmunizations"));
+const PrevAppointments = lazy(() => import("./pages/PrevAppoin"));
+const ExamsExistence = lazy(() => import("./pages/ExamsExistence"));
+const VaccinesExistence = lazy(() => import("./pages/VaccinesExistence"));
 const CitasDia = lazy(() => import("./pages/CitasDia"));
 const Consulta = lazy(() => import("./pages/Consulta"));
+const ScheduleAppointment = lazy(() => import("./pages/ScheduleAppointment"))
 
 
 function App() {
@@ -48,7 +49,8 @@ function App() {
                   <Route exact path="examenes-realizados" element={<Tests />} />
                   <Route exact path="citas-previas" element={<PrevAppointments/>} />
                 </Route>
-                {/*TODO app routes*/}
+
+                <Route exact path="citas" element={<ScheduleAppointment />} />
               </Route>
               <Route path="*" element={<h1>Page not found: 404!</h1>} />
             </Routes>
