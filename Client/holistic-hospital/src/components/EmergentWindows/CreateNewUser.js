@@ -14,6 +14,7 @@ import { Divider } from 'primereact/divider';
 import { classNames } from 'primereact/utils';
 
 import "../cssFiles/FormDemo.css";
+import { GendersList } from '../../helpers/GendersList';
 import { Roles } from '../../helpers/Roles';
 import { AreasList } from '../../helpers/AreasList';
 
@@ -21,6 +22,7 @@ export default function CreateNewUser() {
     const { emergentNewUserState } = useContext(MenuContext);
     const menuContext = useContext(MenuContext);
 
+    const gendersList =  GendersList;
     const roles = Roles;
     const areasList = AreasList;
     const toast = useRef(null);
@@ -33,6 +35,7 @@ export default function CreateNewUser() {
     const defaultValues = {
         name: '',
         lastname: '',
+        gender: null,
         email: '',
         password: '',
         role: null,
@@ -150,6 +153,16 @@ export default function CreateNewUser() {
                                 </div>
 
                                 <div className="field">
+                                    <span className="p-float-label">
+                                        <Controller name="gender" control={control} rules={{ required: 'El género es requerido.' }} render={({ field }) => (
+                                            <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={gendersList} optionLabel='name' />
+                                        )} />
+                                        <label htmlFor="gender" className={classNames({ 'p-error': errors.role })}>Género*</label>
+                                    </span>
+                                    {getFormErrorMessage('gender')}
+                                </div>
+
+                                <div className="field">
                                     <span className="p-float-label p-input-icon-right">
                                         <i className="pi pi-envelope" />
                                         <Controller name="email" control={control}
@@ -183,13 +196,13 @@ export default function CreateNewUser() {
                                 </div>
 
                                 {
-                                        selectedRole && selectedRole['code'] === 4 ?
+                                        selectedRole && (selectedRole['code'] === 4 || selectedRole['code'] === 3) ?
                                         <div className="field">
                                             <span className="p-float-label">
                                                 <Controller name="area" control={control} rules={{ required: 'El área es requerida.' }} render={({ field }) => (
                                                     <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={areasList} optionLabel='name' />
                                                 )} />
-                                                <label htmlFor="area" className={classNames({ 'p-error': errors.role })}>Área</label>
+                                                <label htmlFor="area" className={classNames({ 'p-error': errors.role })}>Área*</label>
                                             </span>
                                             {getFormErrorMessage('area')}
                                         </div> 

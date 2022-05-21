@@ -42,15 +42,19 @@ export default function UsersTable() {
     return (
       <>
         <Button 
-          icon="pi pi-pencil" 
-          className="p-button-rounded p-button-success mr-2"
+          icon="pi pi-pencil"
+          tooltip="Editar"
+          tooltipOptions={{position: 'bottom'}} 
+          className="p-button-rounded p-button-success mr-2 p-tooltip-bottom"
           onClick={() => {
             userContext.settingUserCode(rowData.code);
             menuContext.settingEmergentEditUserState();
           }} 
          />
         <Button
-           icon="pi pi-trash" 
+           icon="pi pi-trash"
+           tooltipOptions={{position: 'bottom'}}
+           tooltip="Eliminar" 
            className="p-button-rounded p-button-warning"
            onClick={() => {
             userContext.settingUserCode(rowData.code);
