@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 //Components imports
 import { DataTable } from "primereact/datatable";

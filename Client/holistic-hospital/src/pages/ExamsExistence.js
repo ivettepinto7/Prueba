@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import ExamExistenceTable from "../components/ExamExistenceTable";
 export default function ExamExistence() {
   return (

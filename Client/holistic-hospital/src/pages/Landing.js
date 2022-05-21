@@ -4,8 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext/UserContext";
 
 //Components imports
-import { Navigate } from "react-router-dom";
-
 import SideBar from "../components/SideBar";
 
 //Helpers imports

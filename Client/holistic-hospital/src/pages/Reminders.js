@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import RemindersTable from "../components/RemindersTable";
 export default function Reminders() {
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 //Components imports
 import { DataTable } from "primereact/datatable";
@@ -9,7 +9,7 @@ import './cssFiles/DataTable.css';
 //Helpers imports
 import { UserPrescriptionsList } from "../helpers/UserPrescriptionsList";
 
-export default function InmunizationsTable() {
+export default function UserPrescriptionTable() {
   const prescriptions = UserPrescriptionsList;
   const [globalFilter, setGlobalFilter] = useState(null);
   const dt = useRef(null);

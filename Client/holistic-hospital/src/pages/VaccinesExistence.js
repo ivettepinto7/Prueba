@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import VaccineExistenceTable from "../components/VaccineExistenceTable";
 export default function VaccinesExistence() {
   return (

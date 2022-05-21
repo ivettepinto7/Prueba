@@ -8,7 +8,7 @@ import './cssFiles/DataTable.css';
 
 import { Tests } from "../helpers/TestList";
 
-export default function TestTable() {
+export default function TestsTable() {
     const tests = Tests;
     
     const [globalFilter, setGlobalFilter] = useState(null);

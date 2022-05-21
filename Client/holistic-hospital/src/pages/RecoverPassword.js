@@ -22,7 +22,7 @@ export default function RecoverPassword() {
         code: ''
     }
 
-    const { control, formState: { errors }, handleSubmit, reset, watch } = useForm({ defaultValues });
+    const { control, formState: { errors }, handleSubmit, reset } = useForm({ defaultValues });
 
     const onSubmit = (data) => {
         setFormData(data);

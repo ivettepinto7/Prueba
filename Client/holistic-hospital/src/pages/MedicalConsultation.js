@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuContext from "../contexts/MenuContext/MenuContext";
 //Components imports
@@ -12,7 +12,7 @@ import CreatePrescription from "../components/EmergentWindows/CreatePrescription
 
 
 
-export default function Consulta() {
+export default function MedicalConsultation() {
   const navigate = useNavigate();
   const menuContext = useContext(MenuContext);
   const patient = PatientInConsult;

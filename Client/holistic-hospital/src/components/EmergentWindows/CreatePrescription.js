@@ -20,7 +20,6 @@ export default function CreatePrescription() {
 
     const toast = useRef(null);
 
-    var today = new Date();
     const [display, setDisplay] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});

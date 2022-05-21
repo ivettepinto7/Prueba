@@ -19,8 +19,8 @@ const Inmunizations = lazy(() => import("./pages/Inmunizations"));
 const PrevAppointments = lazy(() => import("./pages/PrevAppoin"));
 const ExamsExistence = lazy(() => import("./pages/ExamsExistence"));
 const VaccinesExistence = lazy(() => import("./pages/VaccinesExistence"));
-const CitasDia = lazy(() => import("./pages/CitasDia"));
-const Consulta = lazy(() => import("./pages/Consulta"));
+const AppointsDay = lazy(() => import("./pages/AppointsDay"));
+const MedicalConsultation = lazy(() => import("./pages/MedicalConsultation"));
 const ScheduleAppointment = lazy(() => import("./pages/ScheduleAppointment"))
 const UserPrescriptions = lazy(() => import("./pages/UserPrescriptions"))
 const AreasExistence = lazy(() => import("./pages/AreaExistence"))
@@ -43,9 +43,9 @@ function App() {
                 <Route exact path="vacunas" element={<VaccinesExistence />} />
                 <Route exact path="recordatorios" element={<Recordatorios />} />
                 <Route exact path="areas" element={<AreasExistence />} />
-                <Route exact path="citas-dia" element={<CitasDia/>}/>
+                <Route exact path="citas-dia" element={<AppointsDay />}/>
                 
-                <Route exact path="/landing/citas-dia/consulta" element={<Consulta />} />
+                <Route exact path="/landing/citas-dia/consulta" element={<MedicalConsultation />} />
                 
 
                 <Route exact path="expediente">

@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 
 import {PrevAppointmentsTable } from "../components/PrevAppointmentsTable";
 
 
-export default function Users() {
+export default function PrevAppoin() {
     return (
       <div className="datatable-crud-demo">
         <PrevAppointmentsTable />

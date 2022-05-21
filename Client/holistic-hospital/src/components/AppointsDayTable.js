@@ -1,6 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
 import MenuContext from "../contexts/MenuContext/MenuContext";
-import { UserContext } from "../contexts/UserContext/UserContext";
 
 //Components imports
 import { DataTable } from "primereact/datatable";
@@ -15,7 +14,7 @@ import { CitasDiaList } from "../helpers/CitasDiaList";
 import { useNavigate } from "react-router-dom";
 
 
-export default function CitasDiaTable() {
+export default function AppointsDayTable() {
   const menuContext = useContext(MenuContext);
   const people = CitasDiaList;
   const navigate = useNavigate();

@@ -14,14 +14,13 @@ import { InputNumber } from 'primereact/inputnumber';
 import "../cssFiles/FormDemo.css";
 import { Genders } from '../../helpers/Genders';
 
-export default function EditExamExistence({code}) {
+export default function EditAreaExistence({code}) {
     const { emergentEditAreaState } = useContext(MenuContext);
     const menuContext = useContext(MenuContext);
 
     const genders = Genders;
     const toast = useRef(null);
 
-    var today = new Date();
     const [display, setDisplay] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});

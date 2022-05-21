@@ -7,7 +7,6 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
 import { classNames } from 'primereact/utils';
 import { InputNumber } from 'primereact/inputnumber';
 
@@ -21,7 +20,6 @@ export default function EditVaccineExistence({code}) {
 
     const toast = useRef(null);
 
-    var today = new Date();
     const [display, setDisplay] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});
@@ -40,10 +38,6 @@ export default function EditVaccineExistence({code}) {
         setShowMessage(true);
 
         reset();
-    };
-
-    const getFormErrorMessage = (name) => {
-        return errors[name] && <small className="p-error">{errors[name].message}</small>
     };
 
     const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessage(false)} /></div>;

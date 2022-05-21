@@ -18,7 +18,7 @@ import EditVaccineExistence from "./EmergentWindows/EditVaccineExistence";
 //Helpers imports
 import { VaccinesExistenceList } from "../helpers/VaccinesExistenceList";
 
-export default function ExamExistenceTable() {
+export default function VaccineExistenceTable() {
   const menuContext = useContext(MenuContext);
   const vaccines = VaccinesExistenceList;
 
@@ -80,19 +80,6 @@ export default function ExamExistenceTable() {
       </span>
     </div>
   );
-
-  const genderBodyTemplate = (rowData) => {
-    if (rowData.gender === 'f')
-      return 'Femenino';
-    else if(rowData.gender ==='m')
-      return 'Masculino';
-    else
-      return 'Indiferente';
-  }
-
-  const nameBodyTemplate = (rowData) => {
-    return rowData.name + ' ' + rowData.last_name;
-  }
 
   return (
     <div className="w-full overflow-hidden">

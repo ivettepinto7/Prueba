@@ -9,8 +9,6 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import './cssFiles/DataTable.css';
 
-import CreateNewUser from "./EmergentWindows/CreateNewUser";
-import EditUser from "./EmergentWindows/EditUser";
 import EditExamExistence from "./EmergentWindows/EditExamExistence";
 import DeleteOneExam from "./EmergentWindows/DeleteExamExistence";
 
@@ -87,10 +85,6 @@ export default function ExamExistenceTable() {
       return 'Masculino';
     else
       return 'Indiferente';
-  }
-
-  const nameBodyTemplate = (rowData) => {
-    return rowData.name + ' ' + rowData.last_name;
   }
 
   return (

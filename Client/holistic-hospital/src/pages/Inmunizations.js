@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import InmunizationsTable from "../components/InmunizationsTable";
 export default function Inmunizations() {
   return (

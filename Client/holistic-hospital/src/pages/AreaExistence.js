@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import AreaExistenceTable from "../components/AreaExistenceTable";
-export default function VaccinesExistence() {
+export default function AreaExistence() {
   return (
     <div className="datatable-crud-demo">
       <AreaExistenceTable />

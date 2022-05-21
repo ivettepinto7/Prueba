@@ -8,7 +8,7 @@ import { Button } from 'primereact/button';
 
 import "../cssFiles/FormDemo.css";
 
-export default function DeleteExamExistence({code, name}) {
+export default function DeleteAreaExistence({code, name}) {
     const { emergentDeleteOneAreaState } = useContext(MenuContext);
     const menuContext = useContext(MenuContext);
 

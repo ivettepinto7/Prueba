@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 
 import TestTable from "../components/TestsTable";
 
 
-export default function Users() {
+export default function Tests() {
     return (
       <div className="datatable-crud-demo">
         <TestTable />
