@@ -12,25 +12,27 @@ import { classNames } from 'primereact/utils';
 import { InputNumber } from 'primereact/inputnumber';
 
 import "../cssFiles/FormDemo.css";
+import { Genders } from '../../helpers/Genders';
 
 
-export default function EditVaccineExistence({code}) {
-    
-    const { emergentEditVaccineState } = useContext(MenuContext);
+export default function CreateNewArea() {
+
+    const { emergentNewAreaState } = useContext(MenuContext);
     const menuContext = useContext(MenuContext);
 
+    const genders = Genders;
     const toast = useRef(null);
 
-    var today = new Date();
     const [display, setDisplay] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});
 
     const defaultValues = {
-    name: '',
-    gender: '',
-    start_age: null,
-    frequency: null,
+        id_area: '',
+        name: '',
+        gender: null,
+        start_age: null,
+        frequency: null,
     }
 
     const { control, formState: { errors }, handleSubmit, reset } = useForm({ defaultValues });
@@ -46,19 +48,19 @@ export default function EditVaccineExistence({code}) {
         return errors[name] && <small className="p-error">{errors[name].message}</small>
     };
 
-    const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessage(false)} /></div>;
-
+    const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"
+    autoFocus onClick={() => setShowMessage(false)} /></div>;
 
     useEffect(() => {
-        setDisplay(emergentEditVaccineState); 
-    }, [emergentEditVaccineState]);
+        setDisplay(emergentNewAreaState);
+    }, [emergentNewAreaState]);
 
     const dialogFuncMap = {
         display: setDisplay,
     };
 
     const onHide = (name) => {
-        menuContext.settingEmergentEditVaccineState();
+        menuContext.settingEmergentNewAreaState();
         dialogFuncMap[`${name}`](false);
     };
 
@@ -79,12 +81,13 @@ export default function EditVaccineExistence({code}) {
             </div>
         );
     };
+
     return (
         <div className="flex flex-col">
             <Toast ref={toast} />
             <Dialog
                 breakpoints={{ '960px': '75vw', '640px': '100vw' }}
-                header="Editar Vacuna"
+                header="Crear Area"
                 visible={display}
                 style={{ width: '50vw' }}
                 footer={renderFooter('display')}
@@ -95,7 +98,7 @@ export default function EditVaccineExistence({code}) {
                         <div className="flex justify-content-center flex-column pt-6 px-3">
                             <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
                             <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
-                                <b>{code}</b> modificado con éxito.
+                                <b>{formData.name}</b> Agregado con éxito.
                             </p>
                         </div>
                     </Dialog>
@@ -109,30 +112,42 @@ export default function EditVaccineExistence({code}) {
 
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Controller name="name" control={control}  render={({ field, fieldState }) => (
+                                        <Controller name="name" control={control} rules={{ required: 'El nombre es requerido' }} render={({ field, fieldState }) => (
                                             <InputText id={field.name} {...field} autoFocus className={classNames({ 'p-invalid': fieldState.invalid })} />
                                         )} />
                                         <label htmlFor="name" className={classNames({ 'p-error': errors.name })}>Nombre*</label>
                                     </span>
+                                    {getFormErrorMessage('name')}
                                 </div>
-
 
 
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Controller name="required_doses" control={control} render={({ field, fieldState }) => (
-                                            <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)} />
+                                        <Controller name="gender" control={control} rules={{ required: 'El género es requerido.' }} render={({ field }) => (
+                                            <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={genders} optionLabel='name' />
                                         )} />
-                                        <label htmlFor="required_doses" >Dosis requeridas</label>
+                                        <label htmlFor="gender" className={classNames({ 'p-error': errors.gender })}>Género</label>
+                                    </span>
+                                    {getFormErrorMessage('gender')}
+                                </div>
+
+                                
+                                <div className="field">
+                                    <span className="p-float-label">
+                                        <Controller name="start_age" control={control}  render={({ field, fieldState }) => (
+                                            <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)}  />
+                                        )} />
+                                        <label htmlFor="start_age" >Edad inicial</label>
                                     </span>
                                 </div>
+
 
                                 <div className="field">
                                     <span className="p-float-label">
                                         <Controller name="frequency" control={control} render={({ field, fieldState }) => (
                                             <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)} />
                                         )} />
-                                        <label htmlFor="frequency" >Frecuencia de la vacuna (en dias)</label>
+                                        <label htmlFor="frequency" >Frecuencia de visita al area (en dias)</label>
                                     </span>
                                 </div>
                             </form>

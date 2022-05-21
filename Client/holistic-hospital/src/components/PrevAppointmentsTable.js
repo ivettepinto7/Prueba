@@ -6,10 +6,11 @@ import { Column } from 'primereact/column';
 import { InputText } from "primereact/inputtext";
 import './cssFiles/DataTable.css';
 
-import { PrevAppointments } from "../helpers/PrevAppointmentList";
+import { PrevAppointmentsList } from "../helpers/PrevAppointmentList";
 
-export default function TestTable() {
-    const prevAppointments = PrevAppointments;
+
+export function PrevAppointmentsTable() {
+    const prevAppointmentsList = PrevAppointmentsList;
     
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
@@ -27,7 +28,7 @@ export default function TestTable() {
     return (
       <div className="w-full overflow-hidden">
         <div className="card">
-          <DataTable showGridlines lazy={true} ref={dt} value={prevAppointments}
+          <DataTable showGridlines lazy={true} ref={dt} value={prevAppointmentsList}
           dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
