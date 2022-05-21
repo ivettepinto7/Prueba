@@ -22,6 +22,7 @@ const VaccinesExistence = lazy(() => import("./pages/VaccinesExistence"));
 const CitasDia = lazy(() => import("./pages/CitasDia"));
 const Consulta = lazy(() => import("./pages/Consulta"));
 const ScheduleAppointment = lazy(() => import("./pages/ScheduleAppointment"))
+const UserPrescriptions = lazy(() => import("./pages/UserPrescriptions"))
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
                 <Route exact path="vacunas" element={<VaccinesExistence />} />
                 <Route exact path="recordatorios" element={<Recordatorios />} />
                 <Route exact path="citas-dia" element={<CitasDia/>}/>
+                
                 <Route exact path="/landing/citas-dia/consulta" element={<Consulta />} />
                 
 
@@ -48,6 +50,7 @@ function App() {
                   <Route index exact path="inmunizaciones" element={<Inmunizations />} />
                   <Route exact path="examenes-realizados" element={<Tests />} />
                   <Route exact path="citas-previas" element={<PrevAppointments/>} />
+                  <Route exact path="recetas-medicas" element={<UserPrescriptions/>}/>
                 </Route>
 
                 <Route exact path="citas" element={<ScheduleAppointment />} />
