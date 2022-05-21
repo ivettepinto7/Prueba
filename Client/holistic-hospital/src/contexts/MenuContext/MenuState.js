@@ -33,6 +33,12 @@ const MenuState = (props) => {
     //State for delete one vaccine window
     const [emergentDeleteOneVaccineState, setEmergentDeleteOneVaccineState] = useState(false);
 
+    //State for user record windows
+    const [emergentShowRecordState, setEmergentShowRecordState] = useState(false);
+
+    //State for prescription windows
+    const [emergentPrescriptionState, setPrescriptionState] = useState(false);
+
 
     //Function for emergent new user state
     function settingEmergentNewUserState() {
@@ -93,6 +99,18 @@ const MenuState = (props) => {
         if (emergentDeleteOneVaccineState) setEmergentDeleteOneVaccineState(false);
         else setEmergentDeleteOneVaccineState(true);
     }
+
+    //Function for emergent show user record state
+    function settingEmergentShowRecordState() {
+        if (emergentShowRecordState) setEmergentShowRecordState(false);
+        else setEmergentShowRecordState(true);
+    }
+
+     //Function for emergent prescription state
+     function settingEmergentPrescriptionState() {
+        if (emergentPrescriptionState) setPrescriptionState(false);
+        else setPrescriptionState(true);
+    }
     
 
 
@@ -109,6 +127,8 @@ const MenuState = (props) => {
                 emergentNewVaccineState,
                 emergentEditVaccineState,
                 emergentDeleteOneVaccineState,
+                emergentShowRecordState,
+                emergentPrescriptionState,
 
                 settingEmergentNewUserState,
                 settingEmergentEditUserState,
@@ -120,6 +140,8 @@ const MenuState = (props) => {
                 settingEmergentNewVaccineState,
                 settingEmergentEditVaccineState,
                 settingEmergentDeleteOneVaccineState,
+                settingEmergentShowRecordState,
+                settingEmergentPrescriptionState,
             }}
         >
             { props.children }

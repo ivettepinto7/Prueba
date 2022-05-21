@@ -192,7 +192,7 @@ export default function CreateNewUser() {
                                                 <label htmlFor="area" className={classNames({ 'p-error': errors.role })}>Área</label>
                                             </span>
                                             {getFormErrorMessage('area')}
-                                        </div>
+                                        </div> 
                                         :
                                         ""
                                     }

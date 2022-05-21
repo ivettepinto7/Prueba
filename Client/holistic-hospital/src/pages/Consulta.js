@@ -1,119 +1,63 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
-import MenuContext from '../contexts/MenuContext/MenuContext';
-import { useForm, Controller } from 'react-hook-form';
-
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import MenuContext from "../contexts/MenuContext/MenuContext";
 //Components imports
+import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
-import { Dialog } from 'primereact/dialog';
-import { Toast } from 'primereact/toast';
-import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
-import { classNames } from 'primereact/utils';
-import { InputNumber } from 'primereact/inputnumber';
 
 import "../components/cssFiles/FormDemo.css";
 import { PatientInConsult } from "../helpers/PatientInConsult";
+import UserRecordTable from "../components/EmergentWindows/UserRecordTable";
+import CreatePrescription from "../components/EmergentWindows/CreatePrescription";
+
+
 
 export default function Consulta() {
-
-/*
-    const renderFooter = (name) => {
-        return (
-            <div>
-                <Button
-                    label="Cancelar"
-                    icon="pi pi-times"
-                    onClick={() => onHide(name)}
-                    className="p-button-text"
-                />
-                <Button
-                    label="Crear"
-                    type='submit'
-                    onClick={handleSubmit(onSubmit)}
-                    icon="pi pi-check" />
-            </div>
-        );
-    };
-    */
+  const navigate = useNavigate();
+  const menuContext = useContext(MenuContext);
+  const patient = PatientInConsult;
+  const [value, setValue] = useState('');
+  if (patient.at(0).gender === 'm')
+    patient.at(0).gender = 'Masculino'
+  else if (patient.at(0).gender === 'f')
+    patient.at(0).gender = 'Femenino'
 
 
-     /*
-            <Toast ref={toast} />
-            <Dialog
-                breakpoints={{'960px': '75vw', '640px': '100vw'}}
-                header="Crear examen"
-                visible={display}
-                style={{ width: '50vw' }}
-                //footer={renderFooter('display')}
-                //onHide={() => onHide('display')}
-            >
+  return (
 
-                <div className="form-demo w-full">
-                    <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top"  footer={dialogFooter}  showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
-                        <div className="flex justify-content-center flex-column pt-6 px-3">
-                            <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
-                            <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
-                                <b>{formData.name}</b> registrado con éxito.
-                            </p>
-                        </div>
-                    </Dialog>
+    <div className="flex flex-col  items-center justify-center h-screen ">
+      {/*
+        *User creation emergent window 
+      */}
 
-                    <div className="m-1 w-full flex justify-content-center">
-
-                        <div className="card w-full">
-                            
-                            <form autoComplete='off' onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 p-fluid w-full">
-
-
-                                <div className="field">
-                                    <span className="p-float-label">
-                                        <Controller name="name" control={control} rules={{ required: 'El nombre es requerido' }} render={({ field, fieldState }) => (
-                                            <InputText id={field.name} {...field} autoFocus className={classNames({ 'p-invalid': fieldState.invalid })} />
-                                        )} />
-                                        <label htmlFor="name" className={classNames({ 'p-error': errors.name })}>Nombre*</label>
-                                    </span>
-                                    {getFormErrorMessage('name')}
-                                </div>
-
-
-                                <div className="field">
-                                    <span className="p-float-label">
-                                        <Controller name="gender" control={control} rules={{ required: 'El género es requerido.' }} render={({ field }) => (
-                                            <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} optionLabel='name' />
-                                        )} />
-                                        <label htmlFor="gender" className={classNames({ 'p-error': errors.gender })}>Género</label>
-                                    </span>
-                                    {getFormErrorMessage('gender')}
-                                </div>
-
-                                <div className="field">
-                                    <span className="p-float-label">
-                                        <Controller name="start_age" control={control}  render={({ field, fieldState }) => (
-                                            <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)}  />
-                                        )} />
-                                        <label htmlFor="start_age" >Edad inicial</label>
-                                    </span>
-                                </div>
-
-                                <div className="field">
-                                    <span className="p-float-label">
-                                        <Controller name="frequency" control={control}  render={({ field, fieldState }) => (
-                                            <InputNumber id={field.name} {...field} mode="decimal" onChange={(e) => field.onChange(e.value)} />
-                                        )} />
-                                        <label htmlFor="frequency" >Frecuencia del test (en dias)</label>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-            </Dialog>
-            */
-    return (
-        <div className="flex flex-col">
-           <h1>Consulta</h1>
-           
+      <UserRecordTable />
+      <CreatePrescription />
+      <h1 className="text-3xl">Consulta</h1>
+      <h2 className='lg:text-xl'><b>Nombre: </b>{patient.at(0).name + ' ' + patient.at(0).last_name}</h2>
+      <h2 className='lg:text-xl'><b>Edad: </b>{patient.at(0).age}</h2>
+      <h2 className='lg:text-xl'><b>Género: </b>{patient.at(0).gender}</h2>
+      <h2 className='lg:text-xl'><b>Discutido en cita:</b></h2>
+      <InputTextarea onChange={(e) => setValue(e.target.value)} rows={5} cols={50} />
+      <br />
+      <div className="lg:flex lg:flex-row lg:justify-evenly xsm:flex-col xsm:justify-center lg:w-1/2">
+        <div className="xsm:m-1 lg:justify-evenly lg:flex">
+          <Button label="Abrir Expediente" className="p-button-info" onClick={() => {
+            menuContext.settingEmergentShowRecordState();
+          }} />
         </div>
-    )
+        <div className="xsm:m-1 lg:justify-evenly lg:flex">
+          <Button label="Agregar prescripción" className="p-button-secondary" onClick={() => {
+            menuContext.settingEmergentPrescriptionState();
+          }} />
+        </div>
+        <div className="xsm:m-1 lg:justify-evenly lg:flex">
+          <Button label="Finalizar cita" className="p-button-warning" onClick={()=>{navigate("/landing/citas-dia")}} />
+        </div>
+
+
+
+      </div>
+
+    </div>
+  );
 }
