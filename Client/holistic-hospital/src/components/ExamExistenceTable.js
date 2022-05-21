@@ -22,9 +22,9 @@ import { Exams } from "../helpers/ExamExistenceList";
 export default function ExamExistenceTable() {
   const menuContext = useContext(MenuContext);
   const exams = Exams;
-  const [codevar,setcodevar] = useState("");
-  const [namevar,setnamevar] = useState("");
-  
+  const [codevar, setcodevar] = useState("");
+  const [namevar, setnamevar] = useState("");
+
   const [globalFilter, setGlobalFilter] = useState(null);
   const dt = useRef(null);
 
@@ -35,8 +35,8 @@ export default function ExamExistenceTable() {
           label="Nuevo"
           icon="pi pi-plus"
           className="p-button-success mr-2"
-          onClick={() => menuContext.settingEmergentNewExamState()} 
-          />
+          onClick={() => menuContext.settingEmergentNewExamState()}
+        />
       </>
     )
   }
@@ -45,23 +45,27 @@ export default function ExamExistenceTable() {
   const actionBodyTemplate = (rowData) => {
     return (
       <>
-        <Button 
-          icon="pi pi-pencil" 
+        <Button
+          icon="pi pi-pencil"
+          tooltip="Editar"
+          tooltipOptions={{ position: 'bottom' }}
           className="p-button-rounded p-button-success mr-2"
           onClick={() => {
             setcodevar(rowData.code);
             menuContext.settingEmergentEditExamState();
-          }} 
-         />
+          }}
+        />
         <Button
-           icon="pi pi-trash" 
-           className="p-button-rounded p-button-warning"
-           onClick={() => {
-             setnamevar(rowData.name);
-             setcodevar(rowData.code);
-             menuContext.settingEmergentDeleteOneExamState();
-           }} 
-          />
+          icon="pi pi-trash"
+          tooltip="Eliminar"
+          tooltipOptions={{ position: 'bottom' }}
+          className="p-button-rounded p-button-warning"
+          onClick={() => {
+            setnamevar(rowData.name);
+            setcodevar(rowData.code);
+            menuContext.settingEmergentDeleteOneExamState();
+          }}
+        />
       </>
     );
   }
@@ -79,7 +83,7 @@ export default function ExamExistenceTable() {
   const genderBodyTemplate = (rowData) => {
     if (rowData.gender === 'f')
       return 'Femenino';
-    else if(rowData.gender ==='m')
+    else if (rowData.gender === 'm')
       return 'Masculino';
     else
       return 'Indiferente';
@@ -94,17 +98,17 @@ export default function ExamExistenceTable() {
       {/*
         *User creation emergent window 
       */}
-        <CreateNewExam />
+      <CreateNewExam />
 
-        {/*
+      {/*
           *User edit emergent window 
         */}
-        <EditExamExistence code={codevar}/>
+      <EditExamExistence code={codevar} />
 
-         {/*
+      {/*
           *User deletion emergent window 
         */}
-        <DeleteOneExam code={codevar} name={namevar}/>
+      <DeleteOneExam code={codevar} name={namevar} />
 
       <div className="card">
 

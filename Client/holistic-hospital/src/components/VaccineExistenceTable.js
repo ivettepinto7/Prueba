@@ -46,7 +46,9 @@ export default function ExamExistenceTable() {
     return (
       <>
         <Button 
-          icon="pi pi-pencil" 
+          icon="pi pi-pencil"
+          tooltip="Editar"
+          tooltipOptions={{position: 'bottom'}} 
           className="p-button-rounded p-button-success mr-2"
           onClick={() => {
             setcodevar(rowData.id_vaccine);
@@ -55,7 +57,9 @@ export default function ExamExistenceTable() {
           }} 
          />
         <Button
-           icon="pi pi-trash" 
+           icon="pi pi-trash"
+           tooltip="Eliminar"
+          tooltipOptions={{position: 'bottom'}} 
            className="p-button-rounded p-button-warning"
            onClick={() => {
              setnamevar(rowData.name);
