@@ -42,22 +42,52 @@ const MenuState = (props) => {
     //State for delete  area
     const [emergentDeleteOneAreaState, setemergentDeleteOneAreaState] = useState(false);
 
+    //State for new drug
+    const [emergentNewDrugState, setemergentNewDrugaState] = useState(false);
 
+    //State for edit  drug
+    const [emergentEditDrugState, setemergentEditDrugState] = useState(false);
+
+    //State for delete  drug
+    const [emergentDeleteOneDrugState, setemergentDeleteOneDrugState] = useState(false);
+
+
+    //Function for emergent create drug state
+    function settingEmergentNewDrugState() {
+        if (emergentNewDrugState) setemergentNewDrugaState(false);
+        else setemergentNewDrugaState(true);
+    }
+
+    //Function for emergent edit drug state
+    function settingEmergentEditDrugState() {
+        if (emergentEditDrugState) setemergentEditDrugState(false);
+        else setemergentEditDrugState(true);
+    }
+
+    //Function for emergent delete drug state
+    function settingEmergentDeleteOneDrugState() {
+        if (emergentDeleteOneDrugState) setemergentDeleteOneDrugState(false);
+        else setemergentDeleteOneDrugState(true);
+    }
+
+    //Function for emergent new user state
     function settingEmergentNewAreaState() {
         if (emergentNewAreaState) setemergentNewAreaState(false);
         else setemergentNewAreaState(true);
     }
 
-    //Function for emergent edit user state
+    //Function for emergent edit area state
     function settingEmergentEditAreaState() {
         if (emergentEditAreaState) setemergentEditAreaState(false);
         else setemergentEditAreaState(true);
     }
 
+    //Function for emergent delete area state
     function settingEmergentDeleteOneAreaState() {
         if (emergentDeleteOneAreaState) setemergentDeleteOneAreaState(false);
         else setemergentDeleteOneAreaState(true);
     }
+
     //State for user record windows
     const [emergentShowRecordState, setEmergentShowRecordState] = useState(false);
 
@@ -157,6 +187,9 @@ const MenuState = (props) => {
                 emergentDeleteOneAreaState,
                 emergentShowRecordState,
                 emergentPrescriptionState,
+                emergentNewDrugState,
+                emergentEditDrugState,
+                emergentDeleteOneDrugState,
 
                 
                 settingEmergentNewUserState,
@@ -174,6 +207,9 @@ const MenuState = (props) => {
                 settingEmergentDeleteOneAreaState,
                 settingEmergentShowRecordState,
                 settingEmergentPrescriptionState,
+                settingEmergentNewDrugState,
+                settingEmergentEditDrugState,
+                settingEmergentDeleteOneDrugState,
             }}
         >
             { props.children }

@@ -9,16 +9,17 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import './cssFiles/DataTable.css';
 
-import CreateNewArea from "./EmergentWindows/CreateNewArea";
-import EditAreaExistence from "./EmergentWindows/EditAreaExistence";
-import DeleteOneArea from "./EmergentWindows/DeleteAreaExistence";
+
+import CreateNewDrug from "./EmergentWindows/CreateNewDrug";
+import EditDrugExistence from "./EmergentWindows/EditDrugExistence";
+import DeleteOneDrugExistence from "./EmergentWindows/DeleteDrugExistence";
 
 //Helpers imports
-import { AreaExistenceList } from "../helpers/AreaExistenceList";
+import { DrugExistenceList } from "../helpers/DrugExistenceList";
 
-export default function AreaExistenceTable() {
+export default function DrugExistenceTable() {
     const menuContext = useContext(MenuContext);
-    const areas = AreaExistenceList;
+    const drugs = DrugExistenceList;
   
     const [codevar,setcodevar] = useState("");
     const [namevar,setnamevar] = useState("");
@@ -26,18 +27,18 @@ export default function AreaExistenceTable() {
     const [globalFilter, setGlobalFilter] = useState(null);
     
     const dt = useRef(null);
-  
+
     const leftToolbarTemplate = () => {
-      return (
-        <>
-          <Button
-            label="Nuevo"
-            icon="pi pi-plus"
-            className="p-button-success mr-2"
-            onClick={() => menuContext.settingEmergentNewAreaState()} 
-            />
-        </>
-      )
+        return (
+          <>
+            <Button
+              label="Nuevo"
+              icon="pi pi-plus"
+              className="p-button-success mr-2"
+              onClick={() => menuContext.settingEmergentNewDrugState()} 
+              />
+          </>
+        )
     }
 
     const actionBodyTemplate = (rowData) => {
@@ -47,9 +48,9 @@ export default function AreaExistenceTable() {
               icon="pi pi-pencil" 
               className="p-button-rounded p-button-success mr-2"
               onClick={() => {
-                setcodevar(rowData.id_area);
+                setcodevar(rowData.id_drug);
                 console.log("Enviado: "+ codevar);
-                menuContext.settingEmergentEditAreaState();
+                menuContext.settingEmergentEditDrugState();
               }} 
              />
             <Button
@@ -57,17 +58,17 @@ export default function AreaExistenceTable() {
                className="p-button-rounded p-button-warning"
                onClick={() => {
                  setnamevar(rowData.name);
-                 setcodevar(rowData.id_area);
-                 menuContext.settingEmergentDeleteOneAreaState();
+                 setcodevar(rowData.id_drug);
+                 menuContext.settingEmergentDeleteOneDrugState();
                }} 
               />
           </>
         );
-      }
+    }
 
     const header = (
         <div className="table-header">
-        <h5 className="mx-0 my-1">Manejo de areas</h5>
+        <h5 className="mx-0 my-1">Manejo de medicamentos</h5>
         <span className="p-input-icon-left">
             <i className="pi pi-search" />
             <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
@@ -80,33 +81,33 @@ export default function AreaExistenceTable() {
           {/*
             *User creation emergent window 
           */}
-            <CreateNewArea />
+            <CreateNewDrug />
     
             {/*
               *User edit emergent window 
             */}
-            <EditAreaExistence code={codevar}/>
+            <EditDrugExistence code={codevar}/>
     
              {/*
               *User deletion emergent window 
             */}
-            <DeleteOneArea code={codevar} name={namevar}/>
+            <DeleteOneDrugExistence code={codevar} name={namevar}/>
     
           <div className="card">
     
             <Toolbar className="mb-4" left={leftToolbarTemplate} ></Toolbar>
     
-            <DataTable showGridlines lazy={true} ref={dt} value={areas}
+            <DataTable showGridlines lazy={true} ref={dt} value={drugs}
               dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} areas"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} drugs"
               globalFilter={globalFilter} header={header} responsiveLayout="scroll">
 
               <Column field="name" header="Nombre" sortable style={{ minWidth: '12rem' }}></Column>
-              <Column field="start_age" header="Edad de inicio"  sortable style={{ minWidth: '12rem' }}></Column>
-              <Column field="frequency" header="Frecuencia (días)" sortable style={{ minWidth: '8rem' }}></Column>
+              <Column field="drug_lab" header="Laboratorio" sortable style={{ minWidth: '12rem' }}></Column>
+              <Column field="active" header="Activo"  sortable style={{ minWidth: '12rem' }}></Column>
+              <Column field="active_percentage" header="Porcentaje activo" sortable style={{ minWidth: '8rem' }}></Column>
               <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
-
             </DataTable>
           </div>
         </div>

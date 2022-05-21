@@ -24,6 +24,7 @@ const MedicalConsultation = lazy(() => import("./pages/MedicalConsultation"));
 const ScheduleAppointment = lazy(() => import("./pages/ScheduleAppointment"))
 const UserPrescriptions = lazy(() => import("./pages/UserPrescriptions"))
 const AreasExistence = lazy(() => import("./pages/AreaExistence"))
+const DrugExistence = lazy(() => import("./pages/DrugExistence"))
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
                 <Route exact path="recordatorios" element={<Recordatorios />} />
                 <Route exact path="areas" element={<AreasExistence />} />
                 <Route exact path="citas-dia" element={<AppointsDay />}/>
+                <Route exact path="medicamentos" element={<DrugExistence />}/>
                 
                 <Route exact path="/landing/citas-dia/consulta" element={<MedicalConsultation />} />
                 
