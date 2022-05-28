@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo25.hospital.models.dtos.CitasDiaDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
 
 @RestController
@@ -21,9 +22,9 @@ public class DoctorContoller {
 	public ResponseEntity<List<CitasDiaDTO>> getDayAppointments(/*ELDTO, */ BindingResult result){
 		try {
 			//TODO implementar logica de obtener usuarios
-			List<String> listaUsers= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
-					listaUsers,
+			List<CitasDiaDTO> listaCitas= new ArrayList<>();
+			return new ResponseEntity<List<CitasDiaDTO>>(
+					listaCitas,
 					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(

@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo25.hospital.models.dtos.AreasDTO;
+import com.grupo25.hospital.models.dtos.DrugsExistenceDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
+import com.grupo25.hospital.models.dtos.TestListDTO;
+import com.grupo25.hospital.models.dtos.UserDTO;
+import com.grupo25.hospital.models.dtos.VaccinesExistenceListDTO;
 
 @RestController
 @RequestMapping("")
@@ -20,11 +25,11 @@ public class AdminController {
 	
 
 	@GetMapping("/usuarios")
-	public ResponseEntity<List<UsersDTO>> getUsers(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<UserDTO>> getUsers(/*ELDTO, */ BindingResult result){
 		try {
 			//TODO implementar logica de obtener usuarios
-			List<String> listaUsers= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
+			List<UserDTO> listaUsers= new ArrayList<>();
+			return new ResponseEntity<List<UserDTO>>(
 					listaUsers,
 					HttpStatus.OK);
 		} catch (Exception e) {
@@ -77,11 +82,11 @@ public class AdminController {
 	
 	
 	@GetMapping("/examenes")
-	public ResponseEntity<List<TestsDTO>> getTests(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<TestListDTO>> getTests(/*ELDTO, */ BindingResult result){
 		try {
 			//TODO implementar logica de obtener examenes
-			List<String> TestList= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
+			List<TestListDTO> TestList= new ArrayList<>();
+			return new ResponseEntity<List<TestListDTO>>(
 					TestList,
 					HttpStatus.OK);
 		} catch (Exception e) {
@@ -133,10 +138,10 @@ public class AdminController {
 	}
 	
 	@GetMapping("/vacunas")
-	public ResponseEntity<List<VacunasDTO>> getVaccines(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<VaccinesExistenceListDTO>> getVaccines(/*ELDTO, */ BindingResult result){
 		try {
-		List<String> VaccinesList= new ArrayList<>();
-		return new ResponseEntity<List<String>>(
+		List<VaccinesExistenceListDTO> VaccinesList= new ArrayList<>();
+		return new ResponseEntity<List<VaccinesExistenceListDTO>>(
 				VaccinesList,
 				HttpStatus.OK);
 	} catch (Exception e) {
@@ -188,8 +193,8 @@ public class AdminController {
 	@GetMapping("/areas")
 	public ResponseEntity<List<AreasDTO>> getAreas(/*ELDTO, */ BindingResult result){
 		try {
-		List<String> AreasList= new ArrayList<>();
-		return new ResponseEntity<List<String>>(
+		List<AreasDTO> AreasList= new ArrayList<>();
+		return new ResponseEntity<List<AreasDTO>>(
 				AreasList,
 				HttpStatus.OK);
 	} catch (Exception e) {
@@ -239,10 +244,10 @@ public class AdminController {
 	}
 	
 	@GetMapping("/medicamentos")
-	public ResponseEntity<List<MedicamentosDTO>> getMedicamentos(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<DrugsExistenceDTO>> getMedicamentos(/*ELDTO, */ BindingResult result){
 		try {
-		List<String> MedicamentosList= new ArrayList<>();
-		return new ResponseEntity<List<String>>(
+		List<DrugsExistenceDTO> MedicamentosList= new ArrayList<>();
+		return new ResponseEntity<List<DrugsExistenceDTO>>(
 				MedicamentosList,
 				HttpStatus.OK);
 	} catch (Exception e) {

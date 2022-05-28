@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo25.hospital.models.dtos.InmunizationsDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
+import com.grupo25.hospital.models.dtos.PrevAppointmentDTO;
+import com.grupo25.hospital.models.dtos.RemindersDTO;
+import com.grupo25.hospital.models.dtos.TestListDTO;
+import com.grupo25.hospital.models.dtos.UserPrescriptionDTO;
 
 @RestController
 @RequestMapping("")
@@ -21,9 +26,9 @@ public class PatientController {
 	public ResponseEntity<List<InmunizationsDTO>> getInmunizations(/*ELDTO, */ BindingResult result){
 		try {
 			//TODO implementar logica de obtener inmunizaciones
-			List<String> inmunizationList= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
-					InmunizationList,
+			List<InmunizationsDTO> inmunizationList= new ArrayList<>();
+			return new ResponseEntity<List<InmunizationsDTO>>(
+					inmunizationList,
 					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
@@ -32,12 +37,12 @@ public class PatientController {
 	}
 	
 	@GetMapping("/expediente/examenes-realizados")
-	public ResponseEntity<List<DoneTestsDTO>> getDoneTests(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<TestListDTO>> getDoneTests(/*ELDTO, */ BindingResult result){
 		try {
 			//TODO implementar logica de obtener examenes
-			List<String> doneTestList= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
-					DoneTestList,
+			List<TestListDTO> doneTestList= new ArrayList<>();
+			return new ResponseEntity<List<TestListDTO>>(
+					doneTestList,
 					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
@@ -46,11 +51,11 @@ public class PatientController {
 	}
 	
 	@GetMapping("/expediente/recetas-medicas")
-	public ResponseEntity<List<PrescriptionsDTO>> getPrescriptions(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<UserPrescriptionDTO>> getPrescriptions(/*ELDTO, */ BindingResult result){
 		try {
 			//TODO implementar logica de obtener recetas
-			List<String> prescriptionList= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
+			List<UserPrescriptionDTO> prescriptionList= new ArrayList<>();
+			return new ResponseEntity<List<UserPrescriptionDTO>>(
 					prescriptionList,
 					HttpStatus.OK);
 		} catch (Exception e) {
@@ -59,11 +64,11 @@ public class PatientController {
 		}
 	}
 	@GetMapping("/expediente/citas-previas")
-	public ResponseEntity<List<PreviousAppointmentsDTO>> getPreviousAppointments(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<PrevAppointmentDTO>> getPreviousAppointments(/*ELDTO, */ BindingResult result){
 		try {
 			//TODO implementar logica de obtener citas
-			List<String> previousAppointmentsList= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
+			List<PrevAppointmentDTO> previousAppointmentsList= new ArrayList<>();
+			return new ResponseEntity<List<PrevAppointmentDTO>>(
 					previousAppointmentsList,
 					HttpStatus.OK);
 		} catch (Exception e) {
@@ -87,11 +92,11 @@ public class PatientController {
 	}
 	
 	@GetMapping("/recordatorios")
-	public ResponseEntity<List<RecordatoriosDTO>> getRecordatorios(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<RemindersDTO>> getRecordatorios(/*ELDTO, */ BindingResult result){
 		try {
 			//TODO implementar logica de obtener recetas
-			List<String> recordatoriosList= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
+			List<RemindersDTO> recordatoriosList= new ArrayList<>();
+			return new ResponseEntity<List<RemindersDTO>>(
 					recordatoriosList,
 					HttpStatus.OK);
 		} catch (Exception e) {

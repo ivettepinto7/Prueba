@@ -1,7 +1,6 @@
 package com.grupo25.hospital.models.dtos;
 
 public class UserDTO {
-	private String token;
 	private int code;
 	private String name;
 	private String last_name;
@@ -9,10 +8,9 @@ public class UserDTO {
 	private String password;
 	private int rol;
 	private boolean status;
-	public UserDTO(String token, int code, String name, String last_name, String email, String password, int rol,
+	public UserDTO( int code, String name, String last_name, String email, String password, int rol,
 			boolean status) {
 		super();
-		this.token = token;
 		this.code = code;
 		this.name = name;
 		this.last_name = last_name;
@@ -20,12 +18,6 @@ public class UserDTO {
 		this.password = password;
 		this.rol = rol;
 		this.status = status;
-	}
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
 	}
 	public int getCode() {
 		return code;
