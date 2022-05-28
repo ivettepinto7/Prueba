@@ -56,33 +56,6 @@ export function convertRoutes(navigator) {
                 navigator('/landing/citas');
             },
             path: '/landing/citas',
-            
-            /*items: [
-                {
-                    label: 'Agendar cita médica',
-                    rolesi: [UserRoles.USUARIO],
-                    command: (event) => {
-                        navigator('/landing/citas/cita-medica');
-                    },
-                    pathi: '/landing/citas/cita-medica',
-                },
-                {
-                    label: 'Agendar examen',
-                    rolesi: [UserRoles.USUARIO],
-                    command: (event) => {
-                        navigator('/landing/citas/cita-examen');
-                    },
-                    pathi: '/landing/citas/cita-examen',
-                },
-                {
-                    label: 'Agendar inmunización',
-                    rolesi: [UserRoles.USUARIO],
-                    command: (event) => {
-                        navigator('/landing/citas/cita-inmunizacion');
-                    },
-                    pathi: '/landing/citas/cita-inmunizacion',
-                },
-            ]*/
         },
         {
             label: 'Citas del dia',

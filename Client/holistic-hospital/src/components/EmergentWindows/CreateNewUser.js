@@ -213,7 +213,7 @@ export default function CreateNewUser() {
                                 <div className="field">
                                     <span className="p-float-label">
                                         <Controller name="birthdate" control={control} rules={{ required: 'La fecha de nacimiento es requerida.' }} render={({ field }) => (
-                                            <Calendar id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon maxDate={today} />
+                                            <Calendar id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" mask="99/99/9999" showIcon maxDate={today} />
                                         )} />
                                         <label htmlFor="birthdate" className={classNames({ 'p-error': errors.birthdate })}>Fecha de nacimiento</label>
                                     </span>
