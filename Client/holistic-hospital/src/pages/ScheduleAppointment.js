@@ -15,16 +15,19 @@ import { Calendar } from 'primereact/calendar';
 import { Controller } from 'react-hook-form';
 import { classNames } from 'primereact/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarPlus} from '@fortawesome/free-solid-svg-icons';
+import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
+import { InputNumber } from 'primereact/inputnumber';
 
 //Helpers imports
 import { AreasList } from '../helpers/AreasList';
 import { Inmunizations } from '../helpers/InmunizationsList';
 import { Tests } from '../helpers/TestList';
 import { AreaShifts } from '../helpers/AreaShifts';
+import { People } from '../helpers/UsersList';
 
 export default function ScheduleAppointment() {
     const { rol, name, last_name } = useContext(UserContext);
+    const users = People;
     const appointmentsTypes = [{ name: 'Inmunización', code: 1 }, { name: 'Consulta médica', code: 2 }, { name: 'Examen', code: 3 }];
     const areasList = AreasList;
     const tests = Tests;
@@ -32,11 +35,14 @@ export default function ScheduleAppointment() {
     const inmunizations = Inmunizations;
     const [selectedAppointmentType, setSelectedAppointmentType] = useState(appointmentsTypes[1]);
 
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});
 
     const defaultValues = {
-        patient: null,
+        patient: '',
         inmunization: null,
         test: null,
         area: null,
@@ -50,6 +56,10 @@ export default function ScheduleAppointment() {
     const area = watch('area', false);
     const appointdate = watch('appointdate', false);
     let filteredShifts = null;
+
+    var foundPatient = users.filter(({ code, rol }) => {
+        return formData.patient === code && rol === 2;
+    });
 
     if (selectedAppointmentType.code === 1) {
         filteredShifts = inmunization && areaShifts.filter(({ vaccine }) => {
@@ -81,43 +91,65 @@ export default function ScheduleAppointment() {
 
     return (
         <div className='card'>
-            <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '50vw' }}>
-                <div className="flex justify-content-center flex-column pt-6 px-3">
-                    <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
-                    <h1 style={{ lineHeight: 1.5, textIndent: '1rem' }}>
-                        Cita agendada con éxito.
-                        <p>
-                            <b>Tipo: </b>{selectedAppointmentType.name}
-                        </p>
-                        <p>
-                            <b>Paciente: </b>{rol === 2 ? name + ' ' + last_name : ""}
-                        </p>
-                        {
-                            selectedAppointmentType && selectedAppointmentType.code === 1 ?
+            {
+                (rol === 2 || foundPatient.length > 0) ?
+                    <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '50vw' }}>
+                        <div className="flex justify-content-center flex-column pt-6 px-3">
+                            <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
+                            <h1 style={{ lineHeight: 1.5, textIndent: '1rem' }}>
+                                Cita agendada con éxito.
                                 <p>
-                                    <b>Vacuna: </b>{formData.inmunization && formData.inmunization.vaccine_name}
+                                    <b>Tipo: </b>{selectedAppointmentType.name}
                                 </p>
-                                :
-                                selectedAppointmentType.code === 2 ?
-                                    <p>
-                                        <b>Área: </b>{formData.area && formData.area.name}
-                                    </p>
-                                    : selectedAppointmentType.code === 3 ?
+                                <p>
+                                    <b>Paciente: </b>{
+                                        rol === 2 ? name + ' ' + last_name
+                                            : rol === 3 ?
+                                                foundPatient && formData.patient ? foundPatient.at(0).name + ' ' + foundPatient.at(0).last_name
+                                                    :
+                                                    'Usuario no encontrado'
+                                                : ''
+                                    }
+                                </p>
+                                {
+                                    selectedAppointmentType && selectedAppointmentType.code === 1 ?
                                         <p>
-                                            <b>Examen: </b>{formData.test && formData.test.name}
+                                            <b>Vacuna: </b>{formData.inmunization && formData.inmunization.vaccine_name}
                                         </p>
                                         :
-                                        ""
-                        }
-                        <p>
-                            <b>Dia: </b>{formData.appointdate && formData.appointdate.toLocaleDateString()}
-                        </p>
-                        <p>
-                            <b>Turno: </b>{formData.appointime}
-                        </p>
-                    </h1>
-                </div>
-            </Dialog>
+                                        selectedAppointmentType.code === 2 ?
+                                            <p>
+                                                <b>Área: </b>{formData.area && formData.area.name}
+                                            </p>
+                                            : selectedAppointmentType.code === 3 ?
+                                                <p>
+                                                    <b>Examen: </b>{formData.test && formData.test.name}
+                                                </p>
+                                                :
+                                                ""
+                                }
+                                <p>
+                                    <b>Dia: </b>{formData.appointdate && formData.appointdate.toLocaleDateString()}
+                                </p>
+                                <p>
+                                    <b>Turno: </b>{formData.appointime}
+                                </p>
+                            </h1>
+                        </div>
+                    </Dialog>
+                    :
+                    <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '50vw' }}>
+                        <div className="flex justify-content-center flex-column pt-6 px-3">
+                            <i className="pi pi-exclamation-circle" style={{ fontSize: '5rem', color: 'red' }}></i>
+                            <h1 style={{ lineHeight: 1.5, textIndent: '1rem' }}>
+                                El usuario no fue encontrado o no es un paciente.
+                            </h1>
+                        </div>
+                    </Dialog>
+            }
+
+
+
             <div className='w-full'>
                 <div className='flex items-center justify-center my-4'>
                     <FontAwesomeIcon style={{ color: '#1D4078', fontSize: '2rem' }} icon={faCalendarPlus} />
@@ -140,6 +172,20 @@ export default function ScheduleAppointment() {
 
                 <div className='flex justify-center items-center'>
                     <form onSubmit={handleSubmit(onSubmit)} className="w-1/2 pt-10 grid grid-cols-2 flex flex-col block justify-center items-center rounded-md shadow-md">
+                        {
+                            rol === 3 ?
+                                <div className="field mt-6">
+                                    <span className="p-float-label">
+                                        <Controller name="patient" control={control} rules={{ required: 'El código de paciente es requerida.' }} render={({ field }) => (
+                                            <InputNumber id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} />
+                                        )} />
+                                        <label htmlFor="patient" className={classNames({ 'p-error': errors.patientcode })}>Código de paciente*</label>
+                                    </span>
+                                    {getFormErrorMessage('patient')}
+                                </div>
+                                :
+                                ""
+                        }
                         {
                             selectedAppointmentType && selectedAppointmentType.code === 1 ?
                                 <div className="field mt-6">
@@ -190,7 +236,7 @@ export default function ScheduleAppointment() {
                             <div className="field mt-8">
                                 <span className="p-float-label">
                                     <Controller name="appointdate" control={control} rules={{ required: 'La fecha de cita es requerida.' }} render={({ field }) => (
-                                        <Calendar id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
+                                        <Calendar minDate={tomorrow} id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
                                     )} />
                                     <label htmlFor="appointdate" className={classNames({ 'p-error': errors.appointdate })}>Fecha de cita*</label>
                                 </span>
@@ -203,7 +249,7 @@ export default function ScheduleAppointment() {
                             <div className="field mt-8">
                                 <span className="p-float-label">
                                     <Controller name="appointdate" control={control} rules={{ required: 'La fecha de cita es requerida.' }} render={({ field }) => (
-                                        <Calendar id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
+                                        <Calendar minDate={tomorrow} id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
                                     )} />
                                     <label htmlFor="appointdate" className={classNames({ 'p-error': errors.appointdate })}>Fecha de cita*</label>
                                 </span>
@@ -216,7 +262,7 @@ export default function ScheduleAppointment() {
                             <div className="field mt-8">
                                 <span className="p-float-label">
                                     <Controller name="appointdate" control={control} rules={{ required: 'La fecha de cita es requerida.' }} render={({ field }) => (
-                                        <Calendar id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
+                                        <Calendar minDate={tomorrow} id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
                                     )} />
                                     <label htmlFor="appointdate" className={classNames({ 'p-error': errors.appointdate })}>Fecha de cita*</label>
                                 </span>

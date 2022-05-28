@@ -50,8 +50,8 @@ export function convertRoutes(navigator) {
             ]
         },
         {
-            label: 'Citas',
-            roles: [UserRoles.USUARIO],
+            label: 'Agendar cita',
+            roles: [UserRoles.USUARIO,UserRoles.SECRETARIA],
             command: (event) => {
                 navigator('/landing/citas');
             },
