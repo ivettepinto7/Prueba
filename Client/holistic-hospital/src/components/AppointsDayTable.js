@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from "react";
 import MenuContext from "../contexts/MenuContext/MenuContext";
+import { UserContext } from '../contexts/UserContext/UserContext';
 
 //Components imports
 import { DataTable } from "primereact/datatable";
@@ -12,29 +13,49 @@ import './cssFiles/DataTable.css';
 //Helpers imports
 import { CitasDiaList } from "../helpers/CitasDiaList";
 import { useNavigate } from "react-router-dom";
+import UserRecordTable from "./EmergentWindows/UserRecordTable";
 
 
 export default function AppointsDayTable() {
   const menuContext = useContext(MenuContext);
+  const { rol } = useContext(UserContext);
   const people = CitasDiaList;
   const navigate = useNavigate();
-  
+
   const [globalFilter, setGlobalFilter] = useState(null);
   const dt = useRef(null);
 
 
   const actionBodyTemplate = (rowData) => {
-    return (
-      <>
-        <Button 
-          icon="pi pi-book" 
-          className="p-button-rounded p-button-success mr-2"
-          onClick={() => {
-            navigate("/landing/citas-dia/consulta")
-          }} 
-         />
-      </>
-    );
+    if (rol === 4) {
+      return (
+        <>
+          <Button
+            icon="pi pi-book"
+            tooltip="Atender"
+            tooltipOptions={{ position: 'bottom' }}
+            className="p-button-rounded p-button-success mr-2"
+            onClick={() => {
+              navigate("/landing/citas-dia/consulta")
+            }}
+          />
+        </>
+      );
+    } else if (rol === 3) {
+      return (
+        <>
+          <Button
+            icon="pi pi-book"
+            tooltip="Expediente"
+            tooltipOptions={{ position: 'bottom' }}
+            className="p-button-rounded p-button-success mr-2"
+            onClick={() => {
+              menuContext.settingEmergentShowRecordState();
+            }}
+          />
+        </>
+      );
+    }
   }
 
   const header = (
@@ -53,15 +74,15 @@ export default function AppointsDayTable() {
   const genderBodyTemplate = (rowData) => {
     if (rowData.gender === 'f')
       return 'Femenino';
-    else if(rowData.gender ==='m')
+    else if (rowData.gender === 'm')
       return 'Masculino';
     else
       return 'Indiferente';
   }
   return (
     <div className="w-full overflow-hidden">
-      
 
+      <UserRecordTable />
       <div className="card">
 
 

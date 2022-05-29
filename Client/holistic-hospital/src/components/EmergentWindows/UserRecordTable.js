@@ -5,7 +5,6 @@ import MenuContext from "../../contexts/MenuContext/MenuContext";
 import { DataTable } from "primereact/datatable";
 import { Column } from 'primereact/column';
 import { InputText } from "primereact/inputtext"
-import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import '../cssFiles/DataTable.css';
 
@@ -41,9 +40,6 @@ export default function UserRecordTable() {
       </span>
     </div>
   );
-
-  const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus  /></div>;
-
 
   const typeBodyTemplate = (rowData) => {
     if (rowData.appointment_type === 1)

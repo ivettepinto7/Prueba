@@ -86,6 +86,10 @@ export default function UsersTable() {
     return rowData.name + ' ' + rowData.last_name;
   }
 
+  const filteredPeople = people.filter(({ code }) => {
+    return userContext.code !== code;
+  });
+
   return (
     <div className="w-full overflow-hidden">
       {/*
@@ -107,7 +111,7 @@ export default function UsersTable() {
 
         <Toolbar className="mb-4" left={leftToolbarTemplate} ></Toolbar>
 
-        <DataTable showGridlines lazy={true} ref={dt} value={people}
+        <DataTable showGridlines lazy={true} ref={dt} value={filteredPeople}
           dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
