@@ -42,7 +42,7 @@ export default function ScheduleAppointment() {
     const [formData, setFormData] = useState({});
 
     const defaultValues = {
-        patient: '',
+        patient: null,
         inmunization: null,
         test: null,
         area: null,
