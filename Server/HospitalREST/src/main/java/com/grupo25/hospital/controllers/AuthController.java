@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
+import com.grupo25.hospital.models.dtos.IniciarSesionDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
+import com.grupo25.hospital.models.dtos.RecuperarPassDTO;
 import com.grupo25.hospital.models.dtos.TokenDTO;
 
 @RestController
@@ -19,7 +22,7 @@ public class AuthController {
 	//TokenManager
 	
 	@PostMapping("recuperarcontra")
-	public ResponseEntity<MessageDTO> recoverPassword(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<MessageDTO> recoverPassword(RecuperarPassDTO recuperarPass,BindingResult result){
 		try {
 			//TODO implementar logica de recuperar contra
 			return new ResponseEntity<>(
@@ -33,7 +36,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("iniciarsesion")
-	private ResponseEntity<TokenDTO> login(/*EL DTO*/ BindingResult result){
+	private ResponseEntity<TokenDTO> login( IniciarSesionDTO iniciarSesion,BindingResult result){
 		try {
 			//TODO crear token
 			String token="";
@@ -61,10 +64,10 @@ public class AuthController {
 			return new ResponseEntity<>(
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		}
+	}
 	
 	@PostMapping("actualizarcontra")
-	public ResponseEntity<MessageDTO> updatePassword(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<MessageDTO> updatePassword(ActualizarPassDTO updatepass,BindingResult result){
 		try {
 			//TODO implementar logica de actualizar password
 			return new ResponseEntity<>(

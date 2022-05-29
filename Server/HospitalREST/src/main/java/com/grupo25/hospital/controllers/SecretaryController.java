@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo25.hospital.models.dtos.CitasDiaDTO;
+import com.grupo25.hospital.models.dtos.ExpedienteDTO;
+import com.grupo25.hospital.models.dtos.ExpedientePacienteDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
+import com.grupo25.hospital.models.dtos.ScheduleAppointmentDTO;
 
 @RestController
 @RequestMapping("")
 public class SecretaryController {
 
 	@GetMapping("/citas-dia")
-	public ResponseEntity<List<CitasDiaDTO>> getDayAppointments(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<CitasDiaDTO>> getDayAppointments(BindingResult result){
 		try {
 			//TODO implementar logica de obtener usuarios
 			List<CitasDiaDTO> listaUsers= new ArrayList<>();
@@ -32,12 +35,12 @@ public class SecretaryController {
 		}
 	}
 	@GetMapping("/citas-dia/consulta/expediente")
-	public ResponseEntity<List<ExpedienteDTO>> getUserExpediente(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<ExpedienteDTO>> getUserExpediente(ExpedientePacienteDTO expediente, BindingResult result){
 		try {
 			//TODO implementar logica de obtener usuarios
-			List<String> listaUsers= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
-					listaUsers,
+			List<ExpedienteDTO> listaExpediente= new ArrayList<>();
+			return new ResponseEntity<List<ExpedienteDTO>>(
+					listaExpediente,
 					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
@@ -45,8 +48,8 @@ public class SecretaryController {
 		}
 	}
 	
-	@PostMapping("/citas")
-	public ResponseEntity<MessageDTO> bookAppointment(/*ELDTO, */ BindingResult result){
+	@PostMapping("/agendar-cita")
+	public ResponseEntity<MessageDTO> bookAppointment(ScheduleAppointmentDTO nuevaCita,BindingResult result){
 		try {
 			//TODO implementar logica de reservar citas
 			

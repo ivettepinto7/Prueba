@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo25.hospital.models.dtos.CitasDiaDTO;
+import com.grupo25.hospital.models.dtos.CloseAppointmentDTO;
+import com.grupo25.hospital.models.dtos.CreatePrescriptionDTO;
+import com.grupo25.hospital.models.dtos.ExpedienteDTO;
+import com.grupo25.hospital.models.dtos.ExpedientePacienteDTO;
+import com.grupo25.hospital.models.dtos.GetEntityDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
 
 @RestController
@@ -19,7 +24,7 @@ import com.grupo25.hospital.models.dtos.MessageDTO;
 public class DoctorContoller {
 	
 	@GetMapping("/citas-dia")
-	public ResponseEntity<List<CitasDiaDTO>> getDayAppointments(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<CitasDiaDTO>> getDayAppointments(GetEntityDTO doctor ,BindingResult result){
 		try {
 			//TODO implementar logica de obtener usuarios
 			List<CitasDiaDTO> listaCitas= new ArrayList<>();
@@ -32,12 +37,12 @@ public class DoctorContoller {
 		}
 	}
 	@GetMapping("/citas-dia/consulta/expediente")
-	public ResponseEntity<List<ExpedienteDTO>> getUserExpediente(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<List<ExpedienteDTO>> getUserExpediente(ExpedientePacienteDTO expediente,BindingResult result){
 		try {
 			//TODO implementar logica de obtener usuarios
-			List<String> listaUsers= new ArrayList<>();
-			return new ResponseEntity<List<String>>(
-					listaUsers,
+			List<ExpedienteDTO> listaExpedientes= new ArrayList<>();
+			return new ResponseEntity<List<ExpedienteDTO>>(
+					listaExpedientes,
 					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
@@ -45,9 +50,9 @@ public class DoctorContoller {
 		}
 	}
 	@PostMapping("/citas-dia/consulta/receta/crear")
-	public ResponseEntity<MessageDTO> createPrescription(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<MessageDTO> createPrescription(CreatePrescriptionDTO receta,BindingResult result){
 		try {
-			//TODO implementar logica de crear Vaccine
+			//TODO implementar logica de crear 
 			return new ResponseEntity<>(
 					new MessageDTO("Receta creada"),
 					HttpStatus.CREATED);
@@ -58,9 +63,9 @@ public class DoctorContoller {
 		}
 	}
 	@PostMapping("/citas-dia/consulta/finalizar")
-	public ResponseEntity<MessageDTO> finishAppointment(/*ELDTO, */ BindingResult result){
+	public ResponseEntity<MessageDTO> finishAppointment(CloseAppointmentDTO finalizar,BindingResult result){
 		try {
-			//TODO implementar logica de crear Vaccine
+			//TODO implementar logica de crear 
 			return new ResponseEntity<>(
 					new MessageDTO("Consulta finalizada"),
 					HttpStatus.OK);
