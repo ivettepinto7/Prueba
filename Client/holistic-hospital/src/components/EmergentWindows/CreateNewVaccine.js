@@ -7,7 +7,6 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
 import { classNames } from 'primereact/utils';
 import { InputNumber } from 'primereact/inputnumber';
 
@@ -20,7 +19,6 @@ export default function CreateNewVaccine() {
 
     const toast = useRef(null);
 
-    var today = new Date();
     const [display, setDisplay] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});

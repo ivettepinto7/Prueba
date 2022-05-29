@@ -39,7 +39,6 @@ export default function CreateNewUser() {
         email: '',
         password: '',
         role: null,
-        gender: '',
         birthdate: null,
         area: null,
     }

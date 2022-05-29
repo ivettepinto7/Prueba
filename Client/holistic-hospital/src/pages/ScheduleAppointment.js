@@ -177,7 +177,7 @@ export default function ScheduleAppointment() {
                                 <div className="field mt-6">
                                     <span className="p-float-label">
                                         <Controller name="patient" control={control} rules={{ required: 'El código de paciente es requerida.' }} render={({ field }) => (
-                                            <InputNumber id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} />
+                                            <InputNumber autoFocus id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} />
                                         )} />
                                         <label htmlFor="patient" className={classNames({ 'p-error': errors.patientcode })}>Código de paciente*</label>
                                     </span>
