@@ -1,17 +1,15 @@
-import React, { lazy, useState, useRef } from 'react'
+import React, { lazy, useState, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 //Components imports
 import { Toast } from 'primereact/toast'
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
-import { Button } from 'primereact/button';
 
 //Helpers imports
 import logo from '../logo.png';
 
 const LeftLoginSection = lazy(() => import('../components/LeftLoginSection'));
-
 
 export default function RecoverPassword() {
     const toast = useRef(null);
@@ -19,7 +17,7 @@ export default function RecoverPassword() {
     const [formData, setFormData] = useState({});
 
     const defaultValues = {
-        code: ''
+        code: '',
     }
 
     const { control, formState: { errors }, handleSubmit, reset } = useForm({ defaultValues });
@@ -72,9 +70,7 @@ export default function RecoverPassword() {
                                     </span>
                                     {getFormErrorMessage('code')}
                                 </div>
-
-                                <Button type="submit" label="Enviar correo" className="lg:w-1/2 w-full flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300 mt-2" />
-
+                                <button type="submit" className="lg:w-1/2 w-full flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300">Enviar correo</button>
                             </form>
 
                         </div>

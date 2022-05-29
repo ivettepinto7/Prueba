@@ -94,11 +94,11 @@ export default function RestorePassword() {
 
                             <div className="m-1 w-full flex justify-content-center">
                                 <div className="card w-full"></div>
-                                <form className="flex flex-col block justify-center items-center p-5 w-full h-3/4 rounded-md shadow-md">
+                                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col block justify-center items-center p-5 w-full h-3/4 rounded-md shadow-md">
                                     <div className="field">
                                         <span className="p-float-label">
                                             <Controller name="newpassword" control={control} rules={{ required: 'La contraseña es requerida.' }} render={({ field, fieldState }) => (
-                                                <Password autoComplete='off' id={field.name} {...field} toggleMask className={classNames({ 'p-invalid': fieldState.invalid })} header={passwordHeader} footer={passwordFooter} />
+                                                <Password autoFocus autoComplete='off' id={field.name} {...field} toggleMask className={classNames({ 'p-invalid': fieldState.invalid })} header={passwordHeader} footer={passwordFooter} />
                                             )} />
                                             <label htmlFor="newpassword" className={classNames({ 'p-error': errors.password })}>Nueva contraseña*</label>
                                         </span>
@@ -117,7 +117,7 @@ export default function RestorePassword() {
                                         {getFormErrorMessage('repeatpassword')}
                                     </div>
 
-                                    <Button type="submit" label="Restablecer" className="lg:w-1/2 w-full flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300 mt-2" onClick={handleSubmit(onSubmit)} />
+                                    <button type="submit" className="lg:w-1/2 w-full flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300">Restablecer</button>
 
                                 </form>
                             </div>

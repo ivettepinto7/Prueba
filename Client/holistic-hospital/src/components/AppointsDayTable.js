@@ -94,7 +94,7 @@ export default function AppointsDayTable() {
           <Column field="name" header="Nombre" body={nameBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column>
           <Column field="age" header="Edad" sortable style={{ minWidth: '12rem' }}></Column>
           <Column field="gender" header="Género" body={genderBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
-          <Column header="Atender al paciente" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
+          <Column header="Atender/Expediente" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
         </DataTable>
       </div>
     </div>

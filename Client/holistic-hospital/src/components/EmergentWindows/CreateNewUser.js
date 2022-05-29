@@ -107,7 +107,7 @@ export default function CreateNewUser() {
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col xsm:flex-row sm:flex-row">
             <Toast ref={toast} />
             <Dialog
                 breakpoints={{ '960px': '75vw', '640px': '100vw' }}
@@ -118,7 +118,7 @@ export default function CreateNewUser() {
                 onHide={() => onHide('display')}
             >
 
-                <div className="form-demo w-full">
+                <div className="form-demo w-full xsm:flex-row sm:flex-row">
                     <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
                         <div className="flex justify-content-center flex-column pt-6 px-3">
                             <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
@@ -128,7 +128,7 @@ export default function CreateNewUser() {
                         </div>
                     </Dialog>
 
-                    <div className="m-1 w-full flex justify-content-center">
+                    <div className="m-1 w-full flex justify-content-center xsm:flex-row sm:flex-row">
                         <div className="card w-full">
                             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 p-fluid w-full">
                                 <div className="field">
