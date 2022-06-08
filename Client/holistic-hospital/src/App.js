@@ -10,6 +10,7 @@ import "primeicons/primeicons.css"; //icons
 //Components imports
 const Login = lazy(() => import("./pages/Login"));
 const RecoverPassword = lazy(() => import("./pages/RecoverPassword"));
+const Welcome = lazy(() => import("./pages/Welcome"));
 const RestorePassword = lazy(() => import("./pages/RestorePassword"));
 const Landing = lazy(() => import("./pages/Landing"));
 const Users = lazy(() => import("./pages/Users"));
@@ -39,7 +40,8 @@ function App() {
               <Route exact path="restablecer" element={<RestorePassword />} />
               
               <Route path="landing" element={<Landing />}>
-                <Route index exact path="usuarios" element={<Users />} />
+                <Route index element={<Welcome />} />
+                <Route exact path="usuarios" element={<Users />} />
                 <Route exact path="examenes" element={<ExamsExistence />} />
                 <Route exact path="vacunas" element={<VaccinesExistence />} />
                 <Route exact path="recordatorios" element={<Recordatorios />} />

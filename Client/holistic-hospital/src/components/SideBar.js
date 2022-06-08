@@ -41,12 +41,12 @@ export default function SideBar() {
                 <button onClick={() => setActive(true)} className=" p-sidebar-icon p-link mr-1">
                     <span style={{ color: 'white', 'fontSize': '2em' }} className="pi pi-bars" />
                 </button>
-                <h1 className='lg:text-4xl sm:text-3xl text-white'>Holistic Hospital</h1>
+                <h1 className='lg:text-4xl sm:text-3xl text-white'><b>Holistic Hospital</b></h1>
                 <img src={logo} alt='logo' className='mr-2' style={{ height: '10vmin' }} />
                 <Sidebar visible={active} onHide={() => setActive(false)} style={{ color: 'white', backgroundColor: 'black' }}>
                     <div className="w-full flex flex-row items-center">
                         <img src={logo} alt='logo' className='mr-2' style={{ height: '10vmin' }} />
-                        <h1 className="text-bold text-center w-full">¡ Bienvenid@ {name + ' ' + last_name} !</h1>
+                        <h1 className="text-bold text-center w-full"><b> {name + ' ' + last_name} </b></h1>
                     </div>
                     <div className='flex justify-around align-middle m-4'>
                         <h1

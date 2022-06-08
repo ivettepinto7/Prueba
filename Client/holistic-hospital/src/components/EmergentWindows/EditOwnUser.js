@@ -6,7 +6,6 @@ import { useForm, Controller } from 'react-hook-form';
 //Components imports
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
-import { Button } from 'primereact/button';
 import { Divider } from 'primereact/divider';
 import { classNames } from 'primereact/utils';
 import { Password } from 'primereact/password';
@@ -130,7 +129,7 @@ export default function EditOwnUser() {
                         {
                             newPass && newPass === true
                                 ?
-                                <form className="grid grid-cols-2 p-fluid w-full">
+                                <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 p-fluid w-full">
                                     <div className="field">
                                         <span className="p-float-label">
                                             <Controller name="actualpassword" control={control} rules={{ required: 'La contraseña actual es requerida.' }} render={({ field, fieldState }) => (
@@ -163,7 +162,15 @@ export default function EditOwnUser() {
                                         {getFormErrorMessage('repeatpassword')}
                                     </div>
 
-                                    <Button type="submit" label="Actualizar" className="text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300 mt-2" onClick={handleSubmit(onSubmit)} />
+                                    <div className='col-span-2 flex justify-center mt-5'>
+                                        <button
+                                            type="submit"
+                                            className="w-1/2 flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300"
+
+                                        >
+                                            Actualizar
+                                        </button>
+                                    </div>
                                 </form>
                                 :
                                 ""

@@ -90,7 +90,7 @@ export default function ScheduleAppointment() {
     const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessage(false)} /></div>;
 
     return (
-        <div className='card'>
+        <div className='card flex h-full bg-gray-100'>
             {
                 (rol === 2 || foundPatient.length > 0) ?
                     <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '50vw' }}>
@@ -150,151 +150,155 @@ export default function ScheduleAppointment() {
 
 
 
-            <div className='w-full'>
-                <div className='flex items-center justify-center my-4'>
-                    <FontAwesomeIcon style={{ color: '#1D4078', fontSize: '2rem' }} icon={faCalendarPlus} />
-                    <h1 className='lg:text-3xl mx-3 my-3 text-center'>Agendar una cita para:</h1>
-                </div>
-                <div className='w-full flex justify-center'>
-                    {
-                        appointmentsTypes.map((appointment) => {
-                            return (
-                                <div key={appointment.code} className='lg:w-1/4 flex items-center justify-center' style={{ backgroundColor: '#1D4078' }}>
-                                    <div key={appointment.code} className="field-radiobutton h-20 text-white lg:text-xl flex mx-4 space-between items-center justify-center">
-                                        <RadioButton inputId={appointment.code} name="appointment" value={appointment} onChange={(e) => setSelectedAppointmentType(e.value)} checked={selectedAppointmentType.code === appointment.code} />
-                                        <label key={appointment.code} className='text-center cursor-pointer' htmlFor={appointment.code}>{appointment.name}</label>
+            <div className='flex justify-center w-full items-center'>
+                <div className='lg:w-3/4 border-4 rounded-lg py-4' style={{ backgroundColor: 'white' }}>
+                    <div className='flex items-center justify-center'>
+                        <FontAwesomeIcon style={{ color: '#1D4078', fontSize: '2rem' }} icon={faCalendarPlus} />
+                        <h1 className='lg:text-3xl mx-3 my-3 text-center'>Agendar una cita para:</h1>
+                    </div>
+                    <div className='lg:flex justify-center'>
+                        <div className='lg:flex lg:w-1/2 justify-center rounded-lg' style={{ backgroundColor: '#1D4078' }}>
+                            {
+                                appointmentsTypes.map((appointment) => {
+                                    return (
+                                        <div key={appointment.code}>
+                                            <div key={appointment.code} className="field-radiobutton h-20 text-white lg:text-xl flex mx-4 space-between items-center justify-center">
+                                                <RadioButton inputId={appointment.code} name="appointment" value={appointment} onChange={(e) => setSelectedAppointmentType(e.value)} checked={selectedAppointmentType.code === appointment.code} />
+                                                <label key={appointment.code} className='text-center cursor-pointer' htmlFor={appointment.code}>{appointment.name}</label>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+
+                    <div className='flex justify-center items-center'>
+                        <form onSubmit={handleSubmit(onSubmit)} className="w-1/2 pt-10 grid grid-cols-2 flex flex-col block justify-center items-center rounded-md shadow-md">
+                            {
+                                rol === 3 ?
+                                    <div className="field mt-6">
+                                        <span className="p-float-label">
+                                            <Controller name="patient" control={control} rules={{ required: 'El código de paciente es requerida.' }} render={({ field }) => (
+                                                <InputNumber autoFocus id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} />
+                                            )} />
+                                            <label htmlFor="patient" className={classNames({ 'p-error': errors.patientcode })}>Código de paciente*</label>
+                                        </span>
+                                        {getFormErrorMessage('patient')}
                                     </div>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+                                    :
+                                    ""
+                            }
+                            {
+                                selectedAppointmentType && selectedAppointmentType.code === 1 ?
+                                    <div className="field mt-6">
+                                        <span className="p-float-label">
+                                            <Controller name="inmunization" control={control} rules={{ required: 'La vacuna es requerida.' }} render={({ field }) => (
+                                                <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={inmunizations} optionLabel='vaccine_name' />
+                                            )} />
+                                            <label htmlFor="inmunization" className={classNames({ 'p-error': errors.inmunization })}>Vacuna*</label>
+                                        </span>
+                                        {getFormErrorMessage('inmunization')}
+                                    </div>
+                                    :
+                                    ""
+                            }
 
-                <div className='flex justify-center items-center'>
-                    <form onSubmit={handleSubmit(onSubmit)} className="w-1/2 pt-10 grid grid-cols-2 flex flex-col block justify-center items-center rounded-md shadow-md">
-                        {
-                            rol === 3 ?
-                                <div className="field mt-6">
-                                    <span className="p-float-label">
-                                        <Controller name="patient" control={control} rules={{ required: 'El código de paciente es requerida.' }} render={({ field }) => (
-                                            <InputNumber autoFocus id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} />
-                                        )} />
-                                        <label htmlFor="patient" className={classNames({ 'p-error': errors.patientcode })}>Código de paciente*</label>
-                                    </span>
-                                    {getFormErrorMessage('patient')}
-                                </div>
-                                :
-                                ""
-                        }
-                        {
-                            selectedAppointmentType && selectedAppointmentType.code === 1 ?
-                                <div className="field mt-6">
-                                    <span className="p-float-label">
-                                        <Controller name="inmunization" control={control} rules={{ required: 'La vacuna es requerida.' }} render={({ field }) => (
-                                            <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={inmunizations} optionLabel='vaccine_name' />
-                                        )} />
-                                        <label htmlFor="inmunization" className={classNames({ 'p-error': errors.inmunization })}>Vacuna*</label>
-                                    </span>
-                                    {getFormErrorMessage('inmunization')}
-                                </div>
-                                :
-                                ""
-                        }
+                            {
+                                selectedAppointmentType && selectedAppointmentType.code === 3 ?
+                                    <div className="field mt-6">
+                                        <span className="p-float-label">
+                                            <Controller name="test" control={control} rules={{ required: 'El examen es requerido.' }} render={({ field }) => (
+                                                <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={tests} optionLabel='name' />
+                                            )} />
+                                            <label htmlFor="test" className={classNames({ 'p-error': errors.test })}>Examen*</label>
+                                        </span>
+                                        {getFormErrorMessage('test')}
+                                    </div>
+                                    :
+                                    ""
+                            }
 
-                        {
-                            selectedAppointmentType && selectedAppointmentType.code === 3 ?
-                                <div className="field mt-6">
-                                    <span className="p-float-label">
-                                        <Controller name="test" control={control} rules={{ required: 'El examen es requerido.' }} render={({ field }) => (
-                                            <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={tests} optionLabel='name' />
-                                        )} />
-                                        <label htmlFor="test" className={classNames({ 'p-error': errors.test })}>Examen*</label>
-                                    </span>
-                                    {getFormErrorMessage('test')}
-                                </div>
-                                :
-                                ""
-                        }
+                            {
+                                selectedAppointmentType && selectedAppointmentType.code === 2 ?
+                                    <div className="field mt-8">
+                                        <span className="p-float-label">
+                                            <Controller name="area" control={control} rules={{ required: 'El área es requerido.' }} render={({ field }) => (
+                                                <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={areasList} optionLabel='name' />
+                                            )} />
+                                            <label htmlFor="area" className={classNames({ 'p-error': errors.area })}>Área*</label>
+                                        </span>
+                                        {getFormErrorMessage('area')}
+                                    </div>
+                                    :
+                                    ""
+                            }
 
-                        {
-                            selectedAppointmentType && selectedAppointmentType.code === 2 ?
+                            {
+                                selectedAppointmentType && selectedAppointmentType.code === 1 && inmunization &&
                                 <div className="field mt-8">
                                     <span className="p-float-label">
-                                        <Controller name="area" control={control} rules={{ required: 'El área es requerido.' }} render={({ field }) => (
-                                            <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={areasList} optionLabel='name' />
+                                        <Controller name="appointdate" control={control} rules={{ required: 'La fecha de cita es requerida.' }} render={({ field }) => (
+                                            <Calendar minDate={tomorrow} id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
                                         )} />
-                                        <label htmlFor="area" className={classNames({ 'p-error': errors.area })}>Área*</label>
+                                        <label htmlFor="appointdate" className={classNames({ 'p-error': errors.appointdate })}>Fecha de cita*</label>
                                     </span>
-                                    {getFormErrorMessage('area')}
+                                    {getFormErrorMessage('appointdate')}
                                 </div>
-                                :
-                                ""
-                        }
+                            }
 
-                        {
-                            selectedAppointmentType && selectedAppointmentType.code === 1 && inmunization &&
-                            <div className="field mt-8">
-                                <span className="p-float-label">
-                                    <Controller name="appointdate" control={control} rules={{ required: 'La fecha de cita es requerida.' }} render={({ field }) => (
-                                        <Calendar minDate={tomorrow} id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
-                                    )} />
-                                    <label htmlFor="appointdate" className={classNames({ 'p-error': errors.appointdate })}>Fecha de cita*</label>
-                                </span>
-                                {getFormErrorMessage('appointdate')}
+                            {
+                                selectedAppointmentType && selectedAppointmentType.code === 2 && area &&
+                                <div className="field mt-8">
+                                    <span className="p-float-label">
+                                        <Controller name="appointdate" control={control} rules={{ required: 'La fecha de cita es requerida.' }} render={({ field }) => (
+                                            <Calendar minDate={tomorrow} id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
+                                        )} />
+                                        <label htmlFor="appointdate" className={classNames({ 'p-error': errors.appointdate })}>Fecha de cita*</label>
+                                    </span>
+                                    {getFormErrorMessage('appointdate')}
+                                </div>
+                            }
+
+                            {
+                                selectedAppointmentType && selectedAppointmentType.code === 3 && test &&
+                                <div className="field mt-8">
+                                    <span className="p-float-label">
+                                        <Controller name="appointdate" control={control} rules={{ required: 'La fecha de cita es requerida.' }} render={({ field }) => (
+                                            <Calendar minDate={tomorrow} id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
+                                        )} />
+                                        <label htmlFor="appointdate" className={classNames({ 'p-error': errors.appointdate })}>Fecha de cita*</label>
+                                    </span>
+                                    {getFormErrorMessage('appointdate')}
+                                </div>
+                            }
+
+                            {
+                                appointdate &&
+                                <div className="field mt-8">
+                                    <span className="p-float-label">
+                                        <Controller name="appointime" control={control} rules={{ required: 'El turno de cita es requerido.' }} render={({ field }) => (
+                                            <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={filteredShifts.at(0).shifts} />
+                                        )} />
+                                        <label htmlFor="appointime" className={classNames({ 'p-error': errors.appointime })}>Turno*</label>
+                                    </span>
+                                    {getFormErrorMessage('appointime')}
+                                </div>
+                            }
+
+                            <br />
+
+                            <div className='col-span-2 flex justify-center mt-5'>
+                                <button
+                                    type="submit"
+                                    className="w-1/2 flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300"
+
+                                >
+                                    Agendar
+                                </button>
                             </div>
-                        }
-
-                        {
-                            selectedAppointmentType && selectedAppointmentType.code === 2 && area &&
-                            <div className="field mt-8">
-                                <span className="p-float-label">
-                                    <Controller name="appointdate" control={control} rules={{ required: 'La fecha de cita es requerida.' }} render={({ field }) => (
-                                        <Calendar minDate={tomorrow} id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
-                                    )} />
-                                    <label htmlFor="appointdate" className={classNames({ 'p-error': errors.appointdate })}>Fecha de cita*</label>
-                                </span>
-                                {getFormErrorMessage('appointdate')}
-                            </div>
-                        }
-
-                        {
-                            selectedAppointmentType && selectedAppointmentType.code === 3 && test &&
-                            <div className="field mt-8">
-                                <span className="p-float-label">
-                                    <Controller name="appointdate" control={control} rules={{ required: 'La fecha de cita es requerida.' }} render={({ field }) => (
-                                        <Calendar minDate={tomorrow} id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} dateFormat="yy/mm/dd" showIcon mask="99/99/9999" />
-                                    )} />
-                                    <label htmlFor="appointdate" className={classNames({ 'p-error': errors.appointdate })}>Fecha de cita*</label>
-                                </span>
-                                {getFormErrorMessage('appointdate')}
-                            </div>
-                        }
-
-                        {
-                            appointdate &&
-                            <div className="field mt-8">
-                                <span className="p-float-label">
-                                    <Controller name="appointime" control={control} rules={{ required: 'El turno de cita es requerido.' }} render={({ field }) => (
-                                        <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value)} options={filteredShifts.at(0).shifts} />
-                                    )} />
-                                    <label htmlFor="appointime" className={classNames({ 'p-error': errors.appointime })}>Turno*</label>
-                                </span>
-                                {getFormErrorMessage('appointime')}
-                            </div>
-                        }
-
-                        <br />
-
-                        <div className='col-span-2 flex justify-center mt-5'>
-                            <button
-                                type="submit"
-                                className="w-1/2 flex justify-center text-white p-2 rounded-full tracking-wide font-bold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg bg-blue-800 cursor-pointer transition ease-in duration-300"
-
-                            >
-                                Agendar
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div >
         </div >
