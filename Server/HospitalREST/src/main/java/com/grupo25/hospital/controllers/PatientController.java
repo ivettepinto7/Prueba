@@ -24,7 +24,7 @@ import com.grupo25.hospital.models.dtos.UserPrescriptionDTO;
 @RequestMapping("")
 public class PatientController {
  
-	@GetMapping("/expediente/inmunizaciones")
+	/*@GetMapping("/expediente/inmunizaciones")
 	public ResponseEntity<List<InmunizationsDTO>> getInmunizations(GetEntityDTO user,BindingResult result){
 		try {
 			//TODO implementar logica de obtener inmunizaciones
@@ -105,5 +105,5 @@ public class PatientController {
 			return new ResponseEntity<>(
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
+	}*/
 }

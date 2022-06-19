@@ -3,20 +3,25 @@ package com.grupo25.hospital.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo25.hospital.models.dtos.AreasDTO;
 import com.grupo25.hospital.models.dtos.CreateAreaDTO;
 import com.grupo25.hospital.models.dtos.CreateDrugDTO;
 import com.grupo25.hospital.models.dtos.CreateTestDTO;
-import com.grupo25.hospital.models.dtos.CreateUserDTO;
+import com.grupo25.hospital.models.dtos.CreatePersonDTO;
 import com.grupo25.hospital.models.dtos.CreateVaccineDTO;
 import com.grupo25.hospital.models.dtos.GetEntityDTO;
 import com.grupo25.hospital.models.dtos.DrugsExistenceDTO;
@@ -30,13 +35,97 @@ import com.grupo25.hospital.models.dtos.MessageDTO;
 import com.grupo25.hospital.models.dtos.TestListDTO;
 import com.grupo25.hospital.models.dtos.UserDTO;
 import com.grupo25.hospital.models.dtos.VaccinesExistenceListDTO;
+import com.grupo25.hospital.models.entities.Area;
+import com.grupo25.hospital.models.entities.Person;
+import com.grupo25.hospital.models.entities.Role;
+import com.grupo25.hospital.services.AreaService;
+import com.grupo25.hospital.services.PersonService;
+import com.grupo25.hospital.services.RoleService;
+import com.grupo25.hospital.utils.TokenManager;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/admin")
+@CrossOrigin
 public class AdminController {
 	
+	@Autowired
+	private TokenManager tokenManager;
+	
+	@Autowired
+	private PersonService personService;
+	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private AreaService areaService;
+	
+	@GetMapping("/users")
+	@ResponseBody
+	public ResponseEntity<List<Person>> findAllPeople(){
+		try {
+			Person personAuth = personService.getPersonAuthenticated();
+			System.out.println(personAuth.getName());
+			
+			List<Person> people = personService.findAll();
+			
+			return new ResponseEntity<>(
+						people,
+						HttpStatus.OK
+					);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+						null,
+						HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
+	
+	@PostMapping("/users/create")
+	public ResponseEntity<?> registerUser(@Valid CreatePersonDTO personInfo, BindingResult result){
+		try {
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Person foundPerson = personService.findOneByIdentifier(personInfo.getUsername());
+			
+			if(foundPerson != null) {
+				return new ResponseEntity<>(
+						new MessageDTO("Esta persona ya existe"),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Role foundRole = roleService.findOneById(personInfo.getRole());
+			
+			if(personInfo.getArea() == null) {
+				System.out.println("FOUND ROLE " + foundRole.getName());
+				personService.register(personInfo, foundRole, null);
+				return new ResponseEntity<>(
+						new MessageDTO("Persona registrada"),
+						HttpStatus.CREATED);
+			}else {
+				Area foundArea = areaService.findOneById(personInfo.getArea());
+				System.out.println("FOUND AREA " + foundArea.getName());
+				personService.register(personInfo, foundRole, foundArea);
+				
+				return new ResponseEntity<>(
+						new MessageDTO("Persona registrada"),
+						HttpStatus.CREATED);
+			}
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					new MessageDTO("Error interno"),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 
-	@GetMapping("/usuarios")
+	/*@GetMapping("/usuarios")
 	public ResponseEntity<List<UserDTO>> getUsers(UserDTO usuario, BindingResult result){
 		try {
 			//TODO implementar logica de obtener usuarios
@@ -51,7 +140,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/usuarios/crear")
-	public ResponseEntity<MessageDTO> createUser(CreateUserDTO newUser ,BindingResult result){
+	public ResponseEntity<MessageDTO> createUser(CreatePersonDTO newUser ,BindingResult result){
 		try {
 			//TODO implementar logica de registrar usuario
 			return new ResponseEntity<>(
@@ -308,7 +397,7 @@ public class AdminController {
 					new MessageDTO("Error interno"),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
+	}*/
 	
 	
 	

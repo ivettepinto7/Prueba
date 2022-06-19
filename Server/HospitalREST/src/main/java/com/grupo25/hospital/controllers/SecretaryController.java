@@ -21,7 +21,7 @@ import com.grupo25.hospital.models.dtos.ScheduleAppointmentDTO;
 @RequestMapping("")
 public class SecretaryController {
 
-	@GetMapping("/citas-dia")
+	/*@GetMapping("/citas-dia")
 	public ResponseEntity<List<CitasDiaDTO>> getDayAppointments(BindingResult result){
 		try {
 			//TODO implementar logica de obtener usuarios
@@ -60,5 +60,5 @@ public class SecretaryController {
 			return new ResponseEntity<>(
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
+	}*/
 }

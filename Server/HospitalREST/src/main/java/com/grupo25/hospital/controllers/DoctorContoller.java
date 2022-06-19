@@ -23,7 +23,7 @@ import com.grupo25.hospital.models.dtos.MessageDTO;
 @RequestMapping("")
 public class DoctorContoller {
 	
-	@GetMapping("/citas-dia")
+	/*@GetMapping("/citas-dia")
 	public ResponseEntity<List<CitasDiaDTO>> getDayAppointments(GetEntityDTO doctor ,BindingResult result){
 		try {
 			//TODO implementar logica de obtener usuarios
@@ -74,5 +74,5 @@ public class DoctorContoller {
 					new MessageDTO("Error interno"),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
+	}*/
 }
