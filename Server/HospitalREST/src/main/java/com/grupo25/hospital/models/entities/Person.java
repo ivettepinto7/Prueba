@@ -165,13 +165,13 @@ public class Person {
 		this.id_area = id_area;
 	}
 
-	/*public List<Token> getTokens() {
+	public List<Token> getTokens() {
 		return tokens;
 	}
 
 	public void setTokens(List<Token> tokens) {
 		this.tokens = tokens;
-	}*/
+	}
 	
 	
 }

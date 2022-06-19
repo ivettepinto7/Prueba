@@ -12,7 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +30,11 @@ import com.grupo25.hospital.models.dtos.DrugsExistenceDTO;
 import com.grupo25.hospital.models.dtos.EditAreaDTO;
 import com.grupo25.hospital.models.dtos.EditDrugDTO;
 import com.grupo25.hospital.models.dtos.EditTestDTO;
-import com.grupo25.hospital.models.dtos.EditUserDTO;
+import com.grupo25.hospital.models.dtos.EditPersonDTO;
 import com.grupo25.hospital.models.dtos.EditVaccineDTO;
 import com.grupo25.hospital.models.dtos.ExamExistenceDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
+import com.grupo25.hospital.models.dtos.PersonResponseDTO;
 import com.grupo25.hospital.models.dtos.TestListDTO;
 import com.grupo25.hospital.models.dtos.UserDTO;
 import com.grupo25.hospital.models.dtos.VaccinesExistenceListDTO;
@@ -61,7 +64,6 @@ public class AdminController {
 	private AreaService areaService;
 	
 	@GetMapping("/users")
-	@ResponseBody
 	public ResponseEntity<List<Person>> findAllPeople(){
 		try {
 			Person personAuth = personService.getPersonAuthenticated();
@@ -73,6 +75,31 @@ public class AdminController {
 						people,
 						HttpStatus.OK
 					);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+						null,
+						HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
+	
+	@GetMapping("/users/{id}")
+	public ResponseEntity<?> findOnePerson(@PathVariable(name = "id") Long id){
+		try {
+			Person foundPerson = personService.findOneById(id);
+
+			if(foundPerson != null) {
+				return new ResponseEntity<>(
+						new PersonResponseDTO(foundPerson.getEmail(), foundPerson.getStatus(), foundPerson.getUsername()),
+						HttpStatus.OK
+					);
+			}
+			
+			return new ResponseEntity<>(
+					new PersonResponseDTO(),
+					HttpStatus.NOT_FOUND
+				);
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(
 						null,
@@ -120,52 +147,73 @@ public class AdminController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(
 					new MessageDTO("Error interno"),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+					HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
+	
+	@PutMapping("/users/update")
+	public ResponseEntity<?> editUser(@Valid EditPersonDTO personInfo, BindingResult result){
+		try {
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Person foundPerson = personService.findOneById(personInfo.getId());
+			
+			if(foundPerson != null) {
+				personService.update(personInfo, foundPerson);
+				
+				return new ResponseEntity<>(
+						new MessageDTO("Persona actualizada"),
+						HttpStatus.OK
+					);
+			}
+			
+			return new ResponseEntity<>(
+					new MessageDTO("Persona no encontrada"),
+					HttpStatus.NOT_FOUND
+				);
+		} catch(Exception e) {
+			return new ResponseEntity<>(
+					new MessageDTO("Error interno"),
+					HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
+	
+	@PutMapping("/users/{id}/deactivate")
+	public ResponseEntity<?> deactivateUser(@PathVariable(name = "id") Long id){
+		try {
+			Person foundPerson = personService.findOneById(id);
+			
+			if(foundPerson != null) {
+				Boolean status = foundPerson.getStatus();
+				personService.deactivate(foundPerson, status);
+				return new ResponseEntity<>(
+						new MessageDTO("Persona actualizada"),
+						HttpStatus.OK
+					);
+			}
+			
+			return new ResponseEntity<>(
+					new MessageDTO("Persona no encontrada"),
+					HttpStatus.NOT_FOUND
+				);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+						null,
+						HttpStatus.INTERNAL_SERVER_ERROR
+					);
 		}
 	}
 	
 
-	/*@GetMapping("/usuarios")
-	public ResponseEntity<List<UserDTO>> getUsers(UserDTO usuario, BindingResult result){
-		try {
-			//TODO implementar logica de obtener usuarios
-			List<UserDTO> listaUsers= new ArrayList<>();
-			return new ResponseEntity<List<UserDTO>>(
-					listaUsers,
-					HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	@PostMapping("/usuarios/crear")
-	public ResponseEntity<MessageDTO> createUser(CreatePersonDTO newUser ,BindingResult result){
-		try {
-			//TODO implementar logica de registrar usuario
-			return new ResponseEntity<>(
-					new MessageDTO("Usuario registrado"),
-					HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>(
-					new MessageDTO("Error interno"),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	@PostMapping("/usuarios/modificar")
-	public ResponseEntity<MessageDTO> modifyUser(EditUserDTO editedUser ,BindingResult result){
-		try {
-			//TODO implementar logica de modificar usuario
-			return new ResponseEntity<>(
-					new MessageDTO("Usuario modificado"),
-					HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(
-					new MessageDTO("Error interno"),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+	/*
 	
 	@PostMapping("/usuarios/eliminar")
 	public ResponseEntity<MessageDTO> eliminarUser(GetEntityDTO newDelete ,BindingResult result){

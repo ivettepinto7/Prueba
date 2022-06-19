@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.grupo25.hospital.models.dtos.CreatePersonDTO;
+import com.grupo25.hospital.models.dtos.EditPersonDTO;
 import com.grupo25.hospital.models.entities.Area;
 import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.models.entities.Role;
@@ -120,5 +121,25 @@ public class PersonServiceImpl implements PersonService {
 		
 		return personRepository.findByUsername(username);
 	}
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void update(EditPersonDTO personInfo, Person person) throws Exception {
+		person.setEmail(personInfo.getEmail());
+		person.setPassword(passEncoder.encode(personInfo.getPassword()));
+		person.setStatus(personInfo.getStatus());
+		
+		personRepository.save(person);		
+	}
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void deactivate(Person person, Boolean status) throws Exception {
+		person.setStatus(!status);
+		
+		personRepository.save(person);
+	}
+
+	
 
 }
