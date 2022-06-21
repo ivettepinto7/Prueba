@@ -64,11 +64,8 @@ public class AdminController {
 	private AreaService areaService;
 	
 	@GetMapping("/users")
-	public ResponseEntity<List<Person>> findAllPeople(){
+	public ResponseEntity<?> findAllPeople(){
 		try {
-			Person personAuth = personService.getPersonAuthenticated();
-			System.out.println(personAuth.getName());
-			
 			List<Person> people = personService.findAll();
 			
 			return new ResponseEntity<>(
@@ -136,7 +133,7 @@ public class AdminController {
 						HttpStatus.CREATED);
 			}else {
 				Area foundArea = areaService.findOneById(personInfo.getArea());
-				System.out.println("FOUND AREA " + foundArea.getName());
+				
 				personService.register(personInfo, foundRole, foundArea);
 				
 				return new ResponseEntity<>(
@@ -212,24 +209,126 @@ public class AdminController {
 		}
 	}
 	
-
-	/*
-	
-	@PostMapping("/usuarios/eliminar")
-	public ResponseEntity<MessageDTO> eliminarUser(GetEntityDTO newDelete ,BindingResult result){
+	@GetMapping("/areas")
+	public ResponseEntity<?> getAllAreas(){
 		try {
-			//TODO implementar logica de modificar usuario
+			List<Area> areas = areaService.findAll();
+			
 			return new ResponseEntity<>(
-					new MessageDTO("Usuario eliminado"),
-					HttpStatus.OK);
+						areas,
+						HttpStatus.OK
+					);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					new MessageDTO("Error interno"),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+						null,
+						HttpStatus.INTERNAL_SERVER_ERROR
+					);
 		}
 	}
 	
+	@PostMapping("/areas/create")
+	public ResponseEntity<?> createArea(@Valid CreateAreaDTO areaInfo, BindingResult result){
+		try {
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Area foundArea = areaService.findOneByIdentifier(areaInfo.getName());
+			
+			if(foundArea != null) {
+				return new ResponseEntity<>(
+						new MessageDTO("Esta área ya existe"),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			areaService.insert(areaInfo);
+			
+			return new ResponseEntity<>(
+					new MessageDTO("Área registrada"),
+					HttpStatus.CREATED
+					);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					new MessageDTO("Error interno"),
+					HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
 	
+	@PutMapping("/areas/update")
+	public ResponseEntity<?> updateArea(@Valid EditAreaDTO areaInfo, BindingResult result){
+		try {
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Area foundArea = areaService.findOneById(areaInfo.getId());
+			
+			if(foundArea != null) {
+				/*Area existArea = areaService.findOneByIdentifier(areaInfo.getName());
+				
+				if(existArea != null) {
+					return new ResponseEntity<>(
+							new MessageDTO("Está area ya existe"),
+							HttpStatus.BAD_REQUEST
+							);
+				}*/
+				
+				areaService.update(areaInfo, foundArea);
+				return new ResponseEntity<>(
+						new MessageDTO("Área actualizada"),
+						HttpStatus.OK
+					);
+			}
+			
+			return new ResponseEntity<>(
+					new MessageDTO("Área no encontrada"),
+					HttpStatus.NOT_FOUND
+				);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+						null,
+						HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
+	
+	@DeleteMapping("/areas/{id}/delete")
+	public ResponseEntity<?> deleteArea(@PathVariable(name = "id") Long id){
+		try {
+			Area foundArea = areaService.findOneById(id);
+			
+			if(foundArea != null) {
+				areaService.delete(foundArea);
+				
+				return new ResponseEntity<>(
+						new MessageDTO("Área eliminada"),
+						HttpStatus.OK
+					);
+			}
+			
+			return new ResponseEntity<>(
+					new MessageDTO("Área no encontrada"),
+					HttpStatus.NOT_FOUND
+				);
+		} catch(Exception e) {
+			return new ResponseEntity<>(
+					null,
+					HttpStatus.INTERNAL_SERVER_ERROR
+				);
+		}
+	}
+	
+
+	/*
 	@GetMapping("/examenes")
 	public ResponseEntity<List<ExamExistenceDTO>> getTests(ExamExistenceDTO exam, BindingResult result){
 		try {

@@ -1,50 +1,57 @@
 package com.grupo25.hospital.models.dtos;
 
-public class EditAreaDTO {
-	private int code;
-	private String nombre;
-	private String genero;
-	private int edad_inicial;
-	private int frecuencia_visita;
+import javax.validation.constraints.NotNull;
 
-	public EditAreaDTO(int code, String nombre, String genero, int edad_inicial, int frecuencia_visita) {
-		super();
-		this.code = code;
-		this.nombre = nombre;
-		this.genero = genero;
-		this.edad_inicial = edad_inicial;
-		this.frecuencia_visita = frecuencia_visita;
-	}
+public class EditAreaDTO {
+	@NotNull
+	private Long id;
+	private String name;
+	private Character gender;
+	private Integer start_age;
+	private Integer frequency;
 	
-	public String getNombre() {
-		return nombre;
+	public EditAreaDTO() {
+		super();
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public EditAreaDTO(@NotNull Long id, String name, Character gender, Integer start_age, Integer frequency) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.gender = gender;
+		this.start_age = start_age;
+		this.frequency = frequency;
 	}
-	public String getGenero() {
-		return genero;
+	public Long getId() {
+		return id;
 	}
-	public void setGenero(String genero) {
-		this.genero = genero;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public int getEdad_inicial() {
-		return edad_inicial;
+	public String getName() {
+		return name;
 	}
-	public void setEdad_inicial(int edad_inicial) {
-		this.edad_inicial = edad_inicial;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public int getFrecuencia_visita() {
-		return frecuencia_visita;
+	public Character getGender() {
+		return gender;
 	}
-	public void setFrecuencia_visita(int frecuencia_visita) {
-		this.frecuencia_visita = frecuencia_visita;
+	public void setGender(Character gender) {
+		this.gender = gender;
 	}
-	public int getCode() {
-		return code;
+	public Integer getStart_age() {
+		return start_age;
 	}
-	public void setCode(int code) {
-		this.code = code;
+	public void setStart_age(Integer start_age) {
+		this.start_age = start_age;
 	}
+	public Integer getFrequency() {
+		return frequency;
+	}
+	public void setFrequency(Integer frequency) {
+		this.frequency = frequency;
+	}
+
+	
 	
 }

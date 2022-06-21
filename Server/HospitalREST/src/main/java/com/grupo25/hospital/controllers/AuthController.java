@@ -48,8 +48,7 @@ public class AuthController {
 	private AreaService areaService;
 	
 	@PostMapping("/signin")
-	@ResponseBody
-	public ResponseEntity<TokenDTO> login(@Valid LoginDTO loginInfo, BindingResult result){
+	public ResponseEntity<?> login(@Valid LoginDTO loginInfo, BindingResult result){
 		try {
 			if(result.hasErrors()) {
 	            return new ResponseEntity<>(
@@ -59,8 +58,6 @@ public class AuthController {
 	        }
 			
 			Person person = personService.findOneByIdentifier(loginInfo.getUsername());
-			//Role role = person.getId_role();
-			//Area area = person.getId_area();
 			
 			if(personService.comparePassword(person, loginInfo.getPassword()) == false) {
 	            return new ResponseEntity<>(
@@ -84,7 +81,9 @@ public class AuthController {
                     		person.getEmail(),
                     		person.getGender(),
                     		person.getStatus(),
-                    		person.getBirthdate()
+                    		person.getBirthdate(),
+                    		person.getId_role(),
+                    		person.getId_area()
                     	),
                     HttpStatus.CREATED
                 );

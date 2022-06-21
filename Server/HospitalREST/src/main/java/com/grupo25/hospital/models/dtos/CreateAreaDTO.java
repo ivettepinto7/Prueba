@@ -1,40 +1,59 @@
 package com.grupo25.hospital.models.dtos;
 
+import javax.validation.constraints.NotBlank;
+
 public class CreateAreaDTO {
-	private String nombre;
-	private String genero;
-	private int edad_inicial;
-	private int frecuencia_visita;
-	public CreateAreaDTO(String nombre, String genero, int edad_inicial, int frecuencia_visita) {
+	@NotBlank
+	private String name;
+	
+	private Character gender;
+	
+	private Integer start_age;
+	
+	private Integer frequency;
+
+	public CreateAreaDTO() {
 		super();
-		this.nombre = nombre;
-		this.genero = genero;
-		this.edad_inicial = edad_inicial;
-		this.frecuencia_visita = frecuencia_visita;
 	}
-	public String getNombre() {
-		return nombre;
+
+	public CreateAreaDTO(@NotBlank String name, Character gender, Integer start_age, Integer frequency) {
+		super();
+		this.name = name;
+		this.gender = gender;
+		this.start_age = start_age;
+		this.frequency = frequency;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+
+	public String getName() {
+		return name;
 	}
-	public String getGenero() {
-		return genero;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void setGenero(String genero) {
-		this.genero = genero;
+
+	public Character getGender() {
+		return gender;
 	}
-	public int getEdad_inicial() {
-		return edad_inicial;
+
+	public void setGender(Character gender) {
+		this.gender = gender;
 	}
-	public void setEdad_inicial(int edad_inicial) {
-		this.edad_inicial = edad_inicial;
+
+	public Integer getStart_age() {
+		return start_age;
 	}
-	public int getFrecuencia_visita() {
-		return frecuencia_visita;
+
+	public void setStart_age(Integer start_age) {
+		this.start_age = start_age;
 	}
-	public void setFrecuencia_visita(int frecuencia_visita) {
-		this.frecuencia_visita = frecuencia_visita;
+
+	public Integer getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(Integer frequency) {
+		this.frequency = frequency;
 	}
 	
 	
