@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
 import com.grupo25.hospital.models.dtos.AreasDTO;
 import com.grupo25.hospital.models.dtos.CreateAreaDTO;
 import com.grupo25.hospital.models.dtos.CreateDrugDTO;
@@ -320,6 +321,42 @@ public class AdminController {
 					HttpStatus.NOT_FOUND
 				);
 		} catch(Exception e) {
+			return new ResponseEntity<>(
+					null,
+					HttpStatus.INTERNAL_SERVER_ERROR
+				);
+		}
+	}
+	
+	//@Valid EditAreaDTO areaInfo, BindingResult result
+	@PutMapping("/my-info/updatepassword")
+	public ResponseEntity<?> updateOwnPassword(@Valid ActualizarPassDTO newPassInfo, BindingResult result){
+		
+		try {
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			if(!newPassInfo.getNew_password().equals(newPassInfo.getConfirm_password())) {
+				return new ResponseEntity<>(
+						new MessageDTO("Contraseñas no son iguales"),
+						HttpStatus.BAD_REQUEST);
+			}
+			Person foundPerson = personService.getPersonAuthenticated();
+			if(personService.comparePassword(foundPerson, newPassInfo.getCurrent_password())==false) {
+				return new ResponseEntity<>(
+						new MessageDTO("Contraseña actual equivocada"),
+						HttpStatus.BAD_REQUEST);
+			}
+			personService.updatePersonPassword(newPassInfo, foundPerson);
+			return new ResponseEntity<>(
+					new MessageDTO("Contraseña actualizada"),
+					HttpStatus.OK
+				);
+			
+		} catch (Exception e) {
 			return new ResponseEntity<>(
 					null,
 					HttpStatus.INTERNAL_SERVER_ERROR

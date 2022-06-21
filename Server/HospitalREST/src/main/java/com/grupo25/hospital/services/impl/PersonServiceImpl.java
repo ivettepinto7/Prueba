@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
 import com.grupo25.hospital.models.dtos.CreatePersonDTO;
 import com.grupo25.hospital.models.dtos.EditPersonDTO;
 import com.grupo25.hospital.models.entities.Area;
@@ -138,6 +139,17 @@ public class PersonServiceImpl implements PersonService {
 		person.setStatus(!status);
 		
 		personRepository.save(person);
+	}
+
+
+
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void updatePersonPassword(ActualizarPassDTO passInfo, Person person) throws Exception {
+		person.setPassword(passEncoder.encode(passInfo.getNew_password()));
+		personRepository.save(person);
+		
 	}
 
 	

@@ -1,22 +1,31 @@
 package com.grupo25.hospital.models.dtos;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class ActualizarPassDTO {
-	private int code;
+	
+	@NotBlank
+	@Size(min=8, max=32)
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
 	private String current_password;
+	@NotBlank
+	@Size(min=8, max=32)
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
 	private String new_password;
+	@NotBlank
+	@Size(min=8, max=32)
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
 	private String confirm_password;
-	public ActualizarPassDTO(int code, String current_password, String new_password, String confirm_password) {
+	public ActualizarPassDTO(
+			@NotBlank @Size(min = 8, max = 32) @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$") String current_password,
+			@NotBlank @Size(min = 8, max = 32) @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$") String new_password,
+			@NotBlank @Size(min = 8, max = 32) @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$") String confirm_password) {
 		super();
-		this.code = code;
 		this.current_password = current_password;
 		this.new_password = new_password;
 		this.confirm_password = confirm_password;
-	}
-	public int getCode() {
-		return code;
-	}
-	public void setCode(int code) {
-		this.code = code;
 	}
 	public String getCurrent_password() {
 		return current_password;
@@ -36,6 +45,6 @@ public class ActualizarPassDTO {
 	public void setConfirm_password(String confirm_password) {
 		this.confirm_password = confirm_password;
 	}
-	
+
 	
 }

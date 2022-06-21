@@ -2,6 +2,7 @@ package com.grupo25.hospital.services;
 
 import java.util.List;
 
+import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
 import com.grupo25.hospital.models.dtos.CreatePersonDTO;
 import com.grupo25.hospital.models.dtos.EditPersonDTO;
 import com.grupo25.hospital.models.entities.Area;
@@ -19,4 +20,5 @@ public interface PersonService {
 	void insertToken(Person person, String token) throws Exception;
 	Boolean isTokenValid(Person person, String token) throws Exception;
 	Person getPersonAuthenticated() throws Exception;
+	void updatePersonPassword(ActualizarPassDTO passInfo, Person person) throws Exception;
 }
