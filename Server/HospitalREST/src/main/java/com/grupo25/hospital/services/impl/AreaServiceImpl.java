@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grupo25.hospital.models.dtos.CreateAreaDTO;
+import com.grupo25.hospital.models.dtos.EditAreaDTO;
 import com.grupo25.hospital.models.entities.Area;
 import com.grupo25.hospital.repositories.AreaRepository;
 import com.grupo25.hospital.services.AreaService;
@@ -44,6 +45,22 @@ public class AreaServiceImpl implements AreaService {
 	@Override
 	public Area findOneByIdentifier(String name) throws Exception {
 		return areaRepository.findByName(name);
+	}
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void update(EditAreaDTO areaInfo, Area area) throws Exception {
+		area.setName(areaInfo.getName());
+		area.setStart_age(areaInfo.getStart_age());
+		area.setFrequency(areaInfo.getFrequency());
+		
+		areaRepository.save(area);
+	}
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void delete(Area area) throws Exception {
+		areaRepository.delete(area);
 	}
 
 }
