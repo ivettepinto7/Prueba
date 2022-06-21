@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.springframework.lang.Nullable;
+
 @Entity(name = "area")
 public class Area {
 	@Id
@@ -23,13 +25,14 @@ public class Area {
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "gender")
+	@Column(name = "gender" , nullable = true)
 	private Character gender;
 	
-	@Column(name = "start_age")
+	
+	@Column(name = "start_age" , nullable = true)
 	private Integer start_age;
 	
-	@Column(name = "frequency")
+	@Column(name = "frequency" , nullable = true)
 	private Integer frequency;
 	
 	@OneToMany(mappedBy = "id_area", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
@@ -83,7 +86,7 @@ public class Area {
 		return frequency;
 	}
 
-	public void setFrequency(int frequency) {
+	public void setFrequency(Integer frequency) {
 		this.frequency = frequency;
 	}
 

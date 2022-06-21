@@ -48,6 +48,7 @@ public class AuthController {
 	private AreaService areaService;
 	
 	@PostMapping("/signin")
+	@ResponseBody
 	public ResponseEntity<TokenDTO> login(@Valid LoginDTO loginInfo, BindingResult result){
 		try {
 			if(result.hasErrors()) {
@@ -73,9 +74,9 @@ public class AuthController {
 	        
 	        personService.insertToken(person, token);
 	        
-	        return new ResponseEntity<>(
+	        return new ResponseEntity<TokenDTO>(
                     new TokenDTO(
-                    		token, 
+                    		token,
                     		person.getId_person(),
                     		person.getName(),
                     		person.getUsername(),
