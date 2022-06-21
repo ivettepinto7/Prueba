@@ -1,5 +1,6 @@
 package com.grupo25.hospital.models.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,8 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "person")
 public class Person {
+
 	@Id
 	@Column(name = "id_person")
 	@SequenceGenerator(name = "person_id_person_gen", sequenceName = "person_id_person_seq", allocationSize = 1)
@@ -53,9 +57,11 @@ public class Person {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_area", nullable = true)
+	//@JsonIgnore
 	private Area id_area;
 	
 	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@JsonIgnore
 	private List<Token> tokens;
 
 	public Person() {

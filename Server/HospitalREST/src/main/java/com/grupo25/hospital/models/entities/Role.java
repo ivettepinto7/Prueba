@@ -1,5 +1,6 @@
 package com.grupo25.hospital.models.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,18 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "role")
 public class Role {
+
 	@Id
 	@Column(name = "id_rol")
-	@SequenceGenerator(name = "role_id_rol_gen", sequenceName = "role_id_role_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_role_gen")
+	@SequenceGenerator(name = "role_id_rol_gen", sequenceName = "role_id_rol_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_rol_gen")
 	private Long id_role;
 	
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany(mappedBy = "id_role", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@OneToMany(mappedBy = "id_role", fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
+	@JsonIgnore
 	private List<Person> people;
 	
 	public Role() {

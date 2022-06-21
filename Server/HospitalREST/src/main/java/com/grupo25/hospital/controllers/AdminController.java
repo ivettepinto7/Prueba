@@ -66,9 +66,6 @@ public class AdminController {
 	@GetMapping("/users")
 	public ResponseEntity<List<Person>> findAllPeople(){
 		try {
-			Person personAuth = personService.getPersonAuthenticated();
-			System.out.println(personAuth.getName());
-			
 			List<Person> people = personService.findAll();
 			
 			return new ResponseEntity<>(
@@ -136,7 +133,7 @@ public class AdminController {
 						HttpStatus.CREATED);
 			}else {
 				Area foundArea = areaService.findOneById(personInfo.getArea());
-				System.out.println("FOUND AREA " + foundArea.getName());
+				
 				personService.register(personInfo, foundRole, foundArea);
 				
 				return new ResponseEntity<>(
@@ -204,6 +201,23 @@ public class AdminController {
 					HttpStatus.NOT_FOUND
 				);
 			
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+						null,
+						HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
+	
+	@GetMapping("/areas")
+	public ResponseEntity<?> getAllAreas(){
+		try {
+			List<Area> areas = areaService.findAll();
+			
+			return new ResponseEntity<>(
+						areas,
+						HttpStatus.OK
+					);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
 						null,

@@ -1,5 +1,6 @@
 package com.grupo25.hospital.models.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,8 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity(name = "area")
 public class Area {
+
 	@Id
 	@Column(name = "id_area")
 	@SequenceGenerator(name = "area_id_area_gen", sequenceName = "area_id_area_seq", allocationSize = 1)
@@ -23,16 +28,17 @@ public class Area {
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "gender")
+	@Column(name = "gender", nullable = true)
 	private Character gender;
 	
-	@Column(name = "start_age")
+	@Column(name = "start_age", nullable = true)
 	private Integer start_age;
 	
-	@Column(name = "frequency")
+	@Column(name = "frequency", nullable = true)
 	private Integer frequency;
 	
-	@OneToMany(mappedBy = "id_area", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@OneToMany(mappedBy = "id_area", fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
+	@JsonIgnore
 	private List<Person> people;
 
 	public Area() {
@@ -79,11 +85,11 @@ public class Area {
 		this.start_age = start_age;
 	}
 
-	public int getFrequency() {
+	public Integer getFrequency() {
 		return frequency;
 	}
 
-	public void setFrequency(int frequency) {
+	public void setFrequency(Integer frequency) {
 		this.frequency = frequency;
 	}
 
