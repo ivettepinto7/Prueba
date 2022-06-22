@@ -12,20 +12,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
-import com.grupo25.hospital.models.dtos.CreatePersonDTO;
-import com.grupo25.hospital.models.dtos.IniciarSesionDTO;
 import com.grupo25.hospital.models.dtos.LoginDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
-import com.grupo25.hospital.models.dtos.RecuperarPassDTO;
+import com.grupo25.hospital.models.dtos.RequestPasswordDTO;
+import com.grupo25.hospital.models.dtos.RestorePassDTO;
 import com.grupo25.hospital.models.dtos.TokenDTO;
-import com.grupo25.hospital.models.entities.Area;
 import com.grupo25.hospital.models.entities.Person;
-import com.grupo25.hospital.models.entities.Role;
 import com.grupo25.hospital.services.AreaService;
+import com.grupo25.hospital.services.MailService;
 import com.grupo25.hospital.services.PersonService;
 import com.grupo25.hospital.services.RoleService;
 import com.grupo25.hospital.utils.TokenManager;
@@ -42,10 +38,7 @@ public class AuthController {
 	private PersonService personService;
 	
 	@Autowired
-	private RoleService roleService;
-	
-	@Autowired
-	private AreaService areaService;
+	private MailService mailService;
 	
 	@PostMapping("/signin")
 	public ResponseEntity<?> login(@Valid LoginDTO loginInfo, BindingResult result){
@@ -58,6 +51,13 @@ public class AuthController {
 	        }
 			
 			Person person = personService.findOneByIdentifier(loginInfo.getUsername());
+			
+			if(person == null) {
+				return new ResponseEntity<>(
+	                    new TokenDTO(),
+	                    HttpStatus.NOT_FOUND
+	                );
+			}
 			
 			if(personService.comparePassword(person, loginInfo.getPassword()) == false) {
 	            return new ResponseEntity<>(
@@ -85,11 +85,10 @@ public class AuthController {
                     		person.getId_role(),
                     		person.getId_area()
                     	),
-                    HttpStatus.CREATED
+                    HttpStatus.OK
                 );
 	        
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 	        return new ResponseEntity<>(
 	                new TokenDTO(),
 	                HttpStatus.INTERNAL_SERVER_ERROR
@@ -97,62 +96,76 @@ public class AuthController {
 		}
 	}
 	
-	/*@PostMapping("recuperarcontra")
-	public ResponseEntity<MessageDTO> recoverPassword(RecuperarPassDTO recuperarPass,BindingResult result){
+	@PostMapping("/request-password")
+	public ResponseEntity<?> requestPassword(@Valid RequestPasswordDTO requestInfo, BindingResult result){
 		try {
-			//TODO implementar logica de recuperar contra
-			return new ResponseEntity<>(
-					new MessageDTO("Usuario registrado"),
-					HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(
-					new MessageDTO("Error interno"),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}*/
-	
-	/*@PostMapping("iniciarsesion")
-	private ResponseEntity<TokenDTO> login( IniciarSesionDTO iniciarSesion,BindingResult result){
-		try {
-			//TODO crear token
-			String token="";
-			return new ResponseEntity<>(
-                    new TokenDTO(token),
+			if(result.hasErrors()) {
+	            return new ResponseEntity<>(
+	                    new TokenDTO(),
+	                    HttpStatus.BAD_REQUEST
+	                );
+	        }
+			
+			Person foundPerson = personService.findOneByIdentifier(requestInfo.getUsername());
+			
+			if(foundPerson == null) {
+				return new ResponseEntity<>(
+	                    new MessageDTO("Persona no encontrada"),
+	                    HttpStatus.NOT_FOUND
+	                );
+			}
+			
+			mailService.sendRequestPasswordEmail(
+					foundPerson.getEmail(), 
+					foundPerson.getUsername(), 
+					foundPerson.getId_person()
+				);
+			
+	        return new ResponseEntity<>(
+                    new MessageDTO("Verifique su bandeja de entrada de su correo electrónico"),
                     HttpStatus.OK
                 );
-			
+	        
 		} catch (Exception e) {
-			return new ResponseEntity<>(
-					new TokenDTO(),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<>(
+	                null,
+	                HttpStatus.INTERNAL_SERVER_ERROR
+	            );
 		}
-		}*/
+	}
 	
-	//@PostMapping("cerrarsesion")
-	//private ResponseEntity<MessageDTO> logout(/*EL DTO*/ BindingResult result){
-		//try {
-			//TODO logica de cerrado de sesion
-			//return new ResponseEntity<>(
-                    //HttpStatus.CREATED
-                //);
-			
-		//} catch (Exception e) {
-			//return new ResponseEntity<>(
-					//HttpStatus.INTERNAL_SERVER_ERROR);
-		//}
-	//}
-	
-	/*@PostMapping("actualizarcontra")
-	public ResponseEntity<MessageDTO> updatePassword(ActualizarPassDTO updatepass,BindingResult result){
+	@PostMapping("/restore-password")
+	public ResponseEntity<?> restorePassword(@Valid RestorePassDTO restorePassInfo, BindingResult result){
 		try {
-			//TODO implementar logica de actualizar password
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			if(!restorePassInfo.getNew_password().equals(restorePassInfo.getConfirm_password())) {
+				return new ResponseEntity<>(
+						new MessageDTO("Las contraseñas no coinciden"),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Person foundPerson = personService.findOneById(restorePassInfo.getId());
+			
+			personService.restorePassword(restorePassInfo, foundPerson);
+			
 			return new ResponseEntity<>(
-					new MessageDTO("Actualizada"),
-					HttpStatus.OK);
+					new MessageDTO("Contraseña actualizada"),
+					HttpStatus.OK
+				);
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					new MessageDTO("Error interno"),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+					null,
+					HttpStatus.INTERNAL_SERVER_ERROR
+				);
 		}
-	}*/
+	}
+	
+	
 }

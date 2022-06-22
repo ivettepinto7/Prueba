@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
+import com.grupo25.hospital.models.dtos.UpdatePassDTO;
 import com.grupo25.hospital.models.dtos.AreasDTO;
 import com.grupo25.hospital.models.dtos.CreateAreaDTO;
 import com.grupo25.hospital.models.dtos.CreateDrugDTO;
@@ -43,6 +43,7 @@ import com.grupo25.hospital.models.entities.Area;
 import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.models.entities.Role;
 import com.grupo25.hospital.services.AreaService;
+import com.grupo25.hospital.services.MailService;
 import com.grupo25.hospital.services.PersonService;
 import com.grupo25.hospital.services.RoleService;
 import com.grupo25.hospital.utils.TokenManager;
@@ -54,6 +55,9 @@ public class AdminController {
 	
 	@Autowired
 	private TokenManager tokenManager;
+	
+	@Autowired
+	private MailService mailService;
 	
 	@Autowired
 	private PersonService personService;
@@ -123,6 +127,8 @@ public class AdminController {
 						new MessageDTO("Esta persona ya existe"),
 						HttpStatus.BAD_REQUEST);
 			}
+			
+			mailService.sendWelcomeEmail(personInfo.getEmail(), personInfo.getUsername());
 			
 			Role foundRole = roleService.findOneById(personInfo.getRole());
 			
@@ -327,10 +333,10 @@ public class AdminController {
 				);
 		}
 	}
-	
+		
 	//@Valid EditAreaDTO areaInfo, BindingResult result
 	@PutMapping("/my-info/updatepassword")
-	public ResponseEntity<?> updateOwnPassword(@Valid ActualizarPassDTO newPassInfo, BindingResult result){
+	public ResponseEntity<?> updateOwnPassword(@Valid UpdatePassDTO newPassInfo, BindingResult result){
 		
 		try {
 			if(result.hasErrors()) {
