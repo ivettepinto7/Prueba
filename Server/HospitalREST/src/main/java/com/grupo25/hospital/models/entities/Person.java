@@ -63,6 +63,14 @@ public class Person {
 	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
 	@JsonIgnore
 	private List<Token> tokens;
+	
+	@OneToMany(mappedBy = "id_patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@JsonIgnore
+	private List<Appointment> appointmentsPatient;
+	
+	@OneToMany(mappedBy = "id_doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+	@JsonIgnore
+	private List<Appointment> appointmentsDoctor;
 
 	public Person() {
 		super();
