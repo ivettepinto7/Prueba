@@ -28,7 +28,7 @@ import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.services.PersonService;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/doctor")
 public class DoctorContoller {
 	@Autowired
 	private PersonService personService;

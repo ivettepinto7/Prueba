@@ -22,7 +22,7 @@ public class Inmunization {
 	
 	@Id
 	@Column(name = "id_inmunization")
-	@SequenceGenerator(name = "inmunization_id_inmunization_gen", sequenceName = "inmunization_id_inmunization_gen", allocationSize = 1)
+	@SequenceGenerator(name = "inmunization_id_inmunization_gen", sequenceName = "inmunization_id_inmunization_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inmunization_id_inmunization_gen")
 	private Long id_inmunization;
 	

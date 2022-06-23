@@ -19,8 +19,8 @@ public class Appointment_type {
 	
 	@Id
 	@Column(name = "id_appointment_type")
-	@SequenceGenerator(name = "appointment_type_id_appointment_gen", sequenceName = "appointment_type_id_appointment_gen", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_type_id_appointment_gen")
+	@SequenceGenerator(name = "appointment_type_id_appointment_type_gen", sequenceName = "appointment_type_id_appointment_type_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_type_id_appointment_type_gen")
 	private Long id_appointment_type;
 	
 	@Column(name= "type_name")
