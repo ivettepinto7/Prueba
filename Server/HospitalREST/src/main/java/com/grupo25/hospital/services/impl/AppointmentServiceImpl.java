@@ -19,7 +19,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 			newAppointment.setId_patient(person);
 			newAppointment.setAppointment_time(newSchedule.getDate());
 			newAppointment.setStatus(false);
-			newAppointment.setId_appointment_type(newSchedule.getType());
+			//newAppointment.setId_appointment_type(newSchedule.getType());
 			
 			
 		}

@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
-import com.grupo25.hospital.models.dtos.GetEntityDTO;
 import com.grupo25.hospital.models.dtos.InmunizationsDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
 import com.grupo25.hospital.models.dtos.PrevAppointmentDTO;
 import com.grupo25.hospital.models.dtos.RemindersDTO;
+import com.grupo25.hospital.models.dtos.RestorePassDTO;
 import com.grupo25.hospital.models.dtos.ScheduleAppointmentDTO;
 import com.grupo25.hospital.models.dtos.TestListDTO;
+import com.grupo25.hospital.models.dtos.UpdatePassDTO;
 import com.grupo25.hospital.models.dtos.UserPrescriptionDTO;
 import com.grupo25.hospital.models.entities.Area;
 import com.grupo25.hospital.models.entities.Person;
@@ -78,7 +78,7 @@ public class PatientController {
 	}
 	
 	@PutMapping("/my-info/updatepassword")
-	public ResponseEntity<?> updateOwnPassword(@Valid ActualizarPassDTO newPassInfo, BindingResult result){
+	public ResponseEntity<?> updateOwnPassword(@Valid UpdatePassDTO newPassInfo, BindingResult result){
 		
 		try {
 			if(result.hasErrors()) {
