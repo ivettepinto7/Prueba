@@ -1,31 +1,52 @@
 package com.grupo25.hospital.models.dtos;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class CreateVaccineDTO {
+	@NotNull
 	private String name;
-	private int dosis_requeridas;
-	private int frecuencia;
-	public CreateVaccineDTO(String name, int dosis_requeridas, int frecuencia) {
+	
+	@NotNull
+	private Integer required_doses;
+
+	public CreateVaccineDTO() {
+		super();
+	}
+
+	
+
+	
+
+
+
+	public CreateVaccineDTO(@NotNull String name, @NotNull Integer required_doses) {
 		super();
 		this.name = name;
-		this.dosis_requeridas = dosis_requeridas;
-		this.frecuencia = frecuencia;
+		this.required_doses = required_doses;
 	}
+
+
+
+
+
+
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getDosis_requeridas() {
-		return dosis_requeridas;
+
+	public Integer getRequired_doses() {
+		return required_doses;
 	}
-	public void setDosis_requeridas(int dosis_requeridas) {
-		this.dosis_requeridas = dosis_requeridas;
+
+	public void setRequired_doses(Integer required_doses) {
+		this.required_doses = required_doses;
 	}
-	public int getFrecuencia() {
-		return frecuencia;
-	}
-	public void setFrecuencia(int frecuencia) {
-		this.frecuencia = frecuencia;
-	}
+	
+	
 }
