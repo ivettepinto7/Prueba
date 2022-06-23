@@ -31,6 +31,12 @@ public class Vaccine {
 	@JsonIgnore
 	private List<Inmunization> inmunizations;
 
+	
+	
+	public Vaccine() {
+		super();
+	}
+
 	public Vaccine(String name, Integer required_doses) {
 		super();
 		this.name = name;

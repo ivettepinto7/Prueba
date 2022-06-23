@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
-import com.grupo25.hospital.models.dtos.CitasDiaDTO;
 import com.grupo25.hospital.models.dtos.ExpedienteDTO;
 import com.grupo25.hospital.models.dtos.ExpedientePacienteDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
+import com.grupo25.hospital.models.dtos.RestorePassDTO;
 import com.grupo25.hospital.models.dtos.ScheduleAppointmentDTO;
+import com.grupo25.hospital.models.dtos.UpdatePassDTO;
 import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.services.PersonService;
 
@@ -32,7 +32,7 @@ public class SecretaryController {
 	private PersonService personService;
 	
 	@PutMapping("/my-info/updatepassword")
-	public ResponseEntity<?> updateOwnPassword(@Valid ActualizarPassDTO newPassInfo, BindingResult result){
+	public ResponseEntity<?> updateOwnPassword(@Valid UpdatePassDTO newPassInfo, BindingResult result){
 		
 		try {
 			if(result.hasErrors()) {
