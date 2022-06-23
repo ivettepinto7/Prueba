@@ -25,7 +25,7 @@ import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.services.PersonService;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/secretary")
 public class SecretaryController {
 	
 	@Autowired

@@ -27,7 +27,7 @@ public class Appointment {
 	@Id
 	@Column(name = "id_appointment")
 	@SequenceGenerator(name = "appointment_id_appointment_gen", sequenceName = "appointment_id_appointment_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_id_appointment_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_id_appointment_gen")
 	private Long id_appointment;
 	
 	//paciente puede tener varias citas, pero una cita puede tener solo un paciente

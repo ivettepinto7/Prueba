@@ -54,7 +54,7 @@ public class PatientController {
 		}
 	}
 	
-	@PostMapping("/agendar-cita")
+	/*@PostMapping("/agendar-cita")
 	public ResponseEntity<?> bookAppointment(ScheduleAppointmentDTO newSchedule,BindingResult result){
 		try {
 			if(result.hasErrors()) {
@@ -75,7 +75,7 @@ public class PatientController {
 			return new ResponseEntity<>(
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
+	}*/
 	
 	@PutMapping("/my-info/updatepassword")
 	public ResponseEntity<?> updateOwnPassword(@Valid UpdatePassDTO newPassInfo, BindingResult result){

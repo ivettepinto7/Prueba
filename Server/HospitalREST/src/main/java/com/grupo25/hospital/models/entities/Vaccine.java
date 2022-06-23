@@ -27,7 +27,7 @@ public class Vaccine {
 	@Column(name= "required_doses")
 	private Integer required_doses;
 	
-	@OneToMany(mappedBy = "vaccine", fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
+	@OneToMany(mappedBy = "id_vaccine", fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
 	@JsonIgnore
 	private List<Inmunization> inmunizations;
 
