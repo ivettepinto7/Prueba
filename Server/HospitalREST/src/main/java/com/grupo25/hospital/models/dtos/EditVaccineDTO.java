@@ -1,41 +1,40 @@
 package com.grupo25.hospital.models.dtos;
 
+import javax.validation.constraints.NotNull;
+
 public class EditVaccineDTO {
-	private int code;
-	private String nombre;
-	private int dosis_requeridas;
-	private int frecuencia;
-	
-	public EditVaccineDTO(int code, String nombre, int dosis_requeridas, int frecuencia) {
+	@NotNull
+	private Long id;
+	private String name;
+	private Integer required_doses;
+	public EditVaccineDTO() {
 		super();
-		this.code = code;
-		this.nombre = nombre;
-		this.dosis_requeridas = dosis_requeridas;
-		this.frecuencia = frecuencia;
 	}
-	public String getNombre() {
-		return nombre;
+	public EditVaccineDTO(@NotNull Long id, String name, Integer required_doses) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.required_doses = required_doses;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public Long getId() {
+		return id;
 	}
-	public int getDosis_requeridas() {
-		return dosis_requeridas;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public void setDosis_requeridas(int dosis_requeridas) {
-		this.dosis_requeridas = dosis_requeridas;
+	public String getName() {
+		return name;
 	}
-	public int getFrecuencia() {
-		return frecuencia;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void setFrecuencia(int frecuencia) {
-		this.frecuencia = frecuencia;
+	public Integer getRequired_doses() {
+		return required_doses;
 	}
-	public int getCode() {
-		return code;
+	public void setRequired_doses(Integer required_doses) {
+		this.required_doses = required_doses;
 	}
-	public void setCode(int code) {
-		this.code = code;
-	}
+	
+	
 	
 }

@@ -11,9 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
+import com.grupo25.hospital.models.dtos.UpdatePassDTO;
 import com.grupo25.hospital.models.dtos.CreatePersonDTO;
 import com.grupo25.hospital.models.dtos.EditPersonDTO;
+import com.grupo25.hospital.models.dtos.RestorePassDTO;
 import com.grupo25.hospital.models.entities.Area;
 import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.models.entities.Role;
@@ -126,9 +127,15 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	@Transactional(rollbackOn = Exception.class)
 	public void update(EditPersonDTO personInfo, Person person) throws Exception {
-		person.setEmail(personInfo.getEmail());
-		person.setPassword(passEncoder.encode(personInfo.getPassword()));
-		person.setStatus(personInfo.getStatus());
+		if(personInfo.getEmail() != null) {
+			person.setEmail(personInfo.getEmail());
+		}
+		if(personInfo.getPassword() != null) {
+			person.setPassword(passEncoder.encode(personInfo.getPassword()));
+		}
+		if(personInfo.getStatus() != null) {
+			person.setStatus(personInfo.getStatus());
+		}
 		
 		personRepository.save(person);		
 	}
@@ -146,10 +153,18 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	@Transactional(rollbackOn = Exception.class)
-	public void updatePersonPassword(ActualizarPassDTO passInfo, Person person) throws Exception {
+	public void updatePersonPassword(UpdatePassDTO passInfo, Person person) throws Exception {
 		person.setPassword(passEncoder.encode(passInfo.getNew_password()));
-		personRepository.save(person);
 		
+		personRepository.save(person);
+	}
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void restorePassword(RestorePassDTO restoreInfo, Person person) throws Exception {
+		person.setPassword(passEncoder.encode(restoreInfo.getNew_password()));
+		
+		personRepository.save(person);
 	}
 
 	

@@ -1,6 +1,5 @@
 package com.grupo25.hospital.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,35 +15,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grupo25.hospital.models.dtos.ActualizarPassDTO;
-import com.grupo25.hospital.models.dtos.AreasDTO;
+import com.grupo25.hospital.models.dtos.UpdatePassDTO;
 import com.grupo25.hospital.models.dtos.CreateAreaDTO;
-import com.grupo25.hospital.models.dtos.CreateDrugDTO;
-import com.grupo25.hospital.models.dtos.CreateTestDTO;
 import com.grupo25.hospital.models.dtos.CreatePersonDTO;
 import com.grupo25.hospital.models.dtos.CreateVaccineDTO;
-import com.grupo25.hospital.models.dtos.GetEntityDTO;
-import com.grupo25.hospital.models.dtos.DrugsExistenceDTO;
 import com.grupo25.hospital.models.dtos.EditAreaDTO;
-import com.grupo25.hospital.models.dtos.EditDrugDTO;
-import com.grupo25.hospital.models.dtos.EditTestDTO;
 import com.grupo25.hospital.models.dtos.EditPersonDTO;
 import com.grupo25.hospital.models.dtos.EditVaccineDTO;
-import com.grupo25.hospital.models.dtos.ExamExistenceDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
 import com.grupo25.hospital.models.dtos.PersonResponseDTO;
-import com.grupo25.hospital.models.dtos.TestListDTO;
-import com.grupo25.hospital.models.dtos.UserDTO;
-import com.grupo25.hospital.models.dtos.VaccinesExistenceListDTO;
 import com.grupo25.hospital.models.entities.Area;
 import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.models.entities.Role;
+import com.grupo25.hospital.models.entities.Vaccine;
 import com.grupo25.hospital.services.AreaService;
+import com.grupo25.hospital.services.MailService;
 import com.grupo25.hospital.services.PersonService;
 import com.grupo25.hospital.services.RoleService;
+import com.grupo25.hospital.services.VaccineService;
 import com.grupo25.hospital.utils.TokenManager;
 
 @RestController
@@ -56,6 +46,9 @@ public class AdminController {
 	private TokenManager tokenManager;
 	
 	@Autowired
+	private MailService mailService;
+	
+	@Autowired
 	private PersonService personService;
 	
 	@Autowired
@@ -63,6 +56,9 @@ public class AdminController {
 	
 	@Autowired
 	private AreaService areaService;
+	
+	@Autowired
+	private VaccineService vaccService;
 	
 	@GetMapping("/users")
 	public ResponseEntity<?> findAllPeople(){
@@ -123,6 +119,8 @@ public class AdminController {
 						new MessageDTO("Esta persona ya existe"),
 						HttpStatus.BAD_REQUEST);
 			}
+			
+			mailService.sendWelcomeEmail(personInfo.getEmail(), personInfo.getUsername());
 			
 			Role foundRole = roleService.findOneById(personInfo.getRole());
 			
@@ -328,9 +326,118 @@ public class AdminController {
 		}
 	}
 	
-	//@Valid EditAreaDTO areaInfo, BindingResult result
+	@GetMapping("/vaccines")
+	public ResponseEntity<?> getAllVaccines(){
+		try {
+			List<Vaccine> vaccines = vaccService.findAll();
+			
+			return new ResponseEntity<>(
+						vaccines,
+						HttpStatus.OK
+					);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+						null,
+						HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
+	
+	@PostMapping("/vaccines/create")
+	public ResponseEntity<?> createVaccine(@Valid CreateVaccineDTO vaccInfo, BindingResult result){
+		try {
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Vaccine vacc = vaccService.findOneByIdentifier(vaccInfo.getName());
+			
+			if(vacc != null) {
+				return new ResponseEntity<>(
+						new MessageDTO("Esta vacuna ya existe"),
+						HttpStatus.BAD_REQUEST
+						);
+			}
+			
+			vaccService.insert(vaccInfo);
+			
+			return new ResponseEntity<>(
+					new MessageDTO("Vacuna registrada"),
+					HttpStatus.CREATED
+					);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					new MessageDTO("Error interno"),
+					HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
+	
+	@PutMapping("/vaccines/update")
+	public ResponseEntity<?> updateVaccine(@Valid EditVaccineDTO vaccInfo, BindingResult result){
+		try {
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Vaccine foundVacc = vaccService.findOneById(vaccInfo.getId());
+			
+			if(foundVacc != null) {
+				vaccService.update(vaccInfo, foundVacc);
+				return new ResponseEntity<>(
+						new MessageDTO("Vacuna actualizada"),
+						HttpStatus.OK
+					);
+			}
+			
+			return new ResponseEntity<>(
+					new MessageDTO("Vacuna no encontrada"),
+					HttpStatus.NOT_FOUND
+				);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+						null,
+						HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
+	
+	@DeleteMapping("/vaccines/{id}/delete")
+	public ResponseEntity<?> deleteVaccine(@PathVariable(name = "id") Long id){
+		try {
+			Vaccine foundVacc = vaccService.findOneById(id);
+			
+			if(foundVacc != null) {
+				vaccService.delete(foundVacc);
+				
+				return new ResponseEntity<>(
+						new MessageDTO("Vacuna eliminada"),
+						HttpStatus.OK
+					);
+			}
+			
+			return new ResponseEntity<>(
+					new MessageDTO("Vacuna no encontrada"),
+					HttpStatus.NOT_FOUND
+				);
+		} catch(Exception e) {
+			return new ResponseEntity<>(
+					null,
+					HttpStatus.INTERNAL_SERVER_ERROR
+				);
+		}
+	}
+		
 	@PutMapping("/my-info/updatepassword")
-	public ResponseEntity<?> updateOwnPassword(@Valid ActualizarPassDTO newPassInfo, BindingResult result){
+	public ResponseEntity<?> updateOwnPassword(@Valid UpdatePassDTO newPassInfo, BindingResult result){
 		
 		try {
 			if(result.hasErrors()) {

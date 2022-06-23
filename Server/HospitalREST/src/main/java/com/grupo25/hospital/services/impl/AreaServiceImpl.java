@@ -50,9 +50,15 @@ public class AreaServiceImpl implements AreaService {
 	@Override
 	@Transactional(rollbackOn = Exception.class)
 	public void update(EditAreaDTO areaInfo, Area area) throws Exception {
-		area.setName(areaInfo.getName());
-		area.setStart_age(areaInfo.getStart_age());
-		area.setFrequency(areaInfo.getFrequency());
+		if(areaInfo.getName() != null) {
+			area.setName(areaInfo.getName());
+		}
+		if(areaInfo.getStart_age() != null) {
+			area.setStart_age(areaInfo.getStart_age());
+		}
+		if(areaInfo.getFrequency() != null) {
+			area.setFrequency(areaInfo.getFrequency());
+		}
 		
 		areaRepository.save(area);
 	}
